@@ -22,3 +22,6 @@ app.use((err, req, res, next) => {
 });
 
 //aggiungere l uso delle route
+
+app.listen(PORT);
+console.log("ok");

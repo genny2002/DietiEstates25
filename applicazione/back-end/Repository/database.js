@@ -6,7 +6,7 @@ import { createModel as createModelGestoreAgenzia } from "./Model/GestoreAgenzia
 import { createModel as createModelRichiesta } from "./Model/Richiesta.js";
 import 'dotenv/config.js';
 
-export const database = new Sequelize(process.env.DB_CONNECTION_URI, {  //apre la connessione al DB utilizzando le variabili del file ".env"
+export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
     dialect: process.env.DIALECT
 });
 
@@ -33,7 +33,7 @@ Richiesta.Annuncio=Richiesta.belongsTo(Annuncio);
 Annuncio.Cliente=Annuncio.hasMany(Cliente);
 Cliente.Annuncio=Cliente.belongsTo(Annuncio);
 
-database.sync().then(() => {    //sincronizza lo schema del DB con i modelli definiti
+database.sync().then(() => {
     console.log("Database synced correctly");
 }).catch(err => {
     console.error("Error with database synchronization: " + err.message);
