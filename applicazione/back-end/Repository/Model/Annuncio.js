@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function createModelAbnnuncio(database) {
+export function createModelAnnuncio(database) {
   database.define('Annuncio', {
     IDimmobile: {
       type: DataTypes.INTEGER,

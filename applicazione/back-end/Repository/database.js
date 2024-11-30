@@ -1,6 +1,40 @@
 import { Sequelize } from "sequelize";
-import { createModel as createUserModel } from "./User.js";
-import { createModel as createIdeaModel } from "./Idea.js";
-import { createModel as createVoteModel } from "./Vote.js";
-import { createModel as createCommentModel } from "./Comment.js";
+import { createModel as createModelAgenteImmobiliare } from "./Model/AgenteImmobiliare.js";
+import { createModel as createModelAnnuncio } from "./Model/Annuncio.js";
+import { createModel as createModelCliente } from "./Model/Cliente.js";
+import { createModel as createModelGestoreAgenzia } from "./Model/GestoreAgenzia.js";
+import { createModel as createModelRichiesta } from "./Model/Richiesta.js";
 import 'dotenv/config.js';
+
+export const database = new Sequelize(process.env.DB_CONNECTION_URI, {  //apre la connessione al DB utilizzando le variabili del file ".env"
+    dialect: process.env.DIALECT
+});
+
+createModelAgenteImmobiliare(database);
+createModelAnnuncio(database);
+createModelCliente(database);
+createModelGestoreAgenzia(database);
+createModelRichiesta(database);
+
+export const { AgenteImmobiliare, Annuncio, Cliente, GestoreAgenzia, Richiesta} = database.models;
+
+GestoreAgenzia.AgenteImmobiliare=GestoreAgenzia.hasMany(AgenteImmobiliare);
+AgenteImmobiliare.GestoreAgenzia=AgenteImmobiliare.belongsTo(GestoreAgenzia);
+
+AgenteImmobiliare.Annuncio=AgenteImmobiliare.hasMany(Annuncio);
+Annuncio.AgenteImmobiliare=Annuncio.belongsTo(AgenteImmobiliare);
+
+AgenteImmobiliare.Richiesta=AgenteImmobiliare.hasMany(Richiesta);
+Richiesta.AgenteImmobiliare=Richiesta.belongsTo(AgenteImmobiliare);
+
+Annuncio.Richiesta=Annuncio.hasMany(Richiesta);
+Richiesta.Annuncio=Richiesta.belongsTo(Annuncio);
+
+Annuncio.Cliente=Annuncio.hasMany(Cliente);
+Cliente.Annuncio=Cliente.belongsTo(Annuncio);
+
+database.sync().then(() => {    //sincronizza lo schema del DB con i modelli definiti
+    console.log("Database synced correctly");
+}).catch(err => {
+    console.error("Error with database synchronization: " + err.message);
+});
