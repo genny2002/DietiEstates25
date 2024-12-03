@@ -2,16 +2,16 @@ import { DataTypes } from "sequelize";
 
 export function createModelAgenteImmobiliare(database) {
   database.define('AgenteImmobiliare', {
-    Username: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
-    Password: {
+    password: {
           type: DataTypes.STRING,
           allowNull: false,
       },
-    Email: {
+    email: {
         type: DataTypes.STRING,
         allowNull: false,
     }

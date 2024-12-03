@@ -8,56 +8,53 @@ export function createModelAnnuncio(database) {
       primaryKey: true,
       autoIncrement: true
     },
-
-    Foto: {
+    foto: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Descrizione: {
+    descrizione: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Prezzo: {
+    prezzo: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    Dimesioni: {
+    dimesioni: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    Citta: {
+    citta: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    ViaENumeroCivico: {
+    viaENumeroCivico: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Comune: {
+    comune: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    NumeroDiStanze: {
+    numeroDiStanze: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Piano: {
+    piano: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    Acensore: {
+    ascensore: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
-    ClasseEnergetica: {
+    classeEnergetica: {
         type: DataTypes.CHAR,
         allowNull: false,
     },
-    AltriServizzi: {
+    altriServizzi: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-
-
   });
 }
