@@ -1,4 +1,4 @@
-import { Cliente as ClienteModel } from "./Repository/database.js";
+/*import { Cliente as ClienteModel } from "./Repository/database.js";
 
 async function main() {
   let cliente = await ClienteModel.create({
@@ -19,14 +19,15 @@ async function main() {
 
 main().catch(err => {
   console.error("Error in main function:", err);
-});
+});*/
 
 
-/*import express from "express";
+import express from "express";
 import morgan from 'morgan';
 import cors from "cors";
 
 //aggiungere import dei router
+import { authenticationRouter } from "./Controller/authenticationRouter.js";
 
 const app = express();
 const PORT = 3000;
@@ -46,6 +47,7 @@ app.use((err, req, res, next) => {
 });
 
 //aggiungere l uso delle route
+app.use(authenticationRouter);  //aggiunge la route 'authenticationRouter'
 
 app.listen(PORT);
-console.log("ok");*/
+console.log("ok");
