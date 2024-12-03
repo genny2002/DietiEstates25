@@ -15,5 +15,7 @@ export function createModelAgenteImmobiliare(database) {
         type: DataTypes.STRING,
         allowNull: false,
     }
+  }, {
+
   });
 }

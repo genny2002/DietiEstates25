@@ -10,28 +10,28 @@ export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
     dialect: process.env.DIALECT
 });
 
+createModelGestoreAgenzia(database);
+createModelCliente(database);
 createModelAgenteImmobiliare(database);
 createModelAnnuncio(database);
-createModelCliente(database);
-createModelGestoreAgenzia(database);
 createModelRichiesta(database);
 
-export const { AgenteImmobiliare, Annuncio, Cliente, GestoreAgenzia, Richiesta} = database.models;
+export const { GestoreAgenzia, Cliente, AgenteImmobiliare, Annuncio, Richiesta} = database.models;
 
-GestoreAgenzia.AgenteImmobiliare=GestoreAgenzia.hasMany(AgenteImmobiliare);
+GestoreAgenzia.AgenteImmobiliares=GestoreAgenzia.hasMany(AgenteImmobiliare);
 AgenteImmobiliare.GestoreAgenzia=AgenteImmobiliare.belongsTo(GestoreAgenzia);
 
-AgenteImmobiliare.Annuncio=AgenteImmobiliare.hasMany(Annuncio);
+AgenteImmobiliare.Annuncios=AgenteImmobiliare.hasMany(Annuncio);
 Annuncio.AgenteImmobiliare=Annuncio.belongsTo(AgenteImmobiliare);
 
-AgenteImmobiliare.Richiesta=AgenteImmobiliare.hasMany(Richiesta);
+AgenteImmobiliare.Richiestas=AgenteImmobiliare.hasMany(Richiesta);
 Richiesta.AgenteImmobiliare=Richiesta.belongsTo(AgenteImmobiliare);
 
-Annuncio.Richiesta=Annuncio.hasMany(Richiesta);
+Annuncio.Richiestas=Annuncio.hasMany(Richiesta);
 Richiesta.Annuncio=Richiesta.belongsTo(Annuncio);
 
-Annuncio.Cliente=Annuncio.hasMany(Cliente);
-Cliente.Annuncio=Cliente.belongsTo(Annuncio);
+Richiesta.Clientes=Richiesta.hasMany(Cliente);
+Cliente.Richiesta=Cliente.belongsTo(Richiesta);
 
 database.sync().then(() => {
     console.log("Database synced correctly");

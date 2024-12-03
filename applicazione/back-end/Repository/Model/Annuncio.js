@@ -56,5 +56,7 @@ export function createModelAnnuncio(database) {
         type: DataTypes.STRING,
         allowNull: false,
     },
+  }, {
+
   });
 }

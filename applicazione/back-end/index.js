@@ -1,19 +1,25 @@
 import { Cliente as ClienteModel } from "./Repository/database.js";
 
-let cliente = await ClienteModel.create({
-  email: "aa",
-  password: "b",
-  username: "c"
-});
+async function main() {
+  let cliente = await ClienteModel.create({
+    email: "aa",
+    password: "b",
+    username: "c"
+  });
 
-async function fetchAndLogUtenti() {
-  const clienti = await ClienteModel.findAll();
-  for (let i = 0; i < clienti.length; i++) {
-    console.log(clienti[i].get('nickname'));
+  async function fetchAndLogUtenti() {
+    const clienti = await ClienteModel.findAll();
+    for (let i = 0; i < clienti.length; i++) {
+      console.log(clienti[i].get('username'));
+    }
   }
+
+  await fetchAndLogUtenti();
 }
 
-fetchAndLogUtenti();
+main().catch(err => {
+  console.error("Error in main function:", err);
+});
 
 
 /*import express from "express";

@@ -23,5 +23,7 @@ export function createModelGestoreAgenzia(database) {
         type: DataTypes.STRING,
         allowNull: false,
     }
+  }, {
+
   });
 }

@@ -15,5 +15,7 @@ export function createModelCliente(database) {
         type: DataTypes.STRING,
         allowNull: false,
     }
+  }, {
+
   });
 }

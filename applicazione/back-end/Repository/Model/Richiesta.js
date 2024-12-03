@@ -12,5 +12,7 @@ export function createModelRichiesta(database) {
         type: DataTypes.STRING,
         allowNull: false,
     }
+  }, {
+
   });
 }
