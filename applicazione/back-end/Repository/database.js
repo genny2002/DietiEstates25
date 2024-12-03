@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
-import { createModel as createModelAgenteImmobiliare } from "./Model/AgenteImmobiliare.js";
-import { createModel as createModelAnnuncio } from "./Model/Annuncio.js";
-import { createModel as createModelCliente } from "./Model/Cliente.js";
-import { createModel as createModelGestoreAgenzia } from "./Model/GestoreAgenzia.js";
-import { createModel as createModelRichiesta } from "./Model/Richiesta.js";
+import { createModelAgenteImmobiliare } from "./Model/AgenteImmobiliare.js";
+import { createModelAnnuncio } from "./Model/Annuncio.js";
+import { createModelCliente } from "./Model/Cliente.js";
+import { createModelGestoreAgenzia } from "./Model/GestoreAgenzia.js";
+import { createModelRichiesta } from "./Model/Richiesta.js";
 import 'dotenv/config.js';
 
 export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
