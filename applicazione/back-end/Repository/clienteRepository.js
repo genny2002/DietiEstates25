@@ -13,10 +13,11 @@ export class ClienteRepository {
         return found !== null;
     }
 
-    static async signUp(usrname, psw){
+    static async signUp(usrname, psw, email){
         let cliente = new Cliente({   //dati dell'utente da inserire
             username: usrname,
-            password: psw
+            password: psw,
+            email: email
         });
 
         return cliente.save();

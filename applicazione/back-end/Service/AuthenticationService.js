@@ -33,10 +33,16 @@ export class AuthenticationService {
     }//fine issueToken
 
     static async saveCliente(req, res) {    //tenta di creare un nuovo utente con 'req.body.usr' e 'req.body.pwd'
-        if (await AuthenticationService.checkRuolo(req)==null){
-            return ClienteRepository.signUp(req.body.usr, req.body.pwd);
-        }else{
-            throw new Error("Credenziali già usate");
+        try{
+            const ruolo = await AuthenticationService.checkRuolo(req);
+
+            if (ruolo !== null) {
+                throw new Error("Credenziali già usate");
+            }
+
+            return await ClienteRepository.signUp(req.body.usr, req.body.pwd, req.body.email);
+        } catch (err) {
+            throw err;
         }
     }//fine saveUser
 

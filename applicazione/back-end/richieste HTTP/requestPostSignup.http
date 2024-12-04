@@ -3,5 +3,6 @@ Content-Type: application/json
 
 {
   "usr": "jasmine",
-  "pwd": "jasmine"
+  "pwd": "jasmine",
+  "email": "ciao@40"
 }

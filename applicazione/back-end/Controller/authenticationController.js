@@ -19,9 +19,14 @@ authenticationController.post("/auth", async (req, res) => {    //se le credenzi
 });
 
 authenticationController.post("/signupCliente", (req, res, next) => {  //tenta di registrare un nuovo utente e invia una risposta
-    AuthenticationService.saveCliente(req, res).then((cliente) => {
-        res.json(cliente); //invia una risposta con l'utente creato
-    }).catch((err) => {
-        next({ status: 500, message: "Could not save user" });  //invia una risposta con un messaggio di errore
-    })
+    try{
+        const cliente = AuthenticationService.saveCliente(req);
+        res.status(201).json(cliente);
+    } catch(err) {
+        if(err.message==="credenziali già usate"){
+            return res.status(409).json({ message: err.message });
+        }
+
+        next ({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
 });
