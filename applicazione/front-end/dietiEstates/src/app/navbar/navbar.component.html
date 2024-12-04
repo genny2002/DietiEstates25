@@ -1,0 +1,60 @@
+<nav class="bg-white border-blue-600 border-b-2 dark:bg-black p-3">
+    <div class="container mx-auto flex justify-between flex-wrap">
+        <a routerLink="/home" class="flex items-center space-x-3 rtl:space-x-reverse flex-grow">
+            <span
+                class="self-center text-xl font-bold whitespace-nowrap dark:text-white lg:text-2xl xl:text-xl">DietiEstates</span>
+        </a>
+        <dark-mode-toggle class="md:order-1 md:pl-4" (click)="toggleDarkMode()" />
+        <button (click)="toggle()" data-collapse-toggle="navbar-default" type="button"
+            class="inline-flex items-center p-1 w-7 h-7 justify-center text-sm text-blue-600 md:hidden hover:text-yellow-300 focus:outline-none mx-2"
+            aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+        </button>
+        <div class="{{isOpen ? 'block' : 'hidden'}} w-full md:block md:w-auto" id="navbar-default">
+            <ul
+                class="font-semibold flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900 md:dark:bg-black dark:border-gray-950">
+
+                @if(! this.authService.isUserAuthenticated()){
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/login"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Login</a>
+                </li>
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/signup"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Sign
+                        up</a>
+                </li>
+                } @else {
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/home"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Home</a>
+                </li>
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/ideas"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Idee</a>
+                </li>
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/newIdea"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Nuova
+                        idea</a>
+                </li>
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/logout"
+                        routerLinkActive="text-yellow-300 hover:text-yellow-300 md:text-yellow-300"
+                        class="block py-2 px-3 text-blue-600 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-yellow-300 md:dark:hover:bg-black dark:hover:bg-gray-700 md:p-0 text-2xl lg:text-3xl xl:text-lg">Log
+                        out</a>
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
