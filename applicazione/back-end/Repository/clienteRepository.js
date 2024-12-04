@@ -1,4 +1,4 @@
-import { Cliente } from "../Repository/database";
+import { Cliente } from "../Repository/database.js";
 
 export class ClienteRepository {
 

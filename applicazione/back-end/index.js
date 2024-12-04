@@ -1,14 +1,14 @@
-/*import { Cliente as ClienteModel } from "./Repository/database.js";
+/*import { GestoreAgenzia as ClienteModel, GestoreAgenzia } from "./Repository/database.js";
 
 async function main() {
-  let cliente = await ClienteModel.create({
+  let cliente = await GestoreAgenzia.create({
     email: "aa",
     password: "b",
     username: "c"
   });
 
   async function fetchAndLogUtenti() {
-    const clienti = await ClienteModel.findAll();
+    const clienti = await GestoreAgenzia.findAll();
     for (let i = 0; i < clienti.length; i++) {
       console.log(clienti[i].get('username'));
     }

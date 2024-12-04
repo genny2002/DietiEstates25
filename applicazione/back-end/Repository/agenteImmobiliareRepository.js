@@ -1,4 +1,4 @@
-import { AgenteImmobiliare } from "../Repository/database";
+import { AgenteImmobiliare } from "../Repository/database.js";
 
 export class AgenteImmobiliareRepository {
 

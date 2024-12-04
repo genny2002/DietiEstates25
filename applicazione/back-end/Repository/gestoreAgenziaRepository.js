@@ -1,4 +1,4 @@
-import { GestoreAgenzia } from "../Repository/database";
+import { GestoreAgenzia } from "../Repository/database.js";
 
 export class GestoreAgenziaRepository {
 

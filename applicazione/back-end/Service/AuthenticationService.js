@@ -1,22 +1,22 @@
 //import { AgenteImmobiliare, Cliente, GestoreAgenzia } from "../Repository/database";
-import { GestoreAgenziaRepository  } from "../Repository/gestoreAgenziaRepository";
-import { AgenteImmobiliareRepository  } from "../Repository/agenteImmobiliareRepository";
-import { ClienteRepository  } from "../Repository/clienteRepository";
+import { GestoreAgenziaRepository  } from "../Repository/gestoreAgenziaRepository.js";
+import { AgenteImmobiliareRepository  } from "../Repository/agenteImmobiliareRepository.js";
+import { ClienteRepository  } from "../Repository/clienteRepository.js";
 import Jwt from "jsonwebtoken";
 
 export class AuthenticationService {
     static async checkCredentials(req, res) {    //controlla se esiste un utente con 'req.body.usr' e 'req.body.pwd'
         let ruolo=null;
 
-        if(GestoreAgenziaRepository.checkGestoreByUsernamePassword(req.body.usr, req.body.pwd)){
+        if(await GestoreAgenziaRepository.checkGestoreByUsernamePassword(req.body.usr, req.body.pwd)){
             ruolo="gestoreAgenzia";
         }
 
-        if(AgenteImmobiliareRepository.checkAgenteImmobiliareByUsernamePassword(req.body.usr, req.body.pwd)){
+        if(await AgenteImmobiliareRepository.checkAgenteImmobiliareByUsernamePassword(req.body.usr, req.body.pwd)){
             ruolo="agenteImmobiliare";
         }
 
-        if(ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)){
+        if(await ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)){
             ruolo="cliente";
         }
 
