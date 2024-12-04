@@ -6,34 +6,38 @@ import Jwt from "jsonwebtoken";
 
 export class AuthenticationService {
     static async checkCredentials(req, res) {    //controlla se esiste un utente con 'req.body.usr' e 'req.body.pwd'
-        let ruolo=null;
-
-        if(await GestoreAgenziaRepository.checkGestoreByUsernamePassword(req.body.usr, req.body.pwd)){
-            ruolo="gestoreAgenzia";
-        }
-
-        if(await AgenteImmobiliareRepository.checkAgenteImmobiliareByUsernamePassword(req.body.usr, req.body.pwd)){
-            ruolo="agenteImmobiliare";
-        }
-
-        if(await ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)){
-            ruolo="cliente";
-        }
+        let ruolo = await AuthenticationService.checkRuolo(req);
 
         return ruolo;
     }//fine checkCredentials
+
+    static async checkRuolo(req) {
+        let ruolo = null;
+
+        if (await GestoreAgenziaRepository.checkGestoreByUsernamePassword(req.body.usr, req.body.pwd)) {
+            ruolo = "gestoreAgenzia";
+        }
+
+        if (await AgenteImmobiliareRepository.checkAgenteImmobiliareByUsernamePassword(req.body.usr, req.body.pwd)) {
+            ruolo = "agenteImmobiliare";
+        }
+
+        if (await ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)) {
+            ruolo = "cliente";
+        }
+        return ruolo;
+    }
 
     static issueToken(username, ruolo) {    //genera un token per l'utente 'username' valido per 24 ore
         return Jwt.sign({ user: username, role: ruolo}, process.env.TOKEN_SECRET, { expiresIn: `${24 * 60 * 60}s` });
     }//fine issueToken
 
-    /*static async saveUser(req, res) {    //tenta di creare un nuovo utente con 'req.body.usr' e 'req.body.pwd'
-        let user = new User({   //dati dell'utente da inserire
-            userName: req.body.usr,
-            password: req.body.pwd
-        });
-
-        return user.save();
+    static async saveCliente(req, res) {    //tenta di creare un nuovo utente con 'req.body.usr' e 'req.body.pwd'
+        if (await AuthenticationService.checkRuolo(req)==null){
+            return ClienteRepository.signUp(req.body.usr, req.body.pwd);
+        }else{
+            throw new Error("Credenziali già usate");
+        }
     }//fine saveUser
 
     static isTokenValid(token, callback) {   //controlla se il token è valido

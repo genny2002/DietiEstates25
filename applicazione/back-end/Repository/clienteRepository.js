@@ -12,4 +12,13 @@ export class ClienteRepository {
 
         return found !== null;
     }
+
+    static async signUp(usrname, psw){
+        let cliente = new Cliente({   //dati dell'utente da inserire
+            username: usrname,
+            password: psw
+        });
+
+        return cliente.save();
+    }
 }
