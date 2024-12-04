@@ -27,7 +27,7 @@ import morgan from 'morgan';
 import cors from "cors";
 
 //aggiungere import dei router
-import { authenticationRouter } from "./Controller/authenticationRouter.js";
+import { authenticationController } from "./Controller/authenticationController.js";
 
 const app = express();
 const PORT = 3000;
@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
 });
 
 //aggiungere l uso delle route
-app.use(authenticationRouter);  //aggiunge la route 'authenticationRouter'
+app.use(authenticationController);  //aggiunge la route 'authenticationRouter'
 
 app.listen(PORT);
 console.log("ok");

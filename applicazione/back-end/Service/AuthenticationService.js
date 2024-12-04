@@ -1,56 +1,33 @@
-import { AgenteImmobiliare, Cliente, GestoreAgenzia } from "../Repository/database";
+//import { AgenteImmobiliare, Cliente, GestoreAgenzia } from "../Repository/database";
+import { GestoreAgenziaRepository  } from "../Repository/gestoreAgenziaRepository";
+import { AgenteImmobiliareRepository  } from "../Repository/agenteImmobiliareRepository";
+import { ClienteRepository  } from "../Repository/clienteRepository";
 import Jwt from "jsonwebtoken";
 
-export class AuthenticationController {
+export class AuthenticationService {
     static async checkCredentials(req, res) {    //controlla se esiste un utente con 'req.body.usr' e 'req.body.pwd'
-        let risultato=[];
+        let ruolo=null;
 
-        let found = await GestoreAgenzia.findOne({    //controlla se esiste un utente con le credenziali ricevute
-            where: {
-                username: req.body.usr,
-                password: req.body.pwd
-            }
-        });
-
-        if(found!=null){
-            risultato.unshift(found);
-            risultato.unshift("gestore");
-
-            return risultato;
-        }else{
-            found = await AgenteImmobiliare.findOne({    //controlla se esiste un utente con le credenziali ricevute
-                where: {
-                    username: req.body.usr,
-                    password: req.body.pwd
-                }
-            });
+        if(GestoreAgenziaRepository.checkGestoreByUsernamePassword(req.body.usr, req.body.pwd)){
+            ruolo="gestoreAgenzia";
         }
 
-        if(found!=null){
-            risultato.unshift(found);
-            risultato.unshift("agente");
-
-            return risultato;
-        }else{
-            found = await Cliente.findOne({    //controlla se esiste un utente con le credenziali ricevute
-                where: {
-                    username: req.body.usr,
-                    password: req.body.pwd
-                }
-            });
+        if(AgenteImmobiliareRepository.checkAgenteImmobiliareByUsernamePassword(req.body.usr, req.body.pwd)){
+            ruolo="agenteImmobiliare";
         }
 
-        if(found!=null){
-            risultato.unshift(found);
-            risultato.unshift("agente");
-        }else{
-            return null;
+        if(ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)){
+            ruolo="cliente";
         }
 
-        return risultato;
+        return ruolo;
     }//fine checkCredentials
 
-    static async saveUser(req, res) {    //tenta di creare un nuovo utente con 'req.body.usr' e 'req.body.pwd'
+    static issueToken(username, ruolo) {    //genera un token per l'utente 'username' valido per 24 ore
+        return Jwt.sign({ user: username, role: ruolo}, process.env.TOKEN_SECRET, { expiresIn: `${24 * 60 * 60}s` });
+    }//fine issueToken
+
+    /*static async saveUser(req, res) {    //tenta di creare un nuovo utente con 'req.body.usr' e 'req.body.pwd'
         let user = new User({   //dati dell'utente da inserire
             userName: req.body.usr,
             password: req.body.pwd
@@ -58,10 +35,6 @@ export class AuthenticationController {
 
         return user.save();
     }//fine saveUser
-
-    static issueToken(username, ruolo) {    //genera un token per l'utente 'username' valido per 24 ore
-        return Jwt.sign({ user: username, role: ruolo}, process.env.TOKEN_SECRET, { expiresIn: `${24 * 60 * 60}s` });
-    }//fine issueToken
 
     static isTokenValid(token, callback) {   //controlla se il token è valido
         Jwt.verify(token, process.env.TOKEN_SECRET, callback);
@@ -105,5 +78,5 @@ export class AuthenticationController {
         })
 
         return vote ? vote.valore : null;
-    }//fine userVotedIdea
+    }//fine userVotedIdea*/
 }
