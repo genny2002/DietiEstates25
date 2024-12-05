@@ -8,6 +8,7 @@ import { AuthState } from './auth-state.type';
 export class AuthService {
   authState: WritableSignal<AuthState> = signal<AuthState>({ //signal che tiene aggiornate le informazioni nel localStorage della sessione
     user: this.getUser(), //username dell'utente
+    ruolo: this.getRuolo(),
     token: this.getToken(), //token della sessione
     isAuthenticated: this.verifyToken(this.getToken())  //flag di autenticazione del token
   })
@@ -39,6 +40,10 @@ export class AuthService {
     return localStorage.getItem("user");
   }//fine getUser
 
+  getRuolo() {  //ritorna l'username dell'utente del localStorge
+    return localStorage.getItem("ruolo");
+  }//fine getUser
+
   getToken() { //ritorna il token del localStorge
     return localStorage.getItem("token");
   }//fine getToken
@@ -64,9 +69,11 @@ export class AuthService {
   updateToken(token: string): void {  //decodifica e aggiorna il token
     const decodedToken: any = jwtDecode(token); //token decofdificato
     const user = decodedToken.user; //username dell'utente decodificato
+    const ruolo = decodedToken.ruolo;
 
     this.authState.set({  //aggiorna lo stato di autenticazione
       user: user,
+      ruolo: ruolo,
       token: token,
       isAuthenticated: this.verifyToken(token)
     })
@@ -76,9 +83,22 @@ export class AuthService {
     return this.verifyToken(this.getToken());
   }//fine isUserAuthenticated
 
+  isUserGestoreAgenzia(): boolean {
+    return this.getRuolo()=="gestoreAgenzia";
+  }
+
+  isUserAgenteImmobiliare(): boolean {
+    return this.getRuolo()=="agenteImmobiliare";
+  }
+
+  isUserCliente(): boolean {
+    return this.getRuolo()=="cliente";
+  }
+
   logout() { //effettua il logout
     this.authState.set({
       user: null,
+      ruolo: null,
       token: null,
       isAuthenticated: false
     });
