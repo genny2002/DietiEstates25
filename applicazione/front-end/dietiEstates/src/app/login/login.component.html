@@ -1,0 +1,45 @@
+<section class="h-full">
+    <div class="w-full mx-auto max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xs">
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+            <div class="mb-4">
+                <label class="block text-blue-600 font-bold mb-2 text-2xl xl:text-base" for="user">
+                    Username
+                </label>
+
+                <input type="text" formControlName="user" id="user"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Username" required="">
+                @if(submitted && loginForm.controls.user.errors){
+                @if(loginForm.controls.user.errors['required']){
+                <p class="form-error">Inserire l'username.</p>
+                }
+                }
+            </div>
+            <div class="mb-6">
+                <label class="block text-blue-600 font-bold mb-2 text-2xl xl:text-base" for="pass">
+                    Password
+                </label>
+
+                <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                    required="">
+                @if(submitted && loginForm.controls.pass.errors){
+                @if(loginForm.controls.pass.errors['required']){
+                <p class="form-error">Inserire la password.</p>
+                }
+
+                @if(loginForm.controls.pass.errors['minlength']){
+                <p class="form-error">La password deve contenere almeno 4 caratteri</p>
+                }
+                }
+            </div>
+
+            <button type="submit"
+                class="w-full text-yellow-300 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium px-5 py-2.5 text-center text-2xl lg:text-3xl xl:text-base">Login</button>
+
+            <p class="font-medium text-gray-500 dark:text-gray-400 text-xl md:text-2xl xl:text-sm">
+                Non sei ancora registrato? <a routerLink="/signup" class="link">Sign up</a>
+            </p>
+        </form>
+    </div>
+</section>
