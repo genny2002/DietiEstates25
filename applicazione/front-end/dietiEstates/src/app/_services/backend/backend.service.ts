@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthRequest } from './aut-request.type';
+import { GestoreAgenzia } from './gestoreAgenzia.type';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +30,11 @@ export class BackendService {
 
     return this.http.post(url, signupRequest, this.httpOptions);
   }//fine signup
+
+  registraAgenzia(gestoreAgenzia: GestoreAgenzia) { //effettua la registrazione
+    const url = `${this.url}/insertGestoreAgenzia`; //URL per la richiesta
+
+    return this.http.post<GestoreAgenzia>(url, gestoreAgenzia, this.httpOptions);
+  }//fine signup
 }
+
