@@ -34,7 +34,7 @@ export class LoginComponent {
     } else {
       this.backendService.login({  //effettua il login con i dati inseriti nel form
         usr: this.loginForm.value.user as string,
-        email: null,
+        email: null, 
         pwd: this.loginForm.value.pass as string,
       }).subscribe({
         next: (token) => {
