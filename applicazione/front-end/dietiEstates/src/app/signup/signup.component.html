@@ -1,1 +1,39 @@
-<p>signup works!</p>
+<section class="h-full">
+    <div class="w-full mx-auto max-w-sm">
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="signupForm" (ngSubmit)="handleSignup()">
+            <div class="mb-4">
+                <label for="user" class="block text-arancione font-bold mb-2">Username</label>
+
+                <input type="text" formControlName="user" id="user"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Username" required="">
+
+                @if(submitted && signupForm.controls.user.errors){
+                @if(signupForm.controls.user.errors['required']){
+                <p class="form-error">Inserire l'username.</p>
+                }
+                }
+            </div>
+            <div class="mb-4">
+                <label for="pass" class="block text-arancione font-bold mb-2">Password</label>
+
+                <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    required="">
+                @if(submitted && signupForm.controls.pass.errors){
+                @if(signupForm.controls.pass.errors['required']){
+                <p class="form-error">Inserire la password.</p>
+                }
+                @if(signupForm.controls.pass.errors['minlength']){
+                <p class="form-error">La password deve contenere almeno 4 caratteri</p>
+                }
+                }
+            </div>
+            <button type="submit"
+                class="w-full text-pesca bg-arancione hover:bg-blue-700 rounded-lg font-medium px-5 py-2.5 text-center text-lg">Sign in</button>
+            <p class="font-medium text-gray-500 dark:text-gray-400 text-xl md:text-2xl xl:text-sm">
+                Sei già registrato? <a routerLink="/login" class="link">Login</a>
+            </p>
+        </form>
+    </div>
+</section>

@@ -23,7 +23,7 @@ export class BackendService {
   }//fine login
 
   signup(signupRequest: AuthRequest) { //effettua la registrazione
-    const url = `${this.url}/signup`; //URL per la richiesta
+    const url = `${this.url}/signupCliente`; //URL per la richiesta
 
     console.log(signupRequest);
 
