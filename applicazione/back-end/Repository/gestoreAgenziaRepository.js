@@ -12,4 +12,14 @@ export class GestoreAgenziaRepository {
 
         return found !== null;
     }
+
+
+    static async insertGestoreAgenzia(gestoreAgenziaDaCreare){
+        try {
+            return await GestoreAgenzia.create(gestoreAgenziaDaCreare);
+        } catch (err) {
+            throw err;
+        }
+       
+    }
 }
