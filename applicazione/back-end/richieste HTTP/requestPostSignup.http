@@ -2,7 +2,7 @@ POST http://localhost:3000/signupCliente
 Content-Type: application/json
 
 {
-  "usr": "jasmine",
-  "pwd": "jasmine",
+  "usr": "provasignup",
+  "pwd": "passwordprova",
   "email": "ciao@40"
 }

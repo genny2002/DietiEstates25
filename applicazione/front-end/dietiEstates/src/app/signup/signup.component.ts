@@ -18,10 +18,12 @@ export class SignupComponent {
   submitted = false;  //flag dello stato di invio del form
   signupForm = new FormGroup({  //form per il sign up
     user: new FormControl('', [Validators.required]), //campo di input dell'username
+    email: new FormControl('', [Validators.required]),
     pass: new FormControl('', [ //campo di input della password
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])
+      
   })
 
   handleSignup() {  //gestisce il sign up
@@ -32,6 +34,7 @@ export class SignupComponent {
     } else {
       this.restService.signup({ //effettua il sign up con i dati inseriti nel form
         usr: this.signupForm.value.user as string,
+        email: this.signupForm.value.email as string,
         pwd: this.signupForm.value.pass as string,
       }).subscribe({
         error: (err) => {
@@ -45,4 +48,3 @@ export class SignupComponent {
     }
   }//fine handleSignup
 }
-

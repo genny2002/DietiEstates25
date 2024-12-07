@@ -15,6 +15,19 @@
                 }
             </div>
             <div class="mb-4">
+                <label for="user" class="block text-arancione font-bold mb-2">Email</label>
+
+                <input type="text" formControlName="email" id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Email" required="">
+
+                @if(submitted && signupForm.controls.user.errors){
+                @if(signupForm.controls.user.errors['required']){
+                <p class="form-error">Inserire l'indirizzo email.</p>
+                }
+                }
+            </div>
+            <div class="mb-4">
                 <label for="pass" class="block text-arancione font-bold mb-2">Password</label>
 
                 <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
@@ -30,9 +43,9 @@
                 }
             </div>
             <button type="submit"
-                class="w-full text-pesca bg-arancione hover:bg-blue-700 rounded-lg font-medium px-5 py-2.5 text-center text-lg">Sign in</button>
-            <p class="font-medium text-gray-500 dark:text-gray-400 text-xl md:text-2xl xl:text-sm">
-                Sei già registrato? <a routerLink="/login" class="link">Login</a>
+                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Sign in</button>
+            <p class="font-medium text-grigio text-base"> 
+                Sei già registrato? <a routerLink="/login" class="link" class="text-arancione font-bold mb-2 hover:text-pesca"><u>Login</u></a>
             </p>
         </form>
     </div>
