@@ -2,7 +2,7 @@
     <div class="w-full mx-auto max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xs">
         <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
             <div class="mb-4">
-                <label class="block text-blue-600 font-bold mb-2 text-2xl xl:text-base" for="user">
+                <label class="block text-arancione font-bold mb-2" for="user">
                     Username
                 </label>
 
@@ -16,7 +16,7 @@
                 }
             </div>
             <div class="mb-6">
-                <label class="block text-blue-600 font-bold mb-2 text-2xl xl:text-base" for="pass">
+                <label class="block text-arancione font-bold mb-2" for="pass">
                     Password
                 </label>
 
@@ -35,13 +35,13 @@
             </div>
 
             <button type="submit"
-                class="w-full text-yellow-300 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium px-5 py-2.5 text-center text-2xl lg:text-3xl xl:text-base">Login</button>
+            class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Login</button>
 
-            <p class="font-medium text-gray-500 dark:text-gray-400 text-xl md:text-2xl xl:text-sm">
-                Non sei ancora registrato? <a routerLink="/signup" class="link">Sign up</a>
+            <p class="font-medium  text-base text-grigio">
+                Non sei ancora registrato? <a routerLink="/signup" class="link" class="block text-arancione font-bold mb-2 hover:text-pesca"><u>Sign up</u></a>
             </p>
-            <p class="font-medium text-gray-500 dark:text-gray-400 text-xl md:text-2xl xl:text-sm">
-                Nsei un agenzia imobbiliare che vuole iscriversi ? <a routerLink="" class="link">Registra agenzia</a>
+            <p class="font-medium text-base text-grigio ">
+                Sei un agenzia imobbiliare che vuole iscriversi ? <a routerLink="" class="link " class="block text-arancione font-bold mb-2 hover:text-pesca"><u>Registra agenzia</u></a>
             </p>
         </form>
     </div>

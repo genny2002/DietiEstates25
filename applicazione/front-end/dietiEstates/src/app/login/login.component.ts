@@ -44,7 +44,7 @@ export class LoginComponent {
         },
         complete: () => {
           this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);  //mostra un messaggio di successo
-          this.router.navigateByUrl("/home");  //naviga alla pagina "/home"
+          this.router.navigateByUrl("");  //naviga alla pagina "/home"
         }
       })
     }
