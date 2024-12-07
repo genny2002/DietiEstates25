@@ -20,17 +20,22 @@
                 @if(! this.authService.isUserAuthenticated()){
                 <li>
                     <a (click)="handleNavigationClick()" routerLink="/ricercaImmboile"
-                        routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                         class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca Immobile</a>
                 </li>
-                    <li>
+                <li>
+                    <a (click)="handleNavigationClick()" routerLink="/registraAgenzia"
+                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
+                        class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Registra Agenzia</a>
+                </li>
+                <li>
                     <a (click)="handleNavigationClick()" routerLink="/login"
-                        routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                         class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Login</a>
                 </li>
                 <li>
                     <a (click)="handleNavigationClick()" routerLink="/signup"
-                        routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                         class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Sign up</a>
                 </li>
                 
@@ -38,37 +43,37 @@
                     @if(this.authService.isUserGestoreAgenzia()){
                         <li>
                             <a (click)="handleNavigationClick()" routerLink="/nuovoCollaboratore"
-                                routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Aggiungi collaboratore</a>
                         </li>
                     }
                     @if(this.authService.isUserAgenteImmobiliare()){
                         <li>
                             <a (click)="handleNavigationClick()" routerLink="/nuovoImmobile"
-                                routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Aggiungi immobile</a>
                         </li>
                         <li>
                             <a (click)="handleNavigationClick()" routerLink="/notifiche"
-                                routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Notifica</a>
                         </li>
                     }
                     @if(this.authService.isUserCliente()){
                         <li>
                             <a (click)="handleNavigationClick()" routerLink="/ricercaImmboile"
-                                routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca immobile</a>
                         </li>
                         <li>
                             <a (click)="handleNavigationClick()" routerLink="/notifiche"
-                                routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Notifica</a>
                         </li>
                     }
                     <li>
                         <a (click)="handleNavigationClick()" routerLink="/logout"
-                            routerLinkActive="hover:text-[#FFD5C2] hover:text-white md:text-pesca"
+                            routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                             class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Logout</a>
                     </li>
                 }
