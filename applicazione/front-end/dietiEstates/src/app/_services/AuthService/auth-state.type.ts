@@ -1,6 +1,6 @@
 export interface AuthState {
     user: string | null,
-    ruolo: string | null, 
+    role: string | null, 
     token: string | null,
     isAuthenticated: boolean
   }

@@ -18,7 +18,7 @@ createModelRichiesta(database);
 
 export const { GestoreAgenzia, Cliente, AgenteImmobiliare, Annuncio, Richiesta} = database.models;
 
-GestoreAgenzia.AgenteImmobiliares=GestoreAgenzia.hasMany(AgenteImmobiliare);
+GestoreAgenzia.AgenteImmobiliare=GestoreAgenzia.hasMany(AgenteImmobiliare);
 AgenteImmobiliare.GestoreAgenzia=AgenteImmobiliare.belongsTo(GestoreAgenzia);
 
 AgenteImmobiliare.Annuncios=AgenteImmobiliare.hasMany(Annuncio);

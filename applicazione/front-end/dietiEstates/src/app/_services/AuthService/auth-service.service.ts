@@ -8,7 +8,7 @@ import { AuthState } from './auth-state.type';
 export class AuthService {
   authState: WritableSignal<AuthState> = signal<AuthState>({ //signal che tiene aggiornate le informazioni nel localStorage della sessione
     user: this.getUser(), //username dell'utente
-    ruolo: this.getRuolo(),
+    role: this.getRuolo(),
     token: this.getToken(), //token della sessione
     isAuthenticated: this.verifyToken(this.getToken())  //flag di autenticazione del token
   })
@@ -21,6 +21,7 @@ export class AuthService {
     effect(() => {
       const token = this.authState().token; //token della sessione aggiornato
       const user = this.authState().user; //username dell'utente aggiornato
+      const ruolo = this.authState().role; //ruolo dell'utente aggiornato
 
       if (token !== null) { //controlla se il token non è NULL
         localStorage.setItem("token", token); //aggiorna il valore di "token" nel localStorage della sessione
@@ -33,6 +34,12 @@ export class AuthService {
       } else {
         localStorage.removeItem("user");  //rimuove "user" dal localStorage della sessione
       }
+      if (ruolo !== null) {  //controlla se il ruolo dell'utente non è NULL
+        localStorage.setItem("role", ruolo); //aggiorna il valore di "ruolo" nel localStorage della sessione
+      }
+      else {
+        localStorage.removeItem("role");  //rimuove "ruolo" dal localStorage della sessione
+      }
     });
   }
 
@@ -41,7 +48,7 @@ export class AuthService {
   }//fine getUser
 
   getRuolo() {  //ritorna l'username dell'utente del localStorge
-    return localStorage.getItem("ruolo");
+    return localStorage.getItem("role");
   }//fine getUser
 
   getToken() { //ritorna il token del localStorge
@@ -69,11 +76,11 @@ export class AuthService {
   updateToken(token: string): void {  //decodifica e aggiorna il token
     const decodedToken: any = jwtDecode(token); //token decofdificato
     const user = decodedToken.user; //username dell'utente decodificato
-    const ruolo = decodedToken.ruolo;
+    const ruolo = decodedToken.role; //ruolo dell'utente decodificato
 
     this.authState.set({  //aggiorna lo stato di autenticazione
       user: user,
-      ruolo: ruolo,
+      role: ruolo,
       token: token,
       isAuthenticated: this.verifyToken(token)
     })
@@ -98,7 +105,7 @@ export class AuthService {
   logout() { //effettua il logout
     this.authState.set({
       user: null,
-      ruolo: null,
+      role: null,
       token: null,
       isAuthenticated: false
     });
