@@ -39,13 +39,16 @@ export class LoginComponent {
       }).subscribe({
         next: (token) => {
           this.authService.updateToken(token);  //aggiorna il token
+          
         },
         error: (err) => {
           this.toastr.error("Inserire username e password corretti.", "Errore: credenziali errate"); //mostra un messaggio di errore
         },
         complete: () => {
           this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);  //mostra un messaggio di successo
-          const role = this.authService.getRuolo();
+
+          const role = this.authService.authState().role;
+
           switch (role) {
             case "gestoreAgenzia":
               this.router.navigateByUrl("/homePageGestore");
