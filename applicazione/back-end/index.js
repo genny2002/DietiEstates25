@@ -29,6 +29,7 @@ import cors from "cors";
 //aggiungere import dei router
 import { authenticationController } from "./Controller/authenticationController.js";
 import {gestoreAgenziaController} from "./Controller/gestoreAgenziaController.js";
+import {agenteImmobiliareController} from "./Controller/agenteImmoiliareController.js";
 
 const app = express();
 const PORT = 3000;
@@ -50,6 +51,7 @@ app.use((err, req, res, next) => {
 //aggiungere l uso delle route
 app.use(authenticationController);  //aggiunge la route 'authenticationRouter'
 app.use(gestoreAgenziaController); //aggiunge la route 'gestoreAgenziaRouter'
+app.use(agenteImmobiliareController); //aggiunge la route 'agenteImmobiliareRouter'
 
 app.listen(PORT);
 console.log("ok");

@@ -1,0 +1,9 @@
+POST http://localhost:3000/insertAgenteImmobiliare
+Content-Type: application/json
+
+{
+  "username": "provaAgenzia",
+  "password": "provaAgenzia",
+  "email": "provaAgenzia",
+  "GestoreAgenziumUsername": "provaAgenzia"
+}

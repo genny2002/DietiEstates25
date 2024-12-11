@@ -1,0 +1,20 @@
+import express from "express";
+import { AgenteImmobiliareService } from "../Service/agenteImmobiliareService.js";
+
+export const agenteImmobiliareController = express.Router();
+
+agenteImmobiliareController.get("/", (req, res) => {
+    res.send("<h1>Welcome To JWT Authentication </h1>");
+});
+
+agenteImmobiliareController.post("/insertAgenteImmobiliare", async (req, res, next) => {
+    try {
+        const AgenteImmobiliare = await AgenteImmobiliareService.insertAgenteImmobiliare(req, res);
+        res.status(201).json(AgenteImmobiliare);
+    } catch (err) {
+        if (err.message === "impossibile creare un utente con queste credenziali") {
+            return res.status(409).json({ message: err.message });
+        }
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});
