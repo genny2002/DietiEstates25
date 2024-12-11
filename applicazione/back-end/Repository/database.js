@@ -7,6 +7,7 @@ import { createModelRichiesta } from "./Model/Richiesta.js";
 import {createModelCollaboratore} from "./Model/Collaboratore.js";
 import 'dotenv/config.js';
 
+
 export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
     dialect: process.env.DIALECT
 });
@@ -46,4 +47,4 @@ database.sync().then(() => {
     console.log("Database synced correctly");
 }).catch(err => {
     console.error("Error with database synchronization: " + err.message);
-});
+}); 

@@ -2,6 +2,7 @@
 import { GestoreAgenziaRepository  } from "../Repository/gestoreAgenziaRepository.js";
 import { AgenteImmobiliareRepository  } from "../Repository/agenteImmobiliareRepository.js";
 import { ClienteRepository  } from "../Repository/clienteRepository.js";
+import { CollaboratoreRepository } from "../Repository/collaboratoreRepository.js";
 import Jwt from "jsonwebtoken";
 
 export class AuthenticationService {
@@ -24,6 +25,9 @@ export class AuthenticationService {
 
         if (await ClienteRepository.checkClienteByUsernamePassword(req.body.usr, req.body.pwd)) {
             ruolo = "cliente";
+        }
+        if (await CollaboratoreRepository.checkCollaboratoreByUsernamePassword(req.body.usr, req.body.pwd)) {
+            ruolo = "collaboratore";
         }
         return ruolo;
     }
