@@ -20,6 +20,21 @@ export class GestoreAgenziaRepository {
         } catch (err) {
             throw err;
         }
-       
     }
+
+
+    static async gestoreAgenziaCambioPassword(username, password){
+      let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+        if(gestoreAgenzia === null){
+            throw new Error("utente non trovato");
+        }
+        gestoreAgenzia.password = password;
+        try {
+            return await gestoreAgenzia.save();
+        } catch (err) {
+            throw err;
+        }
+
+    }
+    
 }

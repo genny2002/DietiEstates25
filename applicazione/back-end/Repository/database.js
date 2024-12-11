@@ -43,7 +43,7 @@ Collaboratore.AgenteImmobiliare=Collaboratore.hasMany(AgenteImmobiliare);
 AgenteImmobiliare.Collaboratore=AgenteImmobiliare.belongsTo(Collaboratore);
 
 
-database.sync({ force: true }).then(() => {
+database.sync().then(() => {
     console.log("Database synced correctly");
 }).catch(err => {
     console.error("Error with database synchronization: " + err.message);

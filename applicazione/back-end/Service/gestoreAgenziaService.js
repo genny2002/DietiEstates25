@@ -20,7 +20,19 @@ export class GestoreAgenziaService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
-       
-    
 
+
+    static async gestoreAgenziaCambioPassword(req, res) {
+        try {
+            const username = req.body.username;
+            const password = req.body.password;
+            const gestoreAgenzia = await GestoreAgenziaRepository.gestoreAgenziaCambioPassword(username, password);
+            res.status(201).json(gestoreAgenzia);
+        } catch (err) {
+            if (err.message === "credenziali già usate") {
+                return res.status(409).json({ message: err.message });
+            }
+            next({ status: 500, message: err.message || "Errore durante la registrazione" });
+        }
+    }
 }
