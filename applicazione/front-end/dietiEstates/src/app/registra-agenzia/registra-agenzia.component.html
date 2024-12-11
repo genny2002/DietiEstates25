@@ -4,9 +4,9 @@
             <div class="mb-4">
                 <label for="user" class="block text-arancione font-bold mb-2">Username</label>
 
-                <input type="text" formControlName="email" id="email"
+                <input type="text" formControlName="username" id="username"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Email" required="">
+                    placeholder="Username" required="">
 
                 @if(submitted && nuovaAgenziaForm.controls.username.errors){
                 @if(nuovaAgenziaForm.controls.username.errors['required']){
@@ -35,9 +35,9 @@
             <div class="mb-4">
                 <label for="user" class="block text-arancione font-bold mb-2">Nome</label>
 
-                <input type="text" formControlName="nome" id="nome"
+                <input type="text" formControlName="nomeAgenzia" id="nomeAgenzia"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Nome" required="">
+                    placeholder="Nome Agenzia" required="">
 
                 @if(submitted && nuovaAgenziaForm.controls.nomeAgenzia.errors){
                 @if(nuovaAgenziaForm.controls.nomeAgenzia.errors['required']){
@@ -48,9 +48,9 @@
             <div class="mb-4">
                 <label for="user" class="block text-arancione font-bold mb-2">Indirizzo</label>
 
-                <input type="text" formControlName="indirizzo" id="indirizzo"
+                <input type="text" formControlName="indirizzoAgenzia" id="indirizzoAgenzia"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Indirizzo" required="">
+                    placeholder="Indirizzo Agenzia" required="">
 
                 @if(submitted && nuovaAgenziaForm.controls.indirizzoAgenzia.errors){
                 @if(nuovaAgenziaForm.controls.indirizzoAgenzia.errors['required']){
@@ -66,7 +66,7 @@
         </form>
     </div>
 
-    <div class="{{showNewCredentials ? 'block' : 'hidden'}}fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="{{showNewCredentials ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white rounded-lg p-6 w-96 text-center">
             <h2 class="text-lg font-bold text-arancione mb-4">Puoi accedere al tuo nuovo profilo con le seguenti credenziali</h2>
             <p class="text-gray-800 text-base mb-4">Username: {{ this.nuovaAgenziaForm.get("username") }}</p>

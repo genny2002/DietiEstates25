@@ -27,6 +27,10 @@ export class RegistraAgenziaComponent {
 
   newGeneratedPassword: string = this.generaPassword();
 
+  ngOnInit() {  //inizializza il componente
+    console.log(this.showNewCredentials);
+  }
+
   handleNuovaAgenzia() {  //gestisce il sign up
     this.submitted = true;  //aggiorna la flag dello stato di invio del form
 
