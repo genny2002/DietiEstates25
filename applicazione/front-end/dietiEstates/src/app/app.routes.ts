@@ -3,6 +3,9 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LogoutComponent } from './logout/logout.component';
+import { HomePageAgenteImmobiliareComponent } from './home-page-agente-immobiliare/home-page-agente-immobiliare.component';
+import { HomePageClienteComponent } from './home-page-cliente/home-page-cliente.component';
+import { HomePageGestoreComponent } from './home-page-gestore/home-page-gestore.component';
 import { RegistraAgenziaComponent } from './registra-agenzia/registra-agenzia.component';
 
 export const routes: Routes = [ 
@@ -26,5 +29,17 @@ export const routes: Routes = [
         path: "registra-agenzia",
         component: RegistraAgenziaComponent,
         title: "Nuova Agenzia | DietiEstates"
+    },{
+        path: "homePageAgenteImmobiliare",
+        component: HomePageAgenteImmobiliareComponent,
+        title: "Home Page | DietiEstates"
+    },{
+        path: "homePageCliente",
+        component: HomePageClienteComponent,
+        title: "Home Page | DietiEstates"
+    },{
+        path: "homePageGestore",
+        component: HomePageGestoreComponent,
+        title: "Home Page | DietiEstates"
     },
 ];

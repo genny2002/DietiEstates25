@@ -45,7 +45,20 @@ export class LoginComponent {
         },
         complete: () => {
           this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);  //mostra un messaggio di successo
-          this.router.navigateByUrl("");  //naviga alla pagina "/home"
+          const role = this.authService.getRuolo();
+          switch (role) {
+            case "gestoreAgenzia":
+              this.router.navigateByUrl("/homePageGestore");
+              break;
+            case "agenteImmobiliare":
+              this.router.navigateByUrl("/homePageAgenteImmobiliare");
+              break;
+            case "cliente":
+              this.router.navigateByUrl("/homePageCliente");
+              break;
+            default:
+              console.error("Ruolo non riconosciuto:", role);
+          }
         }
       })
     }
