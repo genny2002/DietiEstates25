@@ -102,6 +102,10 @@ export class AuthService {
     return this.getRuolo()=="cliente";
   }
 
+  isUserCollaboratore(): boolean {
+    return this.getRuolo()=="collaboratore";
+  }
+
   logout() { //effettua il logout
     this.authState.set({
       user: null,
