@@ -9,7 +9,7 @@ export function createModelAnnuncio(database) {
       autoIncrement: true
     },
     foto: {
-        type: DataTypes.BLOB('long'),
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
     },
     descrizione: {

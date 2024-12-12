@@ -1,11 +1,14 @@
-import {AnnuncioRepository} from "../Repository/annuncioRepository.js";
+import { AnnuncioRepository } from "../Repository/annuncioRepository.js";
 
 export class AnnuncioService {
 
-    static async insertAnnuncio(req, res) { 
+    static async insertAnnuncio(req, res, next) { 
         try {
-            const AnnuncioDaCreare ={
-                foto: req.body.foto,
+            // Ottieni i percorsi delle immagini caricate
+            const fotoPaths = req.files.map(file => file.path);
+
+            const AnnuncioDaCreare = {
+                foto: fotoPaths, // Salva i percorsi delle immagini come array
                 descrizione: req.body.descrizione,
                 prezzo: req.body.prezzo,
                 dimesioni: req.body.dimesioni,
@@ -17,15 +20,14 @@ export class AnnuncioService {
                 ascensore: req.body.ascensore,
                 classeEnergetica: req.body.classeEnergetica,
                 altriServizzi: req.body.altriServizzi,
+            };
+            const Annuncio = await AnnuncioRepository.insertAnnuncio(AnnuncioDaCreare);
+            res.status(201).json(Annuncio);
+        } catch (err) {
+            if (err.message === "credenziali già usate") {
+                return res.status(409).json({ message: err.message });
             }
-        const Annuncio = await AnnuncioRepository.insertAnnuncio(AnnuncioDaCreare);
-        res.status(201).json(Annuncio);
-    } catch (err) {
-        if (err.message === "credenziali già usate") {
-            return res.status(409).json({ message: err.message });
+            next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
-        next({ status: 500, message: err.message || "Errore durante la registrazione" });
-    }
-        
     }
 }

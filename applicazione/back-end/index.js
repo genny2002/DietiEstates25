@@ -26,6 +26,7 @@ import express from "express";
 import morgan from 'morgan';
 import cors from "cors";
 
+
 //aggiungere import dei router
 import { authenticationController } from "./Controller/authenticationController.js";
 import {gestoreAgenziaController} from "./Controller/gestoreAgenziaController.js";
@@ -47,6 +48,8 @@ app.use((err, req, res, next) => {
         description: err.message || "An error occurred"
     });
 });
+
+
 
 //aggiungere l uso delle route
 app.use(authenticationController);  //aggiunge la route 'authenticationRouter'
