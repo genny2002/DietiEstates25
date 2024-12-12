@@ -1,6 +1,2 @@
-GET http://localhost:3000/getPrimoAccesso
+GET http://localhost:3000/primoAccesso/provaAgenzia
 Content-Type: application/json
-
-{
-  "username": "provaAgenzia"
-}
