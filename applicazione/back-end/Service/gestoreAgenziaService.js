@@ -1,6 +1,7 @@
 import {GestoreAgenziaRepository} from "../Repository/gestoreAgenziaRepository.js";
 
-export class GestoreAgenziaService {
+export class 
+GestoreAgenziaService {
 
     static async insertGestoreAgenzia(req, res) {
         try {
@@ -39,9 +40,8 @@ export class GestoreAgenziaService {
 
     static async getPrimoAccesso(req, res) {
         try {
-            const username = req.body.username;
-            const PrimoAccesso = await GestoreAgenziaRepository.getPrimoAccesso(username);
-            res.status(201).json(PrimoAccesso);
+            const primoAccesso = await GestoreAgenziaRepository.getPrimoAccesso(req.params.user);
+            res.status(201).json(primoAccesso);
         } catch (err) {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }

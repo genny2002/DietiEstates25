@@ -32,11 +32,12 @@ gestoreAgenziaController.post("/gestoreAgenziaCambioPassword", async (req, res, 
     }
 });
 
-gestoreAgenziaController.get("/primoAccesso", async (req, res, next) => {
+gestoreAgenziaController.get("/primoAccesso/:user", async (req, res, next) => {
     try {
         const PrimoAccesso = await GestoreAgenziaService.getPrimoAccesso(req, res);
-        res.status(201).json(PrimoAccesso);
+        res.status(200).json(PrimoAccesso);
     } catch (err) {
+        console.error(err);
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
