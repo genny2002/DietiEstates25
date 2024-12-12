@@ -7,7 +7,7 @@ agenteImmobiliareController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
 });
 
-agenteImmobiliareController.post("/insertAgenteImmobiliare", async (req, res, next) => {
+agenteImmobiliareController.post("/gestoreAgenzia/insertAgenteImmobiliare", async (req, res, next) => {
     try {
         const AgenteImmobiliare = await AgenteImmobiliareService.insertAgenteImmobiliare(req, res);
         res.status(201).json(AgenteImmobiliare);

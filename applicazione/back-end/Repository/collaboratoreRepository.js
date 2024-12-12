@@ -12,5 +12,14 @@ export class CollaboratoreRepository {
         return found !== null;
     }
 
+    static async insertCollaboratore(collaboratoreDaCreare){
+        try {
+            const collaboratore = await Collaboratore.create(collaboratoreDaCreare);
+            return collaboratore;
+        } catch (err) {
+            throw err;
+        }
+
+    }
   
 }
