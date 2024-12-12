@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
-
-interface FirstAccessWrapper {
-  firstAccess: boolean;
-}
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-page-gestore',
@@ -15,35 +12,28 @@ interface FirstAccessWrapper {
 export class HomePageGestoreComponent {
   authService = inject(AuthService);  //gestisce le informazioni della sessione
   backendService = inject(BackendService); //effettua le richieste HTTP
+  toastr = inject(ToastrService); //mostra le notifiche
   showChangePassword = false;
-  userfirstAccess: FirstAccessWrapper;
+  userfirstAccess: boolean = false;
 
   ngOnInit() {  //inizializza il componente
-    this.inituserMustChangePassword();
+    this.getUserFirstAccess();
 
-    if(this.userMustChangePassword){
+    if(this.userfirstAccess){
       this.showChangePassword = true;
     }else{
       this.showChangePassword = false;
     }
   }
 
-  inituserMustChangePassword(){
-    this.backendService.getFirstAccess().subscribe({
+  getUserFirstAccess(){
+    this.backendService.getFirstAccess(this.authService.getUser()).subscribe({
       next: (data) => {
-        this.todos = data;
+        this.userfirstAccess = data;
       },
       error: (err) => {
-        if(err.status === 401){
-          this.toastr.error("Your access token appears to be invalid. Login again", "Token expired");
-          this.router.navigateByUrl("/login");
-        } else {
-          this.toastr.error(err.message, err.statusText)
-        }
+        this.toastr.error(err.message, err.statusText);
       }
     });
   }
-
-
-
 }

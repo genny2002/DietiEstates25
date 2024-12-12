@@ -41,10 +41,10 @@ export class BackendService {
     return this.http.post<GestoreAgenzia>(url, gestoreAgenzia, this.httpOptions);
   }//fine signup
 
-  getFirstAccess(usr: string){
+  getFirstAccess(usr: string | null){
     const url= `${this.url}/primoAccesso/${usr}`;
 
-    return this.http.get<string>(url, this.httpOptions);
+    return this.http.get<boolean>(url, this.httpOptions);
 
   }
 }
