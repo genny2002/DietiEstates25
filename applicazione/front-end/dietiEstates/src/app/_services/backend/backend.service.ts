@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
 
+interface FirstAccessWrapper {
+  firstAccess: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,5 +40,12 @@ export class BackendService {
 
     return this.http.post<GestoreAgenzia>(url, gestoreAgenzia, this.httpOptions);
   }//fine signup
+
+  getFirstAccess(usr: string){
+    const url= `${this.url}/primoAccesso/${usr}`;
+
+    return this.http.get<string>(url, this.httpOptions);
+
+  }
 }
 

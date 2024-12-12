@@ -32,7 +32,7 @@ gestoreAgenziaController.post("/gestoreAgenziaCambioPassword", async (req, res, 
     }
 });
 
-gestoreAgenziaController.get("/getPrimoAccesso", async (req, res, next) => {
+gestoreAgenziaController.get("/primoAccesso", async (req, res, next) => {
     try {
         const PrimoAccesso = await GestoreAgenziaService.getPrimoAccesso(req, res);
         res.status(201).json(PrimoAccesso);
