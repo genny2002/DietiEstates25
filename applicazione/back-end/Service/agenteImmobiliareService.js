@@ -1,4 +1,5 @@
 import {AgenteImmobiliareRepository} from "../Repository/agenteImmobiliareRepository.js";
+import { CollaboratoreService } from "./collaboratoreService.js";
 
 
 export class AgenteImmobiliareService {
@@ -23,18 +24,14 @@ export class AgenteImmobiliareService {
 
     static async insertAgenteImmobiliareByCollabboratore(req, res) {
         try {
-            
-
-
-
-
+            const Collaboratore = await CollaboratoreService.getCollaboratoreByUsername(req.body.usernameCollaboratore);
             const AgenteImmobiliareDaCreare ={
                 username: req.body.username,
                 password: req.body.password,
                 email: req.body.email,
-                CollaboratoreUsername: req.body.CollaboratoreUsername
+                GestoreAgenziumUsername: Collaboratore.GestoreAgenziumUsername
             }
-            const AgenteImmobiliare = await AgenteImmobiliareRepository.insertAgenteImmobiliareByCollabboratore(AgenteImmobiliareDaCreare);
+            const AgenteImmobiliare = await AgenteImmobiliareRepository.insertAgenteImmobiliare(AgenteImmobiliareDaCreare);
             res.status(201).json(AgenteImmobiliare);
         } catch (err) {
             if (err.message === "credenziali già usate") {

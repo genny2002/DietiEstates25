@@ -1,5 +1,5 @@
 import express from "express";
-import { CollaboratoreService } from "../Service/colaboratoreService.js";
+import { CollaboratoreService } from "../Service/collaboratoreService.js";
 
 export const collaboratoreController = express.Router();
 

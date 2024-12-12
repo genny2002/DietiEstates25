@@ -2,6 +2,7 @@ POST http://localhost:3000/gestoreAgenzia/insertCollaboratore
 Content-Type: application/json
 
 {
-  "username": "provacollaboratore",
-  "password": "provacollaboratore"
+  "username": "provacollaboratore2",
+  "password": "provacollaboratore",
+  "GestoreAgenziumUsername": "provaAgenzia"
 }

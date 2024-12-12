@@ -7,7 +7,8 @@ export class CollaboratoreService {
         try {
                 const CollaboratoreDaCreare ={
                     username: req.body.username,
-                    password: req.body.password
+                    password: req.body.password,
+                    GestoreAgenziumUsername: req.body.GestoreAgenziumUsername
                 }
             const Collaboratore = await CollaboratoreRepository.insertCollaboratore(CollaboratoreDaCreare);
             res.status(201).json(Collaboratore);
@@ -27,5 +28,16 @@ export class CollaboratoreService {
         } catch (err) {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
+    }
+
+
+
+    static async getCollaboratoreByUsername(username) {
+        try {
+            const Collaboratore = await CollaboratoreRepository.getCollaboratoreByUsername(username);
+            return Collaboratore;
+        } catch (err) {
+            throw new Error(err.message || "Errore durante la registrazione");
+        }
     }
 }

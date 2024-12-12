@@ -1,0 +1,9 @@
+POST http://localhost:3000/collaboratore/insertAgenteImmobiliare
+Content-Type: application/json
+
+{
+  "username": "provaAgenzia12",
+  "password": "provaAgenzia",
+  "email": "provaAgenzia",
+  "usernameCollaboratore": "provacollaboratore2"
+}

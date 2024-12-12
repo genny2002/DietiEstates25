@@ -30,5 +30,15 @@ export class CollaboratoreRepository {
             throw err;
         }
     }
+
+
+    static async getCollaboratoreByUsername(username){
+        try {
+            const collaboratore = await Collaboratore.findByPk(username);
+            return collaboratore;
+        } catch (err) {
+            throw err;
+        }
+    }
   
 }
