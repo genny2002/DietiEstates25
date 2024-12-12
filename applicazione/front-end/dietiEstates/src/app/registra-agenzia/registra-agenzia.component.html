@@ -72,8 +72,7 @@
             <p class="text-gray-800 text-base mb-4">Username: {{ this.nuovaAgenziaForm.get('username')?.value }}</p>
             <p class="text-gray-800 text-base mb-4">Password: {{ this.newGeneratedPassword }}</p>
             <h3 class="text-base font-bold text-arancione mb-4">Bisogna cambiare password al primo acccesso</h3>
-            <!--<button class="bg-arancione text-white px-4 py-2 rounded-lg hover:bg-pesca" (click)="closePopup()">Accedi</button>-->
-            <button class="bg-arancione text-white px-4 py-2 rounded-lg hover:bg-pesca">Accedi</button>
+            <button class="bg-arancione text-white px-4 py-2 rounded-lg hover:bg-pesca" routerLink="/login">Accedi</button>
         </div>
     </div>
 </section>
