@@ -20,7 +20,7 @@ gestoreAgenziaController.post("/insertGestoreAgenzia", async (req, res, next) =>
 });
 
 
-gestoreAgenziaController.post("/gestoreAgenziaCambioPassword", async (req, res, next) => {
+gestoreAgenziaController.put("/gestoreAgenziaCambioPassword", async (req, res, next) => {
     try {
         const gestoreAgenzia = await GestoreAgenziaService.gestoreAgenziaCambioPassword(req, res);
         res.status(201).json(gestoreAgenzia);
