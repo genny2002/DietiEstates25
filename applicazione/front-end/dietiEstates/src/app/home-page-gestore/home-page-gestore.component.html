@@ -1,1 +1,30 @@
-<p>home-page-gestore works!</p>
+<section>
+    <p>home-page-gestore works!</p>
+    <div class="{{showChangePassword ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 w-96 text-center">
+            <h3 class="text-base font-bold text-arancione mb-4">Cambia la tua password</h3>
+            <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="passwordForm" (ngSubmit)="handleChangePassword()">
+                <div class="mb-6">
+                    <label class="block text-arancione font-bold mb-2" for="pass">
+                        Nuova Password
+                    </label>
+    
+                    <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                        required="">
+                    @if(submitted && passwordForm.controls.pass.errors){
+                    @if(passwordForm.controls.pass.errors['required']){
+                    <p class="form-error">Inserire la password.</p>
+                    }
+    
+                    @if(passwordForm.controls.pass.errors['minlength']){
+                    <p class="form-error">La password deve contenere almeno 4 caratteri</p>
+                    }
+                    }
+                </div>
+                <button type="submit"
+                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Avanti</button>
+            </form>
+        </div>
+    </div>
+</section>

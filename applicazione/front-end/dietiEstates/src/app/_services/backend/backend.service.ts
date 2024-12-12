@@ -3,10 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
 
-interface FirstAccessWrapper {
-  firstAccess: boolean;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -45,7 +41,12 @@ export class BackendService {
     const url= `${this.url}/primoAccesso/${usr}`;
 
     return this.http.get<boolean>(url, this.httpOptions);
+  }
 
+  changePassword(changePasswordRequest: AuthRequest){
+    const url= `${this.url}/gestoreAgenziaCambioPassword`;
+
+    return this.http.put<AuthRequest>(url, changePasswordRequest, this.httpOptions);
   }
 }
 

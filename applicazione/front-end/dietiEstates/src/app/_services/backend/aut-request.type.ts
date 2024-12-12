@@ -1,5 +1,5 @@
 export interface AuthRequest {
-    usr: string,
+    usr: string | null, 
     email: string | null, 
     pwd: string,
   }
