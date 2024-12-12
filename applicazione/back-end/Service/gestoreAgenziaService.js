@@ -35,4 +35,19 @@ export class GestoreAgenziaService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
+
+
+    static async getPrimoAccesso(req, res) {
+        try {
+            const username = req.body.username;
+            const PrimoAccesso = await GestoreAgenziaRepository.getPrimoAccesso(username);
+            res.status(201).json(PrimoAccesso);
+        } catch (err) {
+            next({ status: 500, message: err.message || "Errore durante la registrazione" });
+        }
+    }
 }
+
+
+
+

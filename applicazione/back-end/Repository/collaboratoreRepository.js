@@ -21,5 +21,14 @@ export class CollaboratoreRepository {
         }
 
     }
+
+    static async getCollaboratore(){
+        try {
+            const collaboratore = await Collaboratore.findAll();
+            return collaboratore;
+        } catch (err) {
+            throw err;
+        }
+    }
   
 }

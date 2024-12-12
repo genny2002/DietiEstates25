@@ -36,5 +36,13 @@ export class GestoreAgenziaRepository {
         }
 
     }
+
+    static async getPrimoAccesso(username){
+        let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+        if(gestoreAgenzia === null){
+            throw new Error("utente non trovato");
+        }
+        return gestoreAgenzia.primoAccesso;
+    }
     
 }

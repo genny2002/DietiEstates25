@@ -20,4 +20,27 @@ export class AgenteImmobiliareService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
+
+    static async insertAgenteImmobiliareByCollabboratore(req, res) {
+        try {
+            
+
+
+
+
+            const AgenteImmobiliareDaCreare ={
+                username: req.body.username,
+                password: req.body.password,
+                email: req.body.email,
+                CollaboratoreUsername: req.body.CollaboratoreUsername
+            }
+            const AgenteImmobiliare = await AgenteImmobiliareRepository.insertAgenteImmobiliareByCollabboratore(AgenteImmobiliareDaCreare);
+            res.status(201).json(AgenteImmobiliare);
+        } catch (err) {
+            if (err.message === "credenziali già usate") {
+                return res.status(409).json({ message: err.message });
+            }
+            next({ status: 500, message: err.message || "Errore durante la registrazione" });
+        }
+    }
 }

@@ -18,4 +18,14 @@ export class CollaboratoreService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
+
+
+    static async getCollaboratore(req, res) {
+        try {
+            const Collaboratore = await CollaboratoreRepository.getCollaboratore();
+            res.status(200).json(Collaboratore);
+        } catch (err) {
+            next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+    }
 }

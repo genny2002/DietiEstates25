@@ -1,4 +1,4 @@
-POST http://localhost:3000/insertAgenteImmobiliare
+POST http://localhost:3000/insertGestoreAgenzia
 Content-Type: application/json
 
 {

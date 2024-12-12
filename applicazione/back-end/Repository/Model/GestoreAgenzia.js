@@ -22,7 +22,14 @@ export function createModelGestoreAgenzia(database) {
     indirizzoAgenzia: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    primoAccesso: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
     }
+    
+
   }, {
 
   });

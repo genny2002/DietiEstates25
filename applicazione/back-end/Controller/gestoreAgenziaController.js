@@ -31,3 +31,12 @@ gestoreAgenziaController.post("/gestoreAgenziaCambioPassword", async (req, res, 
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+gestoreAgenziaController.get("/getPrimoAccesso", async (req, res, next) => {
+    try {
+        const PrimoAccesso = await GestoreAgenziaService.getPrimoAccesso(req, res);
+        res.status(201).json(PrimoAccesso);
+    } catch (err) {
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});

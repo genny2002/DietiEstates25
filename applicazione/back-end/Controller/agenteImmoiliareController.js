@@ -18,3 +18,17 @@ agenteImmobiliareController.post("/gestoreAgenzia/insertAgenteImmobiliare", asyn
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+
+
+agenteImmobiliareController.post("/collaboratore/insertAgenteImmobiliare", async (req, res, next) => {
+    try {
+        const AgenteImmobiliare = await AgenteImmobiliareService.insertAgenteImmobiliareByCollabboratore(req, res);
+        res.status(201).json(AgenteImmobiliare);
+    } catch (err) {
+        if (err.message === "impossibile creare un utente con queste credenziali") {
+            return res.status(409).json({ message: err.message });
+        }
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});
