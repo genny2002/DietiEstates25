@@ -26,18 +26,14 @@ export class HomePageGestoreComponent {
 
   ngOnInit() {  //inizializza il componente
     this.getUserFirstAccess();
-
-    if(this.userfirstAccess){
-      this.showChangePassword = true;
-    }else{
-      this.showChangePassword = false;
-    }
   }
 
   getUserFirstAccess(){
     this.backendService.getFirstAccess(this.authService.getUser()).subscribe({
       next: (data) => {
         this.userfirstAccess = data;
+
+        this.showChangePassword = this.userfirstAccess;
       },
       error: (err) => {
         this.toastr.error(err.message, err.statusText);
