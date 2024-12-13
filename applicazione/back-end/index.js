@@ -32,6 +32,7 @@ import { authenticationController } from "./Controller/authenticationController.
 import {gestoreAgenziaController} from "./Controller/gestoreAgenziaController.js";
 import {agenteImmobiliareController} from "./Controller/agenteImmoiliareController.js";
 import {collaboratoreController} from "./Controller/collaboratoreController.js";
+import { anunncioController } from  "./Controller/annuncioCaontroller.js";
 const app = express();
 const PORT = 3000;
 
@@ -56,6 +57,6 @@ app.use(authenticationController);  //aggiunge la route 'authenticationRouter'
 app.use(gestoreAgenziaController); //aggiunge la route 'gestoreAgenziaRouter'
 app.use(agenteImmobiliareController); //aggiunge la route 'agenteImmobiliareRouter'
 app.use(collaboratoreController); //aggiunge la route 'collaboratoreRouter'
-
+app.use(anunncioController); //aggiunge la route 'annuncioRouter'
 app.listen(PORT);
 console.log("ok");
