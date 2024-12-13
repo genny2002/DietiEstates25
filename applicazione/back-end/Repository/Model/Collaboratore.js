@@ -10,7 +10,7 @@ export function createModelCollaboratore(database) {
     password: {
           type: DataTypes.STRING,
           allowNull: false,
-      }
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
