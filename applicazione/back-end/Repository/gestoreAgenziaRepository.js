@@ -29,6 +29,7 @@ export class GestoreAgenziaRepository {
             throw new Error("utente non trovato");
         }
         gestoreAgenzia.password = password;
+        gestoreAgenzia.primoAccesso = false;
         try {
             return await gestoreAgenzia.save();
         } catch (err) {
