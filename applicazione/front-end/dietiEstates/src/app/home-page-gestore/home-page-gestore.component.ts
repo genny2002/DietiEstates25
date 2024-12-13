@@ -47,13 +47,14 @@ export class HomePageGestoreComponent {
     if (this.passwordForm.invalid) { //controlla se i dati inseriti nel form non sono validi
       this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
     } else {
+      const user = this.authService.user();
       this.backendService.changePassword({  //effettua il login con i dati inseriti nel form
-        usr: this.authService.getUser(),
+        usr: user,
         email: null,
         pwd: this.passwordForm.value.pass as string,
       }).subscribe({
         error: (err) => {
-          this.toastr.error("Inserire username e password corretti.", "Errore: credenziali errate"); //mostra un messaggio di errore
+          this.toastr.error("Inserire una password corretta.", "Errore: password errata"); //mostra un messaggio di errore
         },
         complete: () => {
           this.toastr.success(`Password aggiornata`, `Registrazione terminata!`);  //mostra un messaggio di successo
