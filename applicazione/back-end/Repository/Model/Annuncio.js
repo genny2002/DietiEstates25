@@ -56,6 +56,10 @@ export function createModelAnnuncio(database) {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    Categorie: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
   }, {
 
   });

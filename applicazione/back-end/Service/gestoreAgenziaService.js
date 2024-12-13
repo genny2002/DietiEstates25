@@ -25,8 +25,8 @@ GestoreAgenziaService {
 
     static async gestoreAgenziaCambioPassword(req, res) {
         try {
-            const username = req.body.username;
-            const password = req.body.password;
+            const username = req.body.usr;
+            const password = req.body.pwd;
             const gestoreAgenzia = await GestoreAgenziaRepository.gestoreAgenziaCambioPassword(username, password);
             res.status(201).json(gestoreAgenzia);
         } catch (err) {
