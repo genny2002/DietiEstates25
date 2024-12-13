@@ -57,6 +57,7 @@ export class HomePageGestoreComponent {
         },
         complete: () => {
           this.toastr.success(`Password aggiornata`, `Registrazione terminata!`);  //mostra un messaggio di successo
+          this.showChangePassword=false;
         }
       })
     }
