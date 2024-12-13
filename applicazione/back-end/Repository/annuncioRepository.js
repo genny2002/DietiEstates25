@@ -1,19 +1,11 @@
-import {Annuncio} from "../Repository/database.js";
-
+import { Annuncio } from "../Repository/database.js";
 
 export class AnnuncioRepository {
-
-    static async insertAnnuncio(annuncioDaCreare) {
+    static async insertAnnuncio(annuncioData) {
         try {
-            console.log("Inserimento annuncio:", annuncioDaCreare); // Log dei dati da inserire
-            return await Annuncio.create(annuncioDaCreare);
+            return await Annuncio.create(annuncioData);
         } catch (err) {
-            console.error("Errore durante l'inserimento nel repository:", err); // Log dell'errore
             throw err;
         }
     }
-
 }
-
-
-

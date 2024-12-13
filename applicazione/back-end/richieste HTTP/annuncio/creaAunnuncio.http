@@ -1,16 +1,7 @@
-POST http://localhost:3000/insertAnnuncio/2
-Content-Type: multipart/form-data
 
---boundary
-Content-Disposition: form-data; name="foto"; filename="Mk1.jpg"
-Content-Type: image/jpeg
+POST http://localhost:3000/upload/2
+Content-Type: multipart/form-data; boundary=boundary
 
-< ../img/Mk1.jpg
---boundary
-Content-Disposition: form-data; name="foto"; filename="Mk2.jpg"
-Content-Type: image/jpeg
-
-< ../img/Mk2.jpg
 --boundary
 Content-Disposition: form-data; name="descrizione"
 
@@ -30,11 +21,11 @@ Roma
 --boundary
 Content-Disposition: form-data; name="viaENumeroCivico"
 
-Via Roma 1
+Via Roma, 1
 --boundary
 Content-Disposition: form-data; name="comune"
 
-Comune
+Roma
 --boundary
 Content-Disposition: form-data; name="numeroDiStanze"
 
@@ -54,9 +45,19 @@ A
 --boundary
 Content-Disposition: form-data; name="altriServizzi"
 
-Servizio 1, Servizio 2
+Piscina, Giardino
 --boundary
-Content-Disposition: form-data; name="Categoria"
+Content-Disposition: form-data; name="Categorie"
 
-Affitto
+Residenziale
+--boundary
+Content-Disposition: form-data; name="foto"; filename="Mk1.jpg"
+Content-Type: image/jpeg
+
+< ../../../imgdasalvare/Mk1.jpg
+--boundary
+Content-Disposition: form-data; name="foto"; filename="Mk2.jpg"
+Content-Type: image/jpeg
+
+< ../../../imgdasalvare/Mk2.jpg
 --boundary--
