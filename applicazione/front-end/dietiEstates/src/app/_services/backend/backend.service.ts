@@ -48,5 +48,21 @@ export class BackendService {
 
     return this.http.put<AuthRequest>(url, changePasswordRequest, this.httpOptions);
   }
+
+  createNewCollaboratore(newCollaboratoreRequest: AuthRequest){
+    const url = `${this.url}/insertCollaboratore`; //URL per la richiesta
+
+    console.log(newCollaboratoreRequest);
+
+    return this.http.post(url, newCollaboratoreRequest, this.httpOptions);
+  }
+
+  createNewAgenteByGestore(newAgenteRequest: AuthRequest){
+    const url = `${this.url}/gestoreAgenzia/insertAgenteImmobiliare`; //URL per la richiesta
+
+    console.log(newAgenteRequest);
+
+    return this.http.post(url, newAgenteRequest, this.httpOptions);
+  }
 }
 

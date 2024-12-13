@@ -7,11 +7,12 @@ collaboratoreController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
 });
 
-collaboratoreController.post("/gestoreAgenzia/insertCollaboratore", async (req, res, next) => {
+collaboratoreController.post("/insertCollaboratore", async (req, res, next) => {
     try {
         const Collaboratore = await CollaboratoreService.insertCollaboratore(req, res);
         res.status(201).json(Collaboratore);
     } catch (err) {
+        console.error(err);
         if (err.message === "impossibile creare un utente con queste credenziali") {
             return res.status(409).json({ message: err.message });
         }

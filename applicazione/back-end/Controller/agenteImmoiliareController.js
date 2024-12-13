@@ -20,7 +20,6 @@ agenteImmobiliareController.post("/gestoreAgenzia/insertAgenteImmobiliare", asyn
 });
 
 
-
 agenteImmobiliareController.post("/collaboratore/insertAgenteImmobiliare", async (req, res, next) => {
     try {
         const AgenteImmobiliare = await AgenteImmobiliareService.insertAgenteImmobiliareByCollabboratore(req, res);

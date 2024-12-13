@@ -16,12 +16,32 @@ export class HomePageGestoreComponent {
   toastr = inject(ToastrService); //mostra le notifiche
   showChangePassword = false;
   userfirstAccess: boolean = false;
-  submitted = false;  //flag dello stato di invio del form
+  submittedPasswordForm = false;  //flag dello stato di invio del form
   passwordForm = new FormGroup({ //form per il login
     pass: new FormControl('', [ //campo di input della password
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])
+  })
+  submittedNewCollaboratoreForm = false;  //flag dello stato di invio del form
+  newCollaboratoreForm = new FormGroup({  //form per il sign up
+    user: new FormControl('', [Validators.required]), //campo di input dell'username
+    email: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [ //campo di input della password
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(16)])
+      
+  })
+  submittedNewAgenteForm = false;  //flag dello stato di invio del form
+  newAgenteForm = new FormGroup({  //form per il sign up
+    user: new FormControl('', [Validators.required]), //campo di input dell'username
+    email: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [ //campo di input della password
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(16)])
+      
   })
 
   ngOnInit() {  //inizializza il componente
@@ -42,7 +62,7 @@ export class HomePageGestoreComponent {
   }
 
   handleChangePassword() { //gestisce il login
-    this.submitted = true;  //aggiorna la flag dello stato di invio del form
+    this.submittedPasswordForm = true;  //aggiorna la flag dello stato di invio del form
 
     if (this.passwordForm.invalid) { //controlla se i dati inseriti nel form non sono validi
       this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
@@ -63,4 +83,48 @@ export class HomePageGestoreComponent {
       })
     }
   }//fine handleLogin
+
+  handleNewCollaboratore() {  //gestisce il sign up
+    this.submittedNewCollaboratoreForm = true;  //aggiorna la flag dello stato di invio del form
+
+    if (this.newCollaboratoreForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    } else {
+      this.backendService.createNewCollaboratore({ //effettua il sign up con i dati inseriti nel form
+        usr: this.newCollaboratoreForm.value.user as string,
+        email: this.newCollaboratoreForm.value.email as string,
+        pwd: this.newCollaboratoreForm.value.pass as string,
+      }).subscribe({
+        error: (err) => {
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+        },
+        complete: () => {
+          this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          //INVIARE LA MAIL AL NUOVO UTENTE
+        }
+      })
+    }
+  }//fine handleSignup
+
+  handleNewAgente() {  //gestisce il sign up
+    this.submittedNewCollaboratoreForm = true;  //aggiorna la flag dello stato di invio del form
+
+    if (this.newCollaboratoreForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    } else {
+      this.backendService.createNewAgenteByGestore({ //effettua il sign up con i dati inseriti nel form
+        usr: this.newCollaboratoreForm.value.user as string,
+        email: this.newCollaboratoreForm.value.email as string,
+        pwd: this.newCollaboratoreForm.value.pass as string,
+      }).subscribe({
+        error: (err) => {
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+        },
+        complete: () => {
+          this.toastr.success(`E' stata inviata una mail al tuo nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          //INVIARE LA MAIL AL NUOVO UTENTE
+        }
+      })
+    }
+  }//fine handleSignup
 }
