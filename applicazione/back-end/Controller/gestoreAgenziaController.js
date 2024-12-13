@@ -25,6 +25,7 @@ gestoreAgenziaController.put("/gestoreAgenziaCambioPassword", async (req, res, n
         const gestoreAgenzia = await GestoreAgenziaService.gestoreAgenziaCambioPassword(req, res);
         res.status(201).json(gestoreAgenzia);
     } catch (err) {
+        console.error(err);
         if (err.message === "impossibile creare un utente con queste credenziali") {
             return res.status(409).json({ message: err.message });
         }
