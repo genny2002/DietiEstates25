@@ -5,5 +5,5 @@ Content-Type: application/json
   "usr": "provacollaboratore2",
   "pwd": "provacollaboratore",
   "email": "Prova",
-  "GestoreAgenziumUsername": "provaAgenzia"
+  "gestoreAgenziumUsername": "provaAgenzia"
 }

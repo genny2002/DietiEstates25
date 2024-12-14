@@ -10,7 +10,7 @@ export class CollaboratoreService {
                     username: req.body.usr,
                     password: req.body.pwd,
                     email: req.body.email,
-                    GestoreAgenziumUsername: req.body.GestoreAgenziumUsername
+                    GestoreAgenziumUsername: req.body.gestoreAgenziumUsername
                 }
             const Collaboratore = await CollaboratoreRepository.insertCollaboratore(CollaboratoreDaCreare);
             res.status(201).json(Collaboratore);
