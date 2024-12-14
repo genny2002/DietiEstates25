@@ -1,0 +1,3 @@
+
+get http://localhost:3000/download/annunci
+Content-Type: multipart/form-data; boundary=boundary

@@ -51,10 +51,10 @@ Content-Disposition: form-data; name="Categorie"
 
 Residenziale
 --boundary
-Content-Disposition: form-data; name="foto"; filename="Mk1.jpg"
+Content-Disposition: form-data; name="foto"; filename="errrrori.png"
 Content-Type: image/jpeg
 
-< ../../../imgdasalvare/Mk1.jpg
+< ../../../imgdasalvare/errrrori.png
 --boundary
 Content-Disposition: form-data; name="foto"; filename="Mk2.jpg"
 Content-Type: image/jpeg

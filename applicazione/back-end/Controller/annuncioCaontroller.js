@@ -3,7 +3,7 @@ import { AnnuncioService } from "../Service/annuncioService.js";
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import fs from 'fs';
 export const anunncioController = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,4 +48,30 @@ anunncioController.post("/upload/:numeroImg", (req, res, next) => {
 
 anunncioController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
+});
+
+
+
+anunncioController.get("/download/annunci", async (req, res) => {
+    try {
+        const annunci = await AnnuncioService.getAnnunci();
+        if (!annunci || annunci.length === 0) {
+            return res.status(404).json({ error: "Nessun annuncio trovato" });
+        }
+
+        const annunciConImmagini = annunci.map(annuncio => {
+            const immagini = JSON.parse(annuncio.foto).map(filePath => ({
+                url: `http://localhost:3000/img/${path.basename(filePath)}`,
+                nome: path.basename(filePath)
+            }));
+            return {
+                ...annuncio.dataValues,
+                immagini
+            };
+        });
+
+        res.status(200).json(annunciConImmagini);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });

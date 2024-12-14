@@ -8,4 +8,17 @@ export class AnnuncioRepository {
             throw err;
         }
     }
+
+    static async getAnnunci() {
+        try {
+            return await Annuncio.findAll();
+        } catch (err) {
+            throw err;
+        }
+    }
 }
+
+
+
+
+

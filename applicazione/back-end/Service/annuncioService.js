@@ -27,4 +27,13 @@ export class AnnuncioService {
             throw err;
         }
     }
+
+    static async getAnnunci() {
+        try {
+            return await AnnuncioRepository.getAnnunci();
+        } catch (err) {
+            console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
+            throw err;
+        }
+    }
 }
