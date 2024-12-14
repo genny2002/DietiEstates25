@@ -1,0 +1,50 @@
+<section>
+    <div class="flex-1 pr-2">
+        <h3 class="text-lg font-bold text-arancione text-center mb-4 mt-4">Registra un nuovo agente immobiliare</h3>
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="newAgenteForm" (ngSubmit)="handleNewAgente()">
+            <div class="mb-4">
+                <label for="user" class="block text-arancione font-bold mb-2">Username dell'agente immobiliare</label>
+    
+                <input type="text" formControlName="user" id="user"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Username" required="">
+    
+                @if(submittedNewAgenteForm && newAgenteForm.controls.user.errors){
+                @if(newAgenteForm.controls.user.errors['required']){
+                <p class="form-error">Inserire l'username.</p>
+                }
+                }
+            </div>
+            <div class="mb-4">
+                <label for="user" class="block text-arancione font-bold mb-2">Email dell'agente immobiliare</label>
+    
+                <input type="text" formControlName="email" id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Email" required="">
+    
+                @if(submittedNewAgenteForm && newAgenteForm.controls.user.errors){
+                @if(newAgenteForm.controls.user.errors['required']){
+                <p class="form-error">Inserire l'indirizzo email.</p>
+                }
+                }
+            </div>
+            <div class="mb-4">
+                <label for="pass" class="block text-arancione font-bold mb-2">Password dell'agente immobiliare</label>
+    
+                <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    required="">
+                @if(submittedNewAgenteForm && newAgenteForm.controls.pass.errors){
+                @if(newAgenteForm.controls.pass.errors['required']){
+                <p class="form-error">Inserire la password.</p>
+                }
+                @if(newAgenteForm.controls.pass.errors['minlength']){
+                <p class="form-error">La password deve contenere almeno 4 caratteri</p>
+                }
+                }
+            </div>
+            <button type="submit"
+                class="w-1/2 block mx-auto text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Registra Agente</button>
+        </form>
+    </div>
+</section>

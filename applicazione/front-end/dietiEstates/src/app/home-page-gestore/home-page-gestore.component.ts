@@ -30,8 +30,7 @@ export class HomePageGestoreComponent {
     pass: new FormControl('', [ //campo di input della password
       Validators.required,
       Validators.minLength(4),
-      Validators.maxLength(16)])
-      
+      Validators.maxLength(16)]) 
   })
   submittedNewAgenteForm = false;  //flag dello stato di invio del form
   newAgenteForm = new FormGroup({  //form per il sign up
@@ -40,8 +39,7 @@ export class HomePageGestoreComponent {
     pass: new FormControl('', [ //campo di input della password
       Validators.required,
       Validators.minLength(4),
-      Validators.maxLength(16)])
-      
+      Validators.maxLength(16)])  
   })
 
   ngOnInit() {  //inizializza il componente
@@ -94,14 +92,14 @@ export class HomePageGestoreComponent {
         usr: this.newCollaboratoreForm.value.user as string,
         email: this.newCollaboratoreForm.value.email as string,
         pwd: this.newCollaboratoreForm.value.pass as string,
-        gestoreAgenziumUsername: this.authService.user()
+        referente: this.authService.user()
       }).subscribe({
         error: (err) => {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
         },
         complete: () => {
           this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
-          //INVIARE LA MAIL AL NUOVO UTENTE
+          this.newCollaboratoreForm.reset();//INVIARE LA MAIL AL NUOVO UTENTE
         }
       })
     }
@@ -117,13 +115,14 @@ export class HomePageGestoreComponent {
         usr: this.newAgenteForm.value.user as string,
         email: this.newAgenteForm.value.email as string,
         pwd: this.newAgenteForm.value.pass as string,
-        gestoreAgenziumUsername: this.authService.user()
+        referente: this.authService.user()
       }).subscribe({
         error: (err) => {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
         },
         complete: () => {
           this.toastr.success(`E' stata inviata una mail al tuo nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          this.newAgenteForm.reset();  
           //INVIARE LA MAIL AL NUOVO UTENTE
         }
       })

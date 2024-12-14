@@ -51,8 +51,6 @@ export class BackendService {
   }
 
   createNewCollaboratore(newCollaboratoreRequest: CollaboratoreAndAgente){
-    console.log(newCollaboratoreRequest.gestoreAgenziumUsername);
-
     const url = `${this.url}/insertCollaboratore`; //URL per la richiesta
 
     console.log(newCollaboratoreRequest);
@@ -61,9 +59,15 @@ export class BackendService {
   }
 
   createNewAgenteByGestore(newAgenteRequest: CollaboratoreAndAgente){
-    console.log(newAgenteRequest.gestoreAgenziumUsername);
-
     const url = `${this.url}/gestoreAgenzia/insertAgenteImmobiliare`; //URL per la richiesta
+
+    console.log(newAgenteRequest);
+
+    return this.http.post(url, newAgenteRequest, this.httpOptions);
+  }
+
+  createNewAgenteByCollaboratore(newAgenteRequest: CollaboratoreAndAgente){
+    const url = `${this.url}/collaboratore/insertAgenteImmobiliare`; //URL per la richiesta
 
     console.log(newAgenteRequest);
 

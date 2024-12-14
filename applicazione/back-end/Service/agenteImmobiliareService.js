@@ -10,7 +10,7 @@ export class AgenteImmobiliareService {
                     username: req.body.usr,
                     password: req.body.pwd,
                     email: req.body.email,
-                    GestoreAgenziumUsername: req.body.gestoreAgenziumUsername
+                    GestoreAgenziumUsername: req.body.referente
                 }
             const AgenteImmobiliare = await AgenteImmobiliareRepository.insertAgenteImmobiliare(AgenteImmobiliareDaCreare);
             res.status(201).json(AgenteImmobiliare);
@@ -24,10 +24,11 @@ export class AgenteImmobiliareService {
 
     static async insertAgenteImmobiliareByCollabboratore(req, res) {
         try {
-            const Collaboratore = await CollaboratoreService.getCollaboratoreByUsername(req.body.usernameCollaboratore);
+            console.log(req.body.referente);
+            const Collaboratore = await CollaboratoreService.getCollaboratoreByUsername(req.body.referente);
             const AgenteImmobiliareDaCreare ={
-                username: req.body.username,
-                password: req.body.password,
+                username: req.body.usr,
+                password: req.body.pwd,
                 email: req.body.email,
                 GestoreAgenziumUsername: Collaboratore.GestoreAgenziumUsername
             }

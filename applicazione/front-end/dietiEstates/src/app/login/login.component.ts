@@ -48,7 +48,7 @@ export class LoginComponent {
           this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);  //mostra un messaggio di successo
 
           const role = this.authService.authState().role;
-
+          
           switch (role) {
             case "gestoreAgenzia":
               this.router.navigateByUrl("/homePageGestore");
@@ -58,6 +58,9 @@ export class LoginComponent {
               break;
             case "cliente":
               this.router.navigateByUrl("/homePageCliente");
+              break;
+            case "collaboratore":
+              this.router.navigateByUrl("/homePageCollaboratore");
               break;
             default:
               console.error("Ruolo non riconosciuto:", role);
