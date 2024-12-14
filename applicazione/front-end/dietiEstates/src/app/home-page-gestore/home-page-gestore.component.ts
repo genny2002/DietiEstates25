@@ -100,6 +100,7 @@ export class HomePageGestoreComponent {
         complete: () => {
           this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
           this.newCollaboratoreForm.reset();//INVIARE LA MAIL AL NUOVO UTENTE
+          this.submittedNewCollaboratoreForm = false;
         }
       })
     }
@@ -122,7 +123,8 @@ export class HomePageGestoreComponent {
         },
         complete: () => {
           this.toastr.success(`E' stata inviata una mail al tuo nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
-          this.newAgenteForm.reset();  
+          this.newAgenteForm.reset();
+          this.submittedNewAgenteForm = false;
           //INVIARE LA MAIL AL NUOVO UTENTE
         }
       })

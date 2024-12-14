@@ -41,7 +41,8 @@ export class HomePageCollaboratoreComponent {
         },
         complete: () => {
           this.toastr.success(`E' stata inviata una mail al nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
-          this.newAgenteForm.reset();  
+          this.newAgenteForm.reset();
+          this.submittedNewAgenteForm = false;
           //INVIARE LA MAIL AL NUOVO UTENTE
         }
       })
