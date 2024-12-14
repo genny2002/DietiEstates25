@@ -1,3 +1,4 @@
+import e from "express";
 import {CollaboratoreRepository} from "../Repository/collaboratoreRepository.js";
 
 
@@ -6,8 +7,9 @@ export class CollaboratoreService {
     static async insertCollaboratore(req, res) {
         try {
                 const CollaboratoreDaCreare ={
-                    username: req.body.username,
-                    password: req.body.password,
+                    username: req.body.usr,
+                    password: req.body.pwd,
+                    email: req.body.email,
                     GestoreAgenziumUsername: req.body.GestoreAgenziumUsername
                 }
             const Collaboratore = await CollaboratoreRepository.insertCollaboratore(CollaboratoreDaCreare);

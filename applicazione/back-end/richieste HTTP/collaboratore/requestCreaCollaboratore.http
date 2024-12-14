@@ -1,8 +1,9 @@
-POST http://localhost:3000/gestoreAgenzia/insertCollaboratore
+POST http://localhost:3000/insertCollaboratore
 Content-Type: application/json
 
 {
-  "username": "provacollaboratore2",
-  "password": "provacollaboratore",
+  "usr": "provacollaboratore2",
+  "pwd": "provacollaboratore",
+  "email": "Prova",
   "GestoreAgenziumUsername": "provaAgenzia"
 }
