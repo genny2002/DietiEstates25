@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
+import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,9 @@ export class BackendService {
     return this.http.put<AuthRequest>(url, changePasswordRequest, this.httpOptions);
   }
 
-  createNewCollaboratore(newCollaboratoreRequest: AuthRequest){
+  createNewCollaboratore(newCollaboratoreRequest: CollaboratoreAndAgente){
+    console.log(newCollaboratoreRequest.gestoreAgenziumUsername);
+
     const url = `${this.url}/insertCollaboratore`; //URL per la richiesta
 
     console.log(newCollaboratoreRequest);
@@ -57,7 +60,9 @@ export class BackendService {
     return this.http.post(url, newCollaboratoreRequest, this.httpOptions);
   }
 
-  createNewAgenteByGestore(newAgenteRequest: AuthRequest){
+  createNewAgenteByGestore(newAgenteRequest: CollaboratoreAndAgente){
+    console.log(newAgenteRequest.gestoreAgenziumUsername);
+
     const url = `${this.url}/gestoreAgenzia/insertAgenteImmobiliare`; //URL per la richiesta
 
     console.log(newAgenteRequest);

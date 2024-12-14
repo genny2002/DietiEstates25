@@ -94,6 +94,7 @@ export class HomePageGestoreComponent {
         usr: this.newCollaboratoreForm.value.user as string,
         email: this.newCollaboratoreForm.value.email as string,
         pwd: this.newCollaboratoreForm.value.pass as string,
+        gestoreAgenziumUsername: this.authService.user()
       }).subscribe({
         error: (err) => {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
@@ -107,15 +108,16 @@ export class HomePageGestoreComponent {
   }//fine handleSignup
 
   handleNewAgente() {  //gestisce il sign up
-    this.submittedNewCollaboratoreForm = true;  //aggiorna la flag dello stato di invio del form
+    this.submittedNewAgenteForm = true;  //aggiorna la flag dello stato di invio del form
 
-    if (this.newCollaboratoreForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
+    if (this.newAgenteForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
       this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
     } else {
       this.backendService.createNewAgenteByGestore({ //effettua il sign up con i dati inseriti nel form
-        usr: this.newCollaboratoreForm.value.user as string,
-        email: this.newCollaboratoreForm.value.email as string,
-        pwd: this.newCollaboratoreForm.value.pass as string,
+        usr: this.newAgenteForm.value.user as string,
+        email: this.newAgenteForm.value.email as string,
+        pwd: this.newAgenteForm.value.pass as string,
+        gestoreAgenziumUsername: this.authService.user()
       }).subscribe({
         error: (err) => {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore

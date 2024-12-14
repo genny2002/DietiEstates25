@@ -7,10 +7,10 @@ export class AgenteImmobiliareService {
     static async insertAgenteImmobiliare(req, res) {
         try {
                 const AgenteImmobiliareDaCreare ={
-                    username: req.body.username,
-                    password: req.body.password,
+                    username: req.body.usr,
+                    password: req.body.pwd,
                     email: req.body.email,
-                    GestoreAgenziumUsername: req.body.GestoreAgenziumUsername
+                    GestoreAgenziumUsername: req.body.gestoreAgenziumUsername
                 }
             const AgenteImmobiliare = await AgenteImmobiliareRepository.insertAgenteImmobiliare(AgenteImmobiliareDaCreare);
             res.status(201).json(AgenteImmobiliare);

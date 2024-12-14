@@ -12,6 +12,7 @@ agenteImmobiliareController.post("/gestoreAgenzia/insertAgenteImmobiliare", asyn
         const AgenteImmobiliare = await AgenteImmobiliareService.insertAgenteImmobiliare(req, res);
         res.status(201).json(AgenteImmobiliare);
     } catch (err) {
+        console.error(err);
         if (err.message === "impossibile creare un utente con queste credenziali") {
             return res.status(409).json({ message: err.message });
         }

@@ -2,8 +2,8 @@ POST http://localhost:3000/gestoreAgenzia/insertAgenteImmobiliare
 Content-Type: application/json
 
 {
-  "username": "provaAgenzia",
-  "password": "provaAgenzia",
-  "email": "provaAgenzia",
-  "GestoreAgenziumUsername": "provaAgenzia"
+  "usr": "provaAgenzia2",
+  "pwd": "provaAgenzia2",
+  "email": "provaAgenzia2",
+  "gestoreAgenziumUsername": "gestore1"
 }

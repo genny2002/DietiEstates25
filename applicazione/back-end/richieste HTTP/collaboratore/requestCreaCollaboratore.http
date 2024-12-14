@@ -2,8 +2,8 @@ POST http://localhost:3000/insertCollaboratore
 Content-Type: application/json
 
 {
-  "usr": "provacollaboratore2",
-  "pwd": "provacollaboratore",
-  "email": "Prova",
-  "gestoreAgenziumUsername": "provaAgenzia"
+  "usr": "provacollaboratore5",
+  "pwd": "provacollaboratore4",
+  "email": "Prova4",
+  "gestoreAgenziumUsername": "gestore1"
 }
