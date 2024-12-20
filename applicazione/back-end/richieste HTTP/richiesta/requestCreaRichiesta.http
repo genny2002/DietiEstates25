@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "stato": "in attesa",
   "offerta": null,
-  "data": "2024-12-20T12:00:00Z",
+  "data": "2024-12-29T12:00:00Z",
   "ClienteUsername": "jasmine",
   "AgenteImmobiliareUsername":"provaAgenzia2",
   "AnnuncioIDimmobile": 1

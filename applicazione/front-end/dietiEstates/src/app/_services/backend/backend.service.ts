@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
 import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
+import { Appuntamento } from './appuntamento.type';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,12 @@ export class BackendService {
     console.log(newAgenteRequest);
 
     return this.http.post(url, newAgenteRequest, this.httpOptions);
+  }
+
+  getAppuntamentiWithDate(date: Date, usr: string | null){
+    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&data=${date}`;
+
+    return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
 }
 

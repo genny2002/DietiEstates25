@@ -22,7 +22,30 @@ export class RichiestaService {
 
     static async getRichiesta(req, res) {
         try {
-            return await RichiestaRepository.getRichiesteDopoOggi();
+            const { sort, mode, stato, AgenteImmobiliareUsername } = req.query;
+            
+            let richieste=await RichiestaRepository.getRichiesteDopoOggi();
+            
+            if (stato) {
+                richieste = richieste.filter(item => item.stato === stato);
+            }
+
+            if (AgenteImmobiliareUsername) {
+                richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliareUsername);
+            }
+
+            if (sort) {
+                richieste.sort((a, b) => {
+                    if (mode === 'asc') {
+                        return a[sort] > b[sort] ? 1 : -1;
+                    } else if (mode === 'desc') {
+                        return a[sort] < b[sort] ? 1 : -1;
+                    }
+                    return 0;
+                });
+            }
+
+            return richieste
         } catch (err) {
             console.error("Error in getRichiesta:", err);
             throw err;
