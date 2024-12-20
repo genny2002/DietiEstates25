@@ -34,6 +34,7 @@ import {gestoreAgenziaController} from "./Controller/gestoreAgenziaController.js
 import {agenteImmobiliareController} from "./Controller/agenteImmoiliareController.js";
 import {collaboratoreController} from "./Controller/collaboratoreController.js";
 import { anunncioController } from  "./Controller/annuncioCaontroller.js";
+import {richiestaController} from "./Controller/richiestaController.js";
 
 const app = express();
 const PORT = 3000;
@@ -64,6 +65,7 @@ app.use(gestoreAgenziaController); //aggiunge la route 'gestoreAgenziaRouter'
 app.use(agenteImmobiliareController); //aggiunge la route 'agenteImmobiliareRouter'
 app.use(collaboratoreController); //aggiunge la route 'collaboratoreRouter'
 app.use(anunncioController); //aggiunge la route 'annuncioRouter'
+app.use(richiestaController); //aggiunge la route 'richiestaRouter'
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

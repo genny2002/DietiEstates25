@@ -33,8 +33,8 @@ Richiesta.AgenteImmobiliare=Richiesta.belongsTo(AgenteImmobiliare);
 Annuncio.Richiestas=Annuncio.hasMany(Richiesta);
 Richiesta.Annuncio=Richiesta.belongsTo(Annuncio);
 
-Richiesta.Clientes=Richiesta.hasMany(Cliente);
-Cliente.Richiesta=Cliente.belongsTo(Richiesta);
+Cliente.Richiestas=Cliente.hasMany(Richiesta);
+Richiesta.Cliente=Richiesta.belongsTo(Cliente);
 
 GestoreAgenzia.Collaboratores=GestoreAgenzia.hasMany(Collaboratore);
 Collaboratore.GestoreAgenzia=Collaboratore.belongsTo(GestoreAgenzia);

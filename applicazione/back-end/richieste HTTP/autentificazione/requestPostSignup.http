@@ -1,7 +1,8 @@
-POST http://localhost:3000/auth
+POST http://localhost:3000/signupCliente
 Content-Type: application/json
 
 {
   "usr": "jasmine",
-  "pwd": "jasmine"
+  "pwd": "jasmine",
+  "email": "jasmine"
 }
