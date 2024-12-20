@@ -1,4 +1,5 @@
 import { Richiesta } from "./database.js";
+import { Annuncio } from "./database.js";
 import { Op } from "sequelize";
 
 export class RichiestaRepository {
@@ -12,7 +13,6 @@ export class RichiestaRepository {
         }
     }
 
-
     static async getRichiesteDopoOggi(){
         try {
             const oggi = new Date();
@@ -22,7 +22,11 @@ export class RichiestaRepository {
                     data: {
                         [Op.gt]: soloData
                     }
-                }
+                },
+                include: [{
+                    model: Annuncio,
+                    attributes: ['citta', 'viaENumeroCivico', 'comune']
+                }]
             });
         } catch (err) {
             console.error("Error in getRichiesteDopoOggi:", err);
