@@ -29,3 +29,24 @@ richiestaController.get("/getRichiesta", async (req, res, next) => {
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+richiestaController.get("/getRichiestaById/:id", async (req, res, next) => {
+    try {
+        const Richiesta = await RichiestaService.getRichiestaById(req, res);
+        res.status(200).json(Richiesta);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});
+
+
+richiestaController.put("/RichiestaRisposta/:id/:stato", async (req, res, next) => {
+    try {
+        const Richiesta = await RichiestaService.RichiestaRisposta(req, res);
+        res.status(200).json(Richiesta);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});

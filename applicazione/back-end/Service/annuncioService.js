@@ -36,4 +36,39 @@ export class AnnuncioService {
             throw err;
         }
     }
+
+
+    /* static async getAnnunci(req) {
+    try {
+        const { sort, mode, ...filters } = req.query;
+
+        let annunci = await AnnuncioRepository.getAnnunci();
+
+        // Apply filters
+        for (const [key, value] of Object.entries(filters)) {
+            if (value) {
+                annunci = annunci.filter(item => item[key] === value);
+            }
+        }
+
+        // Apply sorting
+        if (sort) {
+            annunci.sort((a, b) => {
+                if (mode === 'asc') {
+                    return a[sort] > b[sort] ? 1 : -1;
+                } else if (mode === 'desc') {
+                    return a[sort] < b[sort] ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+
+        return annunci;
+    } catch (err) {
+        console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
+        throw err;
+    }
+} */
+
+
 }

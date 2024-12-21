@@ -52,4 +52,27 @@ export class RichiestaService {
         }
     }
 
+
+    static async getRichiestaById(req, res) {
+        try {
+            const id = req.params.id;
+            return await RichiestaRepository.getRichiestaById(id);
+        } catch (err) {
+            console.error("Error in getRichiestaById:", err);
+            throw err;
+        }
+    }
+
+
+    static async RichiestaRisposta(req, res) {
+        try {
+            const id = req.params.id;
+            const stato = req.params.stato;
+            return await RichiestaRepository.RichiestaRisposta(id, stato);
+        } catch (err) {
+            console.error("Error in RichiestaRisposta:", err);
+            throw err;
+        }
+    }
+
 }

@@ -34,4 +34,27 @@ export class RichiestaRepository {
         }
     }
 
+
+
+    static async getRichiestaById(id){
+        try {
+            return await Richiesta.findByPk(id);
+        } catch (err) {
+            console.error("Error in getRichiestaById:", err);
+            throw err;
+        }
+    }
+
+
+    static async RichiestaRisposta(id, stato){
+        try {
+            const richiesta = await Richiesta.findByPk(id);
+            richiesta.stato =  stato;
+            return await richiesta.save();
+        } catch (err) {
+            console.error("Error in RichiestaRisposta:", err);
+            throw err;
+        }
+    }
+
 }
