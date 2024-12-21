@@ -2,14 +2,8 @@ import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
-
-import { NgModule } from '@angular/core';
-
-import { BrowserModule } from '@angular/platform-browser';
-
+//import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
-
 
 export interface Appuntamento {
   IDRichiesta: number;
@@ -27,7 +21,7 @@ export interface Appuntamento {
 
 @Component({
   selector: 'app-home-page-agente-immobiliare',
-  imports: [BrowserModule,CommonModule],
+  imports: [CommonModule],
   templateUrl: './home-page-agente-immobiliare.component.html',
   styleUrl: './home-page-agente-immobiliare.component.scss'
 })
@@ -37,13 +31,6 @@ export class HomePageAgenteImmobiliareComponent {
   toastr = inject(ToastrService); //mostra le notifiche
 
   dates: Appuntamento [] = [];
- 
-
-
-
-
-  
-  //formattedTime?: string;
 
   ngOnInit() {  //inizializza il componente
     const now = new Date();
