@@ -8,7 +8,7 @@ export function createModelRichiesta(database) {
       primaryKey: true,
       autoIncrement: true
     },
-    stato: {
+    stato: { 
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "InAttesa"

@@ -3,6 +3,13 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
 
+import { NgModule } from '@angular/core';
+
+import { BrowserModule } from '@angular/platform-browser';
+
+import { CommonModule } from '@angular/common';
+
+
 
 export interface Appuntamento {
   IDRichiesta: number;
@@ -20,7 +27,7 @@ export interface Appuntamento {
 
 @Component({
   selector: 'app-home-page-agente-immobiliare',
-  imports: [],
+  imports: [BrowserModule,CommonModule],
   templateUrl: './home-page-agente-immobiliare.component.html',
   styleUrl: './home-page-agente-immobiliare.component.scss'
 })
@@ -30,6 +37,12 @@ export class HomePageAgenteImmobiliareComponent {
   toastr = inject(ToastrService); //mostra le notifiche
 
   dates: Appuntamento [] = [];
+ 
+
+
+
+
+  
   //formattedTime?: string;
 
   ngOnInit() {  //inizializza il componente
@@ -37,7 +50,7 @@ export class HomePageAgenteImmobiliareComponent {
     this.getDates(now); 
   }
 
-  getDates(selectedData: Date) { //recupera tutte le idee controverse
+  getDates(selectedData: Date) { //recupera tutte le idee controverse  
     this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user()).subscribe({ //cerca tutte le idee controverse
       next: (data: Appuntamento[]) => {
         this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'
