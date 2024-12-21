@@ -4,7 +4,7 @@ export interface Appuntamento {
     offerta: number | null;
     ClienteUsername: string;
     AgenteImmobiliareUsername: string | null;
-    data: string;
+    data: Date;
     Annuncio: {
         citta: string;
         viaENumeroCivico: string;

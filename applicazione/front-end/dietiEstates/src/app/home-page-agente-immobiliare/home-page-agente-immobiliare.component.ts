@@ -10,7 +10,7 @@ export interface Appuntamento {
   offerta: number | null;
   ClienteUsername: string;
   AgenteImmobiliareUsername: string | null;
-  data: string;
+  data: Date;
   Annuncio: {
       citta: string;
       viaENumeroCivico: string;
@@ -30,6 +30,7 @@ export class HomePageAgenteImmobiliareComponent {
   toastr = inject(ToastrService); //mostra le notifiche
 
   dates: Appuntamento [] = [];
+  //formattedTime?: string;
 
   ngOnInit() {  //inizializza il componente
     const now = new Date();
@@ -50,4 +51,8 @@ export class HomePageAgenteImmobiliareComponent {
       }
     });
   }//fine fetchControversialIdeas
+
+  /*getHourMinute(date: Date) { //restituisce l'ora in formato HH:MM
+    this.formattedTime=date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }*/
 }
