@@ -22,7 +22,7 @@ export class RichiestaService {
 
     static async getRichiesta(req, res) {
         try {
-            const { sort, mode, stato, AgenteImmobiliareUsername } = req.query;
+            const { sort, mode, stato, AgenteImmobiliareUsername, dataSelected } = req.query;
             
             let richieste=await RichiestaRepository.getRichiesteDopoOggi();
             
@@ -32,6 +32,19 @@ export class RichiestaService {
 
             if (AgenteImmobiliareUsername) {
                 richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliareUsername);
+            }
+
+            if (dataSelected) {
+                // Creiamo un oggetto Date per la data selezionata (senza orario)
+                const selectedDate = new Date(dataSelected);
+                selectedDate.setHours(0, 0, 0, 0); // Impostiamo a mezzanotte per evitare differenze di orario
+    
+                richieste = richieste.filter(item => {
+                    // Creiamo una data per ogni richiesta e impostiamo anche questa a mezzanotte
+                    const itemDate = new Date(item.data);
+                    itemDate.setHours(0, 0, 0, 0);
+                    return itemDate.getTime() === selectedDate.getTime(); // Confrontiamo solo giorno, mese e anno
+                });
             }
 
             if (sort) {

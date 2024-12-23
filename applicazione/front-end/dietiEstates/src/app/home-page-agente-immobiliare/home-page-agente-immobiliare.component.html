@@ -11,4 +11,11 @@
         </tr>
     }
     </table>
+
+    @if(changeDayClicked >0){
+        <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione py-2 px-4 rounded ml-2" (click)="previousDay()"> &lt; </button>
+    }
+    {{this.dayToShow  | date:'dd/MM/YYYY'}}
+    <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded" (click)="nextDay()"> &gt; </button>
+    <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded ml-4" (click)="setCurrentDay()"> Oggi </button>
 </section>

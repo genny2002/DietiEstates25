@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
-//import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 export interface Appuntamento {
@@ -31,13 +30,16 @@ export class HomePageAgenteImmobiliareComponent {
   toastr = inject(ToastrService); //mostra le notifiche
 
   dates: Appuntamento [] = [];
+  dayToShow = new Date();
+  currentDay = new Date();
+  changeDayClicked = 0;
 
   ngOnInit() {  //inizializza il componente
-    const now = new Date();
-    this.getDates(now); 
+    this.getDates(this.dayToShow); 
   }
 
-  getDates(selectedData: Date) { //recupera tutte le idee controverse  
+  getDates(selectedData: Date) { //recupera tutte le idee controverse
+    console.log(selectedData);
     this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user()).subscribe({ //cerca tutte le idee controverse
       next: (data: Appuntamento[]) => {
         this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'
@@ -52,7 +54,26 @@ export class HomePageAgenteImmobiliareComponent {
     });
   }//fine fetchControversialIdeas
 
-  /*getHourMinute(date: Date) { //restituisce l'ora in formato HH:MM
-    this.formattedTime=date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }*/
+  nextDay() {
+    this.changeDayClicked++;
+    this.changeDay(); // Aggiorna la lista
+  }
+
+  previousDay() {
+    this.changeDayClicked--;
+    this.changeDay(); // Aggiorna la lista
+  }
+
+  private changeDay() {
+    const newDate = new Date(this.currentDay); // Crea una copia della data corrente
+    newDate.setDate(newDate.getDate() + this.changeDayClicked); // Incrementa il giorno
+    this.dayToShow = newDate; // Assegna un nuovo oggetto a dayToShow
+    this.getDates(this.dayToShow); // Aggiorna la lista
+  }
+
+  setCurrentDay() {  //mostra le idee controverse del giorno corrente
+    this.changeDayClicked = 0;
+    this.dayToShow = this.currentDay;  
+  }
+
 }

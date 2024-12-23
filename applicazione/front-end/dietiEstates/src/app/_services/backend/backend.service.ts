@@ -76,7 +76,8 @@ export class BackendService {
   }
 
   getAppuntamentiWithDate(date: Date, usr: string | null){
-    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&data=${date}`;
+    const formattedDate = date.toISOString().split('T')[0];
+    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&data=${formattedDate}`;
 
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
