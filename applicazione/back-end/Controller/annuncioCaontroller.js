@@ -3,7 +3,7 @@ import { AnnuncioService } from "../Service/annuncioService.js";
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'fs';
+
 export const anunncioController = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);

@@ -1,10 +1,14 @@
 
 import {RichiestaRepository} from "../Repository/richiestaRepository.js";
+import moment from 'moment';
 
 export class RichiestaService {
 
     static async insertRichiesta(req, res) {
         try {
+
+            await RichiestaService.controlloRichiesta(req);
+            
             const richiestaDaCreare ={
                 stato: req.body.stato,
                 offerta: req.body.offerta,
@@ -17,6 +21,24 @@ export class RichiestaService {
         } catch (err) {
             console.error("Error in insertRichiesta:", err);
             throw err;
+        }
+    }
+
+    static async controlloRichiesta(req) {
+        const richieste = await RichiestaRepository.getRichiesteGiornoX(req.body.AgenteImmobiliareUsername, req.body.data);
+        const nuovaRichiestaData = moment(req.body.data);
+
+        // Controlla se l'orario è tra le 8 e le 18
+        const ora = nuovaRichiestaData.hour();
+        if (ora < 8 || ora > 18) {
+            throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
+        }
+
+        for (let richiesta of richieste) {
+            const differenzaOre = nuovaRichiestaData.diff(moment(richiesta.data), 'hours');
+            if (Math.abs(differenzaOre) < 2) {
+                throw new Error('La nuova richiesta deve essere distante almeno due ore da ogni altra richiesta esistente.');
+            }
         }
     }
 
