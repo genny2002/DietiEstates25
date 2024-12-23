@@ -59,13 +59,11 @@ export class RichiestaService {
             if (dataSelected) {
                 // Creiamo un oggetto Date per la data selezionata (senza orario)
                 const selectedDate = new Date(dataSelected);
-                selectedDate.setHours(0, 0, 0, 0); // Impostiamo a mezzanotte per evitare differenze di orario
     
                 richieste = richieste.filter(item => {
                     // Creiamo una data per ogni richiesta e impostiamo anche questa a mezzanotte
                     const itemDate = new Date(item.data);
-                    itemDate.setHours(0, 0, 0, 0);
-                    return itemDate.getTime() === selectedDate.getTime(); // Confrontiamo solo giorno, mese e anno
+                    return item.data.getFullYear === selectedDate.getFullYear && selectedDate.getMonth === item.data.getMonth && selectedDate.getDay === item.data.getDay; // Confrontiamo solo giorno, mese e anno
                 });
             }
 

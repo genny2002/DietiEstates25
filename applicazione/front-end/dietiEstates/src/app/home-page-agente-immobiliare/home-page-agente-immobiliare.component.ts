@@ -39,7 +39,6 @@ export class HomePageAgenteImmobiliareComponent {
   }
 
   getDates(selectedData: Date) { //recupera tutte le idee controverse
-    console.log(selectedData);
     this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user()).subscribe({ //cerca tutte le idee controverse
       next: (data: Appuntamento[]) => {
         this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'

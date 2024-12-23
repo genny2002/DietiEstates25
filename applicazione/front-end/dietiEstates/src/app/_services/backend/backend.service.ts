@@ -76,9 +76,10 @@ export class BackendService {
   }
 
   getAppuntamentiWithDate(date: Date, usr: string | null){
-    const formattedDate = date.toISOString().split('T')[0];
-    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&data=${formattedDate}`;
-
+    const stringDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    
+    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&dataSelected=${stringDate}`;
+    console.log(url);
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
 }

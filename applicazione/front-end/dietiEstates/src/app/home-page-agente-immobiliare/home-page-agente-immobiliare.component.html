@@ -6,6 +6,7 @@
         </tr>
         @for(item of dates; track item.IDRichiesta){
         <tr>
+            {{item.IDRichiesta}}
             <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm'}}</td>
             <td>Via {{item.Annuncio.viaENumeroCivico}} {{item.Annuncio.citta}} {{item.Annuncio.comune}}</td>
         </tr>
