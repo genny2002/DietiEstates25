@@ -72,7 +72,8 @@ export class HomePageAgenteImmobiliareComponent {
 
   setCurrentDay() {  //mostra le idee controverse del giorno corrente
     this.changeDayClicked = 0;
-    this.dayToShow = this.currentDay;  
+    this.dayToShow = this.currentDay;
+    this.getDates(this.dayToShow);
   }
 
 }

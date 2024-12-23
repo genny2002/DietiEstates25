@@ -79,7 +79,7 @@ export class BackendService {
     const stringDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     
     const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&dataSelected=${stringDate}`;
-    console.log(url);
+    
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
 }

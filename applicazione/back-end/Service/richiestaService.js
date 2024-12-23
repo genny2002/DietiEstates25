@@ -45,28 +45,36 @@ export class RichiestaService {
     static async getRichiesta(req, res) {
         try {
             const { sort, mode, stato, AgenteImmobiliareUsername, dataSelected } = req.query;
-            
-            let richieste=await RichiestaRepository.getRichiesteDopoOggi();
-            
+
+            let richieste = await RichiestaRepository.getRichiesteDopoOggi();
+    
+            // Filtro per stato
             if (stato) {
                 richieste = richieste.filter(item => item.stato === stato);
             }
-
+    
+            // Filtro per AgenteImmobiliareUsername
             if (AgenteImmobiliareUsername) {
                 richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliareUsername);
             }
-
+           
             if (dataSelected) {
+
                 // Creiamo un oggetto Date per la data selezionata (senza orario)
-                const selectedDate = new Date(dataSelected);
+                // Impostiamo a mezzanotte per evitare differenze di orario
+                selectedDate.setHours(0, 0, 0, 0);  // Set a midnight
     
                 richieste = richieste.filter(item => {
-                    // Creiamo una data per ogni richiesta e impostiamo anche questa a mezzanotte
-                    const itemDate = new Date(item.data);
-                    return item.data.getFullYear === selectedDate.getFullYear && selectedDate.getMonth === item.data.getMonth && selectedDate.getDay === item.data.getDay; // Confrontiamo solo giorno, mese e anno
+                    // Creiamo una data per ogni richiesta e impostiamo a mezzanotte
+                    let itemDate = new Date(item.data);
+
+    
+                    // Confrontiamo solo anno, mese e giorno
+                    return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
                 });
             }
-
+    
+            // Ordinamento (se richiesto)
             if (sort) {
                 richieste.sort((a, b) => {
                     if (mode === 'asc') {
@@ -77,8 +85,8 @@ export class RichiestaService {
                     return 0;
                 });
             }
-
-            return richieste
+    
+            return richieste;
         } catch (err) {
             console.error("Error in getRichiesta:", err);
             throw err;
