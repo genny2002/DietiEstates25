@@ -57,4 +57,20 @@ export class RichiestaRepository {
         }
     }
 
+
+    static async getRichiesteGiornoX(AgenteImmobiliareUsername,data){
+        try {
+            return await Richiesta.findAll({
+                where: {
+                    AgenteImmobiliareUsername: AgenteImmobiliareUsername,
+                    data: data
+                }
+            });
+        } catch (err) {
+            console.error("Error in getRichiesteGiornoX:", err);
+            throw err;
+        }
+        
+    }
+
 }

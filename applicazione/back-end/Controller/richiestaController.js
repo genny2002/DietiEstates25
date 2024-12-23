@@ -15,10 +15,14 @@ richiestaController.post("/insertRichiesta", async (req, res, next) => {
         console.error(err);
         if (err.message === "impossibile creare un utente con queste credenziali") {
             return res.status(409).json({ message: err.message });
+        } else if (err.message === "L'orario della richiesta deve essere compreso tra le 8 e le 18.") {
+            return res.status(400).json({ message: err.message });
+        } else if (err.message === "La nuova richiesta deve essere distante almeno due ore da ogni altra richiesta esistente.") {
+            return res.status(400).json({ message: err.message });
         }
-        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+        next({ status: 500, message: err.message || "Errore durante l'inserimento della richiesta" });
     }
-} );
+});
 
 richiestaController.get("/getRichiesta", async (req, res, next) => {
     try {
