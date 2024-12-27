@@ -1,0 +1,82 @@
+<div class="w-full mx-auto max-w-sm mb-2">
+    <div class="text-arancione font-bold">1 di 3</div>
+    <progress class="w-full h-2 rounded-full overflow-hidden bg-pesca" value="33" max="100">
+      <!-- Valore alternativo in caso di mancato supporto -->
+      33%
+    </progress>
+    
+    <!-- Form Section -->   
+    <form>
+      <!-- Selezione Affitto/Vendita -->
+      <fieldset class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
+        <label class="block text-arancione font-bold">Tipo di offerta</label>
+        <label class="flex items-center mb-2">
+          <input type="radio" name="tipo" value="affitto" class="mr-2" />
+          <span>Affitto</span>
+        </label>
+        <label class="flex items-center">
+          <input type="radio" name="tipo" value="vendita" class="mr-2" checked />
+          <span>Vendita</span>
+        </label>
+      </fieldset>
+  
+      <!-- Prezzo -->
+      <div class="mb-4">
+        <label for="prezzo" class="block text-arancione font-bold mb-2">
+          Prezzo
+        </label>
+        <input
+          type="text"
+          id="prezzo"
+          placeholder="Prezzo dell'immobile in vendita"
+          pattern="^\d+([.,]?\d+)?$"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+          oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"
+        />
+      </div>
+  
+      <!-- Descrizione -->
+      <div class="mb-4">
+        <label for="descrizione" class="block text-arancione font-bold mb-2">
+          Descrizione
+        </label>
+        <textarea
+          id="descrizione"
+          placeholder="Descrizione dell'immobile in vendita"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+        ></textarea>
+      </div>
+  
+      <!-- Numero di stanze -->
+      <div class="mb-4">
+        <label for="stanze" class="block text-arancione font-bold mb-2">
+          Numero di stanze
+        </label>
+        <input
+          type="number"
+          id="stanze"
+          value="1"
+          min="1"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+        />
+      </div>
+  
+      <!-- Dimensioni -->
+      <div class="mb-6">
+        <label for="dimensioni" class="block text-arancione font-bold mb-2">
+          Dimensioni
+        </label>
+        <input
+          type="text"
+          id="dimensioni"
+          placeholder="Superficie dell'immobile in vendita"
+          pattern="^\d+([.,]?\d+)?$"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+          oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"
+        />
+      </div>
+  
+      <!-- Buttons -->
+      
+    </form>
+</div>
