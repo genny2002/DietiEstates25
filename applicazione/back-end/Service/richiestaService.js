@@ -63,6 +63,7 @@ export class RichiestaService {
                 // Creiamo un oggetto Date per la data selezionata (senza orario)
                 // Impostiamo a mezzanotte per evitare differenze di orario
                 //selectedDate.setHours(0, 0, 0, 0);  // Set a midnight
+                let dataSelectedWrapper = new Date(dataSelected);
     
                 richieste = richieste.filter(item => {
                     // Creiamo una data per ogni richiesta e impostiamo a mezzanotte
@@ -70,7 +71,7 @@ export class RichiestaService {
 
     
                     // Confrontiamo solo anno, mese e giorno
-                    return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
+                    return itemDate.getFullYear() === dataSelectedWrapper.getFullYear() && itemDate.getMonth() === dataSelectedWrapper.getMonth() && itemDate.getDate() === dataSelectedWrapper.getDate();
                 });
             }
     
