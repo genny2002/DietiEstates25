@@ -62,7 +62,7 @@ export class RichiestaService {
 
                 // Creiamo un oggetto Date per la data selezionata (senza orario)
                 // Impostiamo a mezzanotte per evitare differenze di orario
-                selectedDate.setHours(0, 0, 0, 0);  // Set a midnight
+                //selectedDate.setHours(0, 0, 0, 0);  // Set a midnight
     
                 richieste = richieste.filter(item => {
                     // Creiamo una data per ogni richiesta e impostiamo a mezzanotte
