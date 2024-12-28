@@ -3,20 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
 import { CommonModule } from '@angular/common';
-
-export interface Appuntamento {
-  IDRichiesta: number;
-  stato: string;
-  offerta: number | null;
-  ClienteUsername: string;
-  AgenteImmobiliareUsername: string | null;
-  data: Date;
-  Annuncio: {
-      citta: string;
-      viaENumeroCivico: string;
-      comune: string;
-  };
-}
+import {Appuntamento} from '../_services/backend/appuntamento.type';
 
 @Component({
   selector: 'app-home-page-agente-immobiliare',

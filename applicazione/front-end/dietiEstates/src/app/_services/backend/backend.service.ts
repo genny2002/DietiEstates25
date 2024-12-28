@@ -82,5 +82,12 @@ export class BackendService {
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
+
+  getUserAppuntamenti(usr: string | null, role: string | null){
+    const url= `${this.url}/getRichiesta?sort=data&mode=asc&${role}=${usr}`;
+    
+    return this.http.get<Appuntamento[]>(url, this.httpOptions);
+  } 
+  
 }
 

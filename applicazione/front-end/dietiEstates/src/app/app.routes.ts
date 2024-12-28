@@ -9,6 +9,7 @@ import { HomePageGestoreComponent } from './home-page-gestore/home-page-gestore.
 import { HomePageCollaboratoreComponent } from './home-page-collaboratore/home-page-collaboratore.component';
 import { RegistraAgenziaComponent } from './registra-agenzia/registra-agenzia.component';
 import { NuovoImmobileComponent } from './nuovo-immobile/nuovo-immobile.component';
+import { NotificheComponent } from './notifiche/notifiche.component';
 
 export const routes: Routes = [ 
     {
@@ -51,5 +52,9 @@ export const routes: Routes = [
         path: "nuovoImmobile",
         component: NuovoImmobileComponent,
         title: "Nuovo Immobile | DietiEstates"
+    },{
+        path: "notifiche",
+        component: NotificheComponent,
+        title: "Notifiche | DietiEstates"
     },
 ];
