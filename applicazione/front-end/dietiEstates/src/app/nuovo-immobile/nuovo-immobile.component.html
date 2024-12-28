@@ -1,12 +1,175 @@
 <section class="h-full">
-    <app-form-step1></app-form-step1>
-    <div class="w-full mx-auto max-w-sm mb-2 flex justify-between">
-        <button type="button" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-          Indietro
-        </button>
-        <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-          Continua
-        </button>
+    @if(step === 1){
+      <div class="w-full mx-auto max-w-sm mb-2">
+        <div class="text-arancione font-bold">1 di 3</div>
+        <progress class="w-full h-2 rounded-full overflow-hidden bg-pesca" value="33" max="100">
+          <!-- Valore alternativo in caso di mancato supporto -->
+          33%
+        </progress>
+        
+        <!-- Form Section -->   
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step1Form" (ngSubmit)="handleStep1Form()">
+          <!-- Selezione Affitto/Vendita -->
+          <fieldset id="tipo" class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
+            <label class="block text-arancione font-bold">Tipo di offerta</label>
+            <label class="flex items-center mb-2">
+              <input type="radio" name="tipo" value="affitto" class="mr-2" />
+              <span>Affitto</span>
+            </label>
+            <label class="flex items-center">
+              <input type="radio" name="tipo" value="vendita" class="mr-2" checked />
+              <span>Vendita</span>
+            </label>
+          </fieldset>
+      
+          <!-- Prezzo -->
+          <div class="mb-4">
+            <label for="prezzo" class="block text-arancione font-bold mb-2">Prezzo</label>
+            <input type="text" id="prezzo" placeholder="Prezzo dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+              oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+          </div>
+      
+          <!-- Descrizione -->
+          <div class="mb-4">
+            <label for="descrizione" class="block text-arancione font-bold mb-2"> Descrizione</label>
+            <textarea id="descrizione" placeholder="Descrizione dell'immobile in vendita"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"></textarea>
+          </div>
+      
+          <!-- Numero di stanze -->
+          <div class="mb-4">
+            <label for="stanze" class="block text-arancione font-bold mb-2">Numero di stanze</label>
+            <input type="number" id="stanze" value="1" min="1"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
+          </div>
+      
+          <!-- Dimensioni -->
+          <div class="mb-6">
+            <label for="dimensioni" class="block text-arancione font-bold mb-2"> Dimensioni </label>
+            <input type="text" id="dimensioni" placeholder="Superficie dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+              oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+          </div>
+    
+          <div class="flex justify-between">
+            <button type="button" routerLink="/homePageAgenteImmobiliare"  class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+              Indietro
+            </button>
+            <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+              Continua 
+            </button>
+          </div>
+        </form>
     </div>
+    } @else if (step === 2) {
+      <div class="w-full mx-auto max-w-sm mb-2">
+        <div class="text-arancione font-bold">2 di 3</div>
+        <progress class="w-full h-2 rounded-full overflow-hidden bg-pesca" value="66" max="100">
+          <!-- Valore alternativo in caso di mancato supporto -->
+          66%
+        </progress>
+        
+        <!-- Form Section -->   
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step2Form" (ngSubmit)="handleStep2Form()">
+          <!-- Selezione Affitto/Vendita -->
+          <div class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
+            <label class="block text-arancione font-bold">Inserire immagini</label>
+            <label for="image-upload">Seleziona le immagini:</label>
+            <input type="file" id="image-upload" name="image-upload[]" accept="image/*" multiple required>
+        </div>
+      
+          <!-- Prezzo -->
+          <div class="mb-4">
+            <fieldset>
+                <label class="block text-arancione font-bold">Selezionare i servizi dell'immobile</label>
+                <label><input type="checkbox" name="asscensore" value="ascensore"> Ascensore</label><br>
+                <label><input type="checkbox" name="portineria" value="portineria"> Portineria</label><br>
+                <label><input type="checkbox" name="climatizzazione" value="climatizzazione"> Climatizzazione</label>
+            </fieldset>
+          </div>
+      
+          <!-- Descrizione -->
+          <div class="mb-4">
+            <label for="descrizione" class="block text-arancione font-bold mb-2"> Classe energetica </label>
+            <select id="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+                <option value="A4">A4</option>
+                <option value="A3">A3</option>
+                <option value="A2">A2</option>
+                <option value="A1">A1</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+            </select>
+          </div>
+      
+          <!-- Numero di stanze -->
+          <div class="mb-4">
+            <label for="stanze" class="block text-arancione font-bold mb-2"> Piano </label>
+            <input type="number" id="stanze" value="0" min="0"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
+          </div>
+          <div class="flex justify-between">
+            <button type="button" (click)="backStep();" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+              Indietro
+            </button>
+            <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+              Continua 
+            </button>
+          </div>
+        </form>
+    </div>
+    } @else {
+      <div class="w-full mx-auto max-w-sm mb-2">
+        <div class="text-arancione font-bold">3 di 3</div>
+        <progress class="w-full h-2 rounded-full overflow-hidden bg-pesca" value="100" max="100">
+          <!-- Valore alternativo in caso di mancato supporto -->
+          100%
+        </progress>
+        
+        <!-- Form Section -->   
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step3Form" (ngSubmit)="handleStep3Form()">
+            <div class="mb-4">
+                <label class="block text-arancione font-bold mb-2" for="citta">
+                    Città
+                </label>
+    
+                <input type="text" formControlName="citta" id="citta"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Città" required="">
+            </div>
+            <div class="mb-4">
+                <label class="block text-arancione font-bold mb-2" for="comune">
+                    Comune
+                </label>
+    
+                <input type="text" formControlName="comune" id="comune"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Comune" required="">
+            </div>
+            <div class="mb-4">
+                <label class="block text-arancione font-bold mb-2" for="viaECivico">
+                    Via e Numero Civico
+                </label>
+    
+                <input type="text" formControlName="viaECivico" id="viaECivico"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
+                    placeholder="Via e Numero Civico" required="">
+            </div>
+
+            <div class="flex justify-between">
+              <button type="button" (click)="backStep();" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                Indietro
+              </button>
+              <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                Continua 
+              </button>
+            </div>
+        </form>
+    </div>
+  }
 </section>
   

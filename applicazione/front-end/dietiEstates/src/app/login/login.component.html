@@ -7,7 +7,7 @@
                 </label>
 
                 <input type="text" formControlName="user" id="user"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
                     placeholder="Username" required="">
                 @if(submitted && loginForm.controls.user.errors){
                 @if(loginForm.controls.user.errors['required']){
@@ -21,7 +21,7 @@
                 </label>
 
                 <input type="password" formControlName="pass" id="pass" placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
                     required="">
                 @if(submitted && loginForm.controls.pass.errors){
                 @if(loginForm.controls.pass.errors['required']){
