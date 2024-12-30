@@ -78,7 +78,7 @@ export class RichiestaRepository {
         try {
             return await Richiesta.destroy({
                 where: {
-                    id: id
+                    IDRichiesta: id
                 }
             });
         } catch (err) {
