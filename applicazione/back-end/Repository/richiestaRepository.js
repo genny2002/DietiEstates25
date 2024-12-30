@@ -87,10 +87,10 @@ export class RichiestaRepository {
         }
     }
 
-    static async updateRichiesta(id, stato, offerta, data){
+    static async updateRichiesta(id, offerta, data){
         try {
             const richiesta = await Richiesta.findByPk(id);
-            richiesta.stato = stato;
+            richiesta.stato = "in attesa";
             richiesta.offerta = offerta;
             richiesta.data = data;
             return await richiesta.save();

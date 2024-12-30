@@ -135,10 +135,9 @@ export class RichiestaService {
     static async updateRichiesta(req, res) {
         try {
             const id = req.params.id;
-            const stato = req.body.stato;
             const offerta = req.body.offerta;
             const data = req.body.data;
-            return await RichiestaRepository.updateRichiesta(id, stato, offerta, data);
+            return await RichiestaRepository.updateRichiesta(id, offerta, data);
         } catch (err) {
             console.error("Error in updateRichiesta:", err);
             throw err;
