@@ -45,7 +45,7 @@ richiestaController.get("/getRichiestaById/:id", async (req, res, next) => {
 });
 
 
-richiestaController.put("/RichiestaRisposta/:id/:stato", async (req, res, next) => {
+richiestaController.put("/cambioStato/:id/:stato", async (req, res, next) => {
     try {
         const Richiesta = await RichiestaService.RichiestaRisposta(req, res);
         res.status(200).json(Richiesta);

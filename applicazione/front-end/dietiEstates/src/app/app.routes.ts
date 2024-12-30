@@ -9,7 +9,7 @@ import { HomePageGestoreComponent } from './home-page-gestore/home-page-gestore.
 import { HomePageCollaboratoreComponent } from './home-page-collaboratore/home-page-collaboratore.component';
 import { RegistraAgenziaComponent } from './registra-agenzia/registra-agenzia.component';
 import { NuovoImmobileComponent } from './nuovo-immobile/nuovo-immobile.component';
-import { NotificheComponent } from './notifiche/notifiche.component';
+import { NotificheComponent } from './notifiche-page/notifiche-page.component';
 
 export const routes: Routes = [ 
     {

@@ -1,1 +1,17 @@
-<p>notifica works!</p>
+<p>{{this.notificaItem.ClienteUsername}} ha richiesto un appuntamento il {{this.notificaItem.data}} per l'immobile a 
+    {{this.notificaItem.Annuncio.viaENumeroCivico}}, {{this.notificaItem.Annuncio.comune}};  {{this.notificaItem.Annuncio.citta}}</p>
+@if(this.notificaItem.offerta){
+    <p>Offerta: €{{this.notificaItem.offerta}}</p>
+}
+
+@if(this.notificaItem.stato=="accettata"){
+    <p>Richiesta accettata</p>
+} @else if(this.notificaItem.stato=="rifiutata"){
+    <p>Richiesta rifiutata</p>
+} @else {
+    <button (click)="changeState('accettata')">Accetta</button>
+    <button (click)="changeState('rifiutata')">Rifiuta</button>
+}
+
+<!--<button (click)="eliminaNotifica()">Elimina</button>-->
+    

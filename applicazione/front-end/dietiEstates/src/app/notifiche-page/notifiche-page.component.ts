@@ -6,7 +6,7 @@ import { Appuntamento } from '../_services/backend/appuntamento.type';
 import { NotificaComponent } from '../notifiche-page/notifica/notifica.component'
 
 @Component({
-  selector: 'app-notifica',
+  selector: 'app-notifichePage',
   imports: [NotificaComponent],
   templateUrl: './notifiche-page.component.html',
   styleUrl: './notifiche-page.component.scss'
@@ -19,7 +19,7 @@ export class NotificheComponent {
   requestDates: Appuntamento [] = [];
 
   ngOnInit() {  //inizializza il componente
-    this.getRequestDates(); 
+    this.getRequestDates();
   }
 
   getRequestDates() { //recupera tutte le idee controverse

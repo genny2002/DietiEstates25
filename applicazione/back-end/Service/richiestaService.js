@@ -44,9 +44,9 @@ export class RichiestaService {
 
     static async getRichiesta(req, res) {
         try {
-            const { sort, mode, stato, AgenteImmobiliareUsername, ClienteUsername, dataSelected } = req.query;
+            const { sort, mode, stato, AgenteImmobiliare, Cliente, dataSelected } = req.query;
 
-            let richieste = await RichiestaRepository.getRichiesteDopoOggi();
+            let richieste = await RichiestaRepository.getRichieste();
     
             // Filtro per stato
             if (stato) {
@@ -54,12 +54,12 @@ export class RichiestaService {
             }
     
             // Filtro per AgenteImmobiliareUsername
-            if (AgenteImmobiliareUsername) {
-                richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliareUsername);
+            if (AgenteImmobiliare) {
+                richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliare);
             }
 
-            if (ClienteUsername) {
-                richieste = richieste.filter(item => item.ClienteUsername === ClienteUsername);
+            if (Cliente) {
+                richieste = richieste.filter(item => item.ClienteUsername === Cliente);
             }
            
             if (dataSelected) {

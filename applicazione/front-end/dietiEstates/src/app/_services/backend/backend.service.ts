@@ -87,7 +87,13 @@ export class BackendService {
     const url= `${this.url}/getRichiesta?sort=data&mode=asc&${role}=${usr}`;
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
-  } 
+  }
+
+  changeState(id: number, newState: string){
+    const url= `${this.url}/cambioStato/${id}/${newState}`;
+
+    return this.http.put(url, this.httpOptions);
+  }
   
 }
 

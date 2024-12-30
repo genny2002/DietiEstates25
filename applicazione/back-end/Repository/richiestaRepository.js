@@ -13,16 +13,16 @@ export class RichiestaRepository {
         }
     }
 
-    static async getRichiesteDopoOggi(){
+    static async getRichieste(){
         try {
             const oggi = new Date();
             const soloData = oggi.toISOString().split('T')[0];
             return await Richiesta.findAll({
-                where: {
+                /*where: {
                     data: {
                         [Op.gt]: soloData
                     }
-                },
+                },*/
                 include: [{
                     model: Annuncio,
                     attributes: ['citta', 'viaENumeroCivico', 'comune']
