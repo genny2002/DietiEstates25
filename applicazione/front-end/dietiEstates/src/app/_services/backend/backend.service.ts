@@ -4,6 +4,7 @@ import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
 import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 import { Appuntamento } from './appuntamento.type';
+import { Offerta } from './offerta.type';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,17 @@ export class BackendService {
 
     return this.http.put(url, this.httpOptions);
   }
-  
+
+  deleteNotifica(id: number){
+    const url= `${this.url}/deleteRichiesta/${id}`;
+
+    return this.http.delete(url, this.httpOptions);
+  }
+
+  changeOffer(id: number, newOfferta: Offerta)  {
+    const url= `${this.url}/updateRichiesta/${id}`;
+
+    return this.http.put(url, newOfferta, this.httpOptions);
+  }
 }
 

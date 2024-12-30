@@ -4,10 +4,11 @@ import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
 import { Appuntamento } from '../_services/backend/appuntamento.type';
 import { NotificaComponent } from '../notifiche-page/notifica/notifica.component'
+import { NotificaClienteComponent } from '../notifiche-page/notifica-cliente/notifica-cliente.component'
 
 @Component({
   selector: 'app-notifichePage',
-  imports: [NotificaComponent],
+  imports: [NotificaComponent, NotificaClienteComponent],
   templateUrl: './notifiche-page.component.html',
   styleUrl: './notifiche-page.component.scss'
 })

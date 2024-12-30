@@ -1,0 +1,36 @@
+@if(!deleted){
+    <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.viaENumeroCivico}}, 
+        {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data}} è stata 
+        {{this.notificaItem.stato}} </p>
+
+    @if(this.notificaItem.stato=="rifiutata"){
+        <button (click)="changeOffer()">Cambia appuntamento</button>
+    }
+
+    <button (click)="deleteNotifica()">Elimina</button>
+
+    <div class="{{showChangeOffer ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 w-96 text-center">
+            <h3 class="text-base font-bold text-arancione mb-4">Cambia la tua offerta</h3>
+            <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="offerForm" (ngSubmit)="handleChangeOffer()">
+                <div class="mb-6">
+                    <label class="block text-arancione font-bold mb-2" for="pass">
+                        Nuova offerta:  €
+                    </label>
+    
+                    <input type="number" formControlName="offer" id="offer" placeholder="{{this.notificaItem.offerta}}" 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                        required="" min="{{this.notificaItem.offerta}}">
+                    @if(submittedOfferForm && offerForm.controls.offer.errors){
+                    @if(offerForm.controls.offer.errors['required']){
+                    <p class="form-error">Inserire un'offerta.</p>
+                    }
+    
+                    }
+                </div>
+                <button type="submit"
+                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Avanti</button>
+            </form>
+        </div>
+    </div>    
+}

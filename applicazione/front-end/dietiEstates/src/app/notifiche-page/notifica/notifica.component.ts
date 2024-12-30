@@ -15,6 +15,9 @@ export class NotificaComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
 
+  deleted: boolean = false; //flag di eliminazione della notifica 'notificaItem'
+  showChangeOffert = false;
+
   changeState(newState: string){
     this.backendService.changeState(this.notificaItem.IDRichiesta, newState).subscribe({ //cerca tutte le idee controverse
       error: (err) => {
