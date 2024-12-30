@@ -73,4 +73,18 @@ export class RichiestaRepository {
         
     }
 
+
+    static async deleteRichiesta(id){
+        try {
+            return await Richiesta.destroy({
+                where: {
+                    id: id
+                }
+            });
+        } catch (err) {
+            console.error("Error in deleteRichiesta:", err);
+            throw err;
+        }
+    }
+
 }

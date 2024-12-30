@@ -47,7 +47,18 @@ richiestaController.get("/getRichiestaById/:id", async (req, res, next) => {
 
 richiestaController.put("/cambioStato/:id/:stato", async (req, res, next) => {
     try {
-        const Richiesta = await RichiestaService.RichiestaRisposta(req, res);
+        const Richiesta = await RichiestaService.richiestaRisposta(req, res);
+        res.status(200).json(Richiesta);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});
+
+
+richiestaController.delete("/deleteRichiesta/:id", async (req, res, next) => {
+    try {
+        const Richiesta = await RichiestaService.deleteRichiesta(req, res);
         res.status(200).json(Richiesta);
     } catch (err) {
         console.error(err);

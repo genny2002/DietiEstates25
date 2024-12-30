@@ -110,7 +110,7 @@ export class RichiestaService {
     }
 
 
-    static async RichiestaRisposta(req, res) {
+    static async richiestaRisposta(req, res) {
         try {
             const id = req.params.id;
             const stato = req.params.stato;
@@ -120,5 +120,17 @@ export class RichiestaService {
             throw err;
         }
     }
+
+    static async deleteRichiesta(req, res) {
+        try {
+            const id = req.params.id;
+            return await RichiestaRepository.deleteRichiesta(id);
+        } catch (err) {
+            console.error("Error in deleteRichiesta:", err);
+            throw err;
+        }
+    }
+
+
 
 }

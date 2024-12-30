@@ -11,7 +11,7 @@ export function createModelRichiesta(database) {
     stato: { 
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "InAttesa"
+        defaultValue: "In Attesa"
     },
     offerta: {
       type: DataTypes.FLOAT,
