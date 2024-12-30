@@ -1,6 +1,6 @@
-GET http://localhost:3000/getRichiestaById/1
+PUT http://localhost:3000/updateRichiesta/2
 Content-Type: application/json
 
 {
-
+    "offerta":"1"
 }
