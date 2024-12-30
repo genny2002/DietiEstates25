@@ -65,3 +65,14 @@ richiestaController.delete("/deleteRichiesta/:id", async (req, res, next) => {
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+
+richiestaController.put("/updateRichiesta/:id", async (req, res, next) => {
+    try {
+        const Richiesta = await RichiestaService.updateRichiesta(req, res);
+        res.status(200).json(Richiesta);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});

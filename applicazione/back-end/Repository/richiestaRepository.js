@@ -87,4 +87,18 @@ export class RichiestaRepository {
         }
     }
 
+    static async updateRichiesta(id, stato, offerta, data){
+        try {
+            const richiesta = await Richiesta.findByPk(id);
+            richiesta.stato = stato;
+            richiesta.offerta = offerta;
+            richiesta.data = data;
+            return await richiesta.save();
+        } catch (err) {
+            console.error("Error in updateRichiesta:", err);
+            throw err;
+        }
+    }
+
+    
 }
