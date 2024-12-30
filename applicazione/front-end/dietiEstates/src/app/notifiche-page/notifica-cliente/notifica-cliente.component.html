@@ -1,10 +1,10 @@
 @if(!deleted){
     <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.viaENumeroCivico}}, 
-        {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data}} è stata 
+        {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data}} è  
         {{this.notificaItem.stato}} </p>
 
     @if(this.notificaItem.stato=="rifiutata"){
-        <button (click)="changeOffer()">Cambia appuntamento</button>
+        <button (click)="changeOffer()">Cambia Offerta</button>
     }
 
     <button (click)="deleteNotifica()">Elimina</button>

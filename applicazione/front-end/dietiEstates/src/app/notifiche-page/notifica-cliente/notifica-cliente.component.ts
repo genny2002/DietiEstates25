@@ -48,11 +48,13 @@ export class NotificaClienteComponent {
         offerta: this.offerForm.value.offer as string,
       }).subscribe({
         error: (err) => {
-          this.toastr.error("Inserire una password corretta.", "Errore: password errata"); //mostra un messaggio di errore
+          this.toastr.error("Inserire un'offerta corretta.", "Errore: offerta errata"); //mostra un messaggio di errore
         },
         complete: () => {
-          this.toastr.success(`Password aggiornata`, `Registrazione terminata!`);  //mostra un messaggio di successo
+          this.toastr.success(`Nuova offerta inviata`, `Offerta inviata!`);  //mostra un messaggio di successo
+          this.notificaItem.stato = "in attesa";
           this.showChangeOffer=false;
+
         }
       })
     }
