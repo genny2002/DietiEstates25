@@ -136,8 +136,7 @@ export class RichiestaService {
         try {
             const id = req.params.id;
             const offerta = req.body.offerta;
-            const data = req.body.data;
-            return await RichiestaRepository.updateRichiesta(id, offerta, data);
+            return await RichiestaRepository.updateRichiesta(id, offerta);
         } catch (err) {
             console.error("Error in updateRichiesta:", err);
             throw err;
