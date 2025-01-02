@@ -1,12 +1,13 @@
 import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr'
 import { Appuntamento } from '../../_services/backend/appuntamento.type';
 import { BackendService } from '../../_services/backend/backend.service';
 
 @Component({
   selector: 'app-notifica-cliente',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './notifica-cliente.component.html',
   styleUrl: './notifica-cliente.component.scss'
 })
@@ -17,6 +18,7 @@ export class NotificaClienteComponent {
   toastr = inject(ToastrService); //mostra le notifiche
   deleted: boolean = false; //flag di eliminazione della notifica 'notificaItem'
   showChangeOffer = false;
+  showMessage = false;
   submittedOfferForm = false;  //flag dello stato di invio del form
     offerForm = new FormGroup({ //form per il login
       offer: new FormControl('', [Validators.required])
@@ -30,12 +32,17 @@ export class NotificaClienteComponent {
       complete: () => {
         this.deleted = true; //aggiorna il flag di eliminazione
         this.toastr.success(`La notifica è stata eliminata`, `Notifica eliminata!`);  //mostra un messaggio di successo
+        this.showMessage = false;
       }
     });
   }
 
   changeOffer(){
     this.showChangeOffer = true;
+  }
+
+  allert(){
+    this.showMessage = true;
   }
 
   handleChangeOffer(){
@@ -58,5 +65,10 @@ export class NotificaClienteComponent {
         }
       })
     }
+  }
+
+  cancel(){
+    this.showChangeOffer = false;
+    this.showMessage = false;
   }
 }

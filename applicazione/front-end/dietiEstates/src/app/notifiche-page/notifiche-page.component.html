@@ -1,20 +1,20 @@
 <section>
     <ul
-        class="w-full text-sm font-medium text-black bg-white border border-gray-100 rounded-lg dark:bg-black dark:border-gray-950 dark:text-white">
+        class="w-full text-sm font-medium text-black border border-gray-100 rounded-lg">
         @if(this.authService.isUserAgenteImmobiliare()){
             @for(item of requestDates; track item.IDRichiesta){
-                <app-notifica [notificaItem]=item />
+                    <app-notifica [notificaItem]=item />
                 } @empty {
                 <li
-                    class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-t-lg dark:border-gray-950">
+                    class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
                     Non ci sono notifiche</li>
                 }   
         }@else {
             @for(item of requestDates; track item.IDRichiesta){
-                <app-notifica-cliente [notificaItem]=item />
+                    <app-notifica-cliente [notificaItem]=item />
                 } @empty {
                 <li
-                    class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-t-lg dark:border-gray-950">
+                    class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
                     Non ci sono notifiche</li>
                 } 
         }

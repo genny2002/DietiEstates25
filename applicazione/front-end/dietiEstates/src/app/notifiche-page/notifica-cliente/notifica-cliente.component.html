@@ -1,36 +1,76 @@
 @if(!deleted){
-    <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.viaENumeroCivico}}, 
-        {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data}} è  
-        {{this.notificaItem.stato}} </p>
+    <div class="mb-4 p-2 mt-2 bg-white rounded-xl shadow-lg">
+        <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.viaENumeroCivico}}, 
+            {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data | date:'dd/MM/YYYY'}} 
+            alle ore {{this.notificaItem.data | date:'HH:mm'}} è 
+            @if(this.notificaItem.stato=="accettata"){
+                <span class="font-bold text-green-500">accettata</span>
+            }@else if (this.notificaItem.stato=="rifiutata"){
+                <span class="font-bold text-red-500">rifiutata</span>}
+            @else{<span class="font-bold text-arancione">in attesa</span>}
+        </p>
 
-    @if(this.notificaItem.stato=="rifiutata"){
-        <button (click)="changeOffer()">Cambia Offerta</button>
-    }
+        <br>
 
-    <button (click)="deleteNotifica()">Elimina</button>
+        @if(this.notificaItem.stato=="rifiutata"){
+            <button (click)="changeOffer()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-md mr-2">Cambia Offerta</button>
+        }
 
-    <div class="{{showChangeOffer ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white rounded-lg p-6 w-96 text-center">
-            <h3 class="text-base font-bold text-arancione mb-4">Cambia la tua offerta</h3>
-            <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="offerForm" (ngSubmit)="handleChangeOffer()">
-                <div class="mb-6">
-                    <label class="block text-arancione font-bold mb-2" for="pass">
-                        Nuova offerta:  €
-                    </label>
-    
-                    <input type="number" formControlName="offer" id="offer" placeholder="{{this.notificaItem.offerta}}" 
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
-                        required="" min="{{this.notificaItem.offerta}}">
-                    @if(submittedOfferForm && offerForm.controls.offer.errors){
-                    @if(offerForm.controls.offer.errors['required']){
-                    <p class="form-error">Inserire un'offerta.</p>
-                    }
-    
-                    }
-                </div>
-                <button type="submit"
-                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Avanti</button>
-            </form>
+        <button (click)="allert()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-md">Elimina</button>
+
+        <div class="{{showChangeOffer ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 w-96 text-center">
+                <h3 class="text-base font-bold text-arancione mb-4">Cambia la tua offerta</h3>
+                <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="offerForm" (ngSubmit)="handleChangeOffer()">
+                    <div class="mb-6">
+                        <label class="block text-arancione font-bold mb-2" for="pass">
+                            Nuova offerta:  €
+                        </label>
+                    
+                        <input type="number" formControlName="offer" id="offer" placeholder="{{this.notificaItem.offerta}}" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                            required="" min="{{this.notificaItem.offerta}}">
+                        @if(submittedOfferForm && offerForm.controls.offer.errors){
+                        @if(offerForm.controls.offer.errors['required']){
+                        <p class="form-error">Inserire un'offerta.</p>
+                        }
+                    
+                        }
+                    </div>
+                    <div class="flex gap-x-4">
+                        <button type="submit"
+                        class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                            Avanti
+                        </button>
+                        <button type="button" (click)="cancel()" class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                            Indietro
+                        </button>
+                    </div>    
+                </form>
+            </div>
         </div>
-    </div>    
+
+        <div class="{{showMessage ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 w-96 text-center">
+                <h3 class="text-base font-bold text-arancione mb-4">Sicuro di voler elminare questa notifica?</h3>
+                @if(this.notificaItem.stato=="accettata"){
+                    <p>Se si elimina questa notifica, l'appuntamneto verrà annullato.</p>
+                }@else if (this.notificaItem.stato=="in attesa") {
+                    <p>Se si elimina questa notifica, l'agente immobiliare non potrà accettare o rifiutare la richiesta</p>
+                }@else {
+                    <p>Se si elimina questa notifica, non sarà possibile inviare una nuova offerta all'agente immobiliare?</p>
+                }
+                <div class="flex gap-x-4 mt-4">
+                    <button type="button" (click)="deleteNotifica()"
+                    class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                        SI
+                    </button>
+                    <button type="button" (click)="cancel()" 
+                    class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                        NO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>   
 }

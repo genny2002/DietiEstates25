@@ -1,11 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr'
 import { Appuntamento } from '../../_services/backend/appuntamento.type';
 import { BackendService } from '../../_services/backend/backend.service';
 
 @Component({
   selector: 'app-notifica',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './notifica.component.html',
   styleUrl: './notifica.component.scss'
 })
