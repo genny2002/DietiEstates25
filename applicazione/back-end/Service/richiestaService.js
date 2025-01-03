@@ -6,13 +6,14 @@ export class RichiestaService {
 
     static async insertRichiesta(req, res) {
         try {
+            const date = new Date(req.body.data);
+            await RichiestaService.controlloRichiesta( req.body.AgenteImmobiliareUsername, date);
+            date.setHours(date.getHours() -1 );
 
-            await RichiestaService.controlloRichiesta(req);
-            
             const richiestaDaCreare ={
                 stato: req.body.stato,
                 offerta: req.body.offerta,
-                data: req.body.data,
+                data: date,
                 ClienteUsername: req.body.ClienteUsername,
                 AgenteImmobiliareUsername: req.body.AgenteImmobiliareUsername,
                 AnnuncioIDimmobile: req.body.AnnuncioIDimmobile
@@ -24,22 +25,21 @@ export class RichiestaService {
         }
     }
 
-    static async controlloRichiesta(req) {
-        const richieste = await RichiestaRepository.getRichiesteGiornoX(req.body.AgenteImmobiliareUsername, req.body.data);
-        const nuovaRichiestaData = moment(req.body.data);
-
-        // Controlla se l'orario è tra le 8 e le 18
-        const ora = nuovaRichiestaData.hour();
-        if (ora < 8 || ora > 18) {
+    static async controlloRichiesta(aggente,date) {
+        const richieste = await RichiestaRepository.getRichiesteGiornoX(aggente, date);
+        const ora = date.hour;
+        if (ora < 8 || ora >= 19) {
             throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
         }
-
         for (let richiesta of richieste) {
-            const differenzaOre = nuovaRichiestaData.diff(moment(richiesta.data), 'hours');
-            if (Math.abs(differenzaOre) < 2) {
-                throw new Error('La nuova richiesta deve essere distante almeno due ore da ogni altra richiesta esistente.');
+            const dataRichiesta = new Date(richiesta.data);
+            const diff = Math.abs(date - dataRichiesta);
+            if (diff < 2) {
+                throw new Error('deve esserci una differenza di due ore tra una richiesta e l\'altra');
             }
         }
+
+      
     }
 
     static async getRichiesta(req, res) {

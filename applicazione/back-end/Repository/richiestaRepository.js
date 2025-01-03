@@ -6,6 +6,9 @@ export class RichiestaRepository {
 
     static async insertRichiesta(richiestaDaCreare){
         try {
+            console.log(richiestaDaCreare.data);
+            
+
             return await Richiesta.create(richiestaDaCreare);
         } catch (err) {
             console.error("Error in insertRichiesta:", err);
