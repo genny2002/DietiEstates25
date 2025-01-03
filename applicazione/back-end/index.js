@@ -1,32 +1,9 @@
-/*import { GestoreAgenzia as ClienteModel, GestoreAgenzia } from "./Repository/database.js";
-
-async function main() {
-  let cliente = await GestoreAgenzia.create({
-    email: "aa",
-    password: "b",
-    username: "c"
-  });
-
-  async function fetchAndLogUtenti() {
-    const clienti = await GestoreAgenzia.findAll();
-    for (let i = 0; i < clienti.length; i++) {
-      console.log(clienti[i].get('username'));
-    }
-  }
-
-  await fetchAndLogUtenti();
-}
-
-main().catch(err => {
-  console.error("Error in main function:", err);
-});*/
-
-
 import path from 'path';
 import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from 'morgan';
 import cors from "cors";
+import axios from 'axios';
 
 //aggiungere import dei router
 import { authenticationController } from "./Controller/authenticationController.js";
@@ -35,6 +12,7 @@ import {agenteImmobiliareController} from "./Controller/agenteImmoiliareControll
 import {collaboratoreController} from "./Controller/collaboratoreController.js";
 import { anunncioController } from  "./Controller/annuncioCaontroller.js";
 import {richiestaController} from "./Controller/richiestaController.js";
+import { mapController } from './Controller/mapController.js';
 
 const app = express();
 const PORT = 3000;
@@ -50,6 +28,7 @@ app.use('/img', express.static(imgDirectory));
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
@@ -66,6 +45,7 @@ app.use(agenteImmobiliareController); //aggiunge la route 'agenteImmobiliareRout
 app.use(collaboratoreController); //aggiunge la route 'collaboratoreRouter'
 app.use(anunncioController); //aggiunge la route 'annuncioRouter'
 app.use(richiestaController); //aggiunge la route 'richiestaRouter'
+app.use(mapController); //aggiunge la route 'richiestaRouter'
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

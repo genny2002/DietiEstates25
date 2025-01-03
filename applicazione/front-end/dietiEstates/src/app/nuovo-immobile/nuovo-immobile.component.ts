@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import {IntercativeMapComponent} from './intercative-map/intercative-map.component';
 
 @Component({
   selector: 'app-nuovo-immobile',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, IntercativeMapComponent],
   templateUrl: './nuovo-immobile.component.html',
   styleUrl: './nuovo-immobile.component.scss'
 })
