@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import * as L from 'leaflet';
 import 'mapbox-gl-leaflet';
-//import { GeoapifyService } from './geoapify.service';
+
 
 @Component({
   selector: 'app-intercative-map',
@@ -10,25 +10,17 @@ import 'mapbox-gl-leaflet';
   styleUrl: './intercative-map.component.scss'
 })
 export class IntercativeMapComponent {
-  //private map: L.Map;
-
   @ViewChild('map')
-  private mapContainer!: ElementRef<HTMLElement> /*= new ElementRef<HTMLElement>(document.createElement('div'))*/;
-
-  constructor() { }
-
-  ngOnInit() {
-    //this.mapContainer = new ElementRef<HTMLElement>(document.createElement('div'));
-  }
+  private mapContainer!: ElementRef<HTMLElement>;
 
   ngAfterViewInit() {
     const myAPIKey = "8cb9e657dbaf434fb522fad850eeafb0";
     const mapStyle = "https://maps.geoapify.com/v1/styles/osm-carto/style.json";
 
     const initialState = {
-      lng: 11,
-      lat: 49,
-      zoom: 4
+      lng: 12,
+      lat: 42,
+      zoom: 4.5
     };
 
     const map = new L.Map(this.mapContainer.nativeElement).setView(
@@ -39,9 +31,7 @@ export class IntercativeMapComponent {
     // the attribution is required for the Geoapify Free tariff plan
     map.attributionControl
       .setPrefix("")
-      .addAttribution(''
-        /*'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'*/
-      );
+      .addAttribution('');
 
     L.mapboxGL({
       style: `${mapStyle}?apiKey=${myAPIKey}`,
