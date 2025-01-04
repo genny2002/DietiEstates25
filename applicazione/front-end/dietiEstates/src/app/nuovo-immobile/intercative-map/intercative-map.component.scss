@@ -1,0 +1,10 @@
+.mappa-container {
+    width: 100%;
+    max-width: 600px; /* Larghezza massima */
+    height: 300px; /* Altezza fissa */
+    border: 1px solid #ccc; /* Bordo opzionale */
+    border-radius: 8px; /* Bordo arrotondato opzionale */
+    overflow: hidden; /* Nasconde eventuali elementi fuori dai limiti */
+    margin: 20px auto; /* Centrare la mappa */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra opzionale */
+  }
