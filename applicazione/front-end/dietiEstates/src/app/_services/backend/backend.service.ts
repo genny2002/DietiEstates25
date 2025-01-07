@@ -107,5 +107,11 @@ export class BackendService {
 
     return this.http.put(url, newOfferta, this.httpOptions);
   }
+
+  getMapConfiguration() {
+    const url = `${this.url}/api/map-config`;
+
+    return this.http.get(url, this.httpOptions);
+  }
 }
 

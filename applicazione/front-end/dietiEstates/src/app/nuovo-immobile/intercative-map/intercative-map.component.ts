@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject } from '@angular/core';
+import { BackendService } from '../../_services/backend/backend.service';
+import { ToastrService } from 'ngx-toastr';
 import * as L from 'leaflet';
 import 'mapbox-gl-leaflet';
-
 
 @Component({
   selector: 'app-intercative-map',
@@ -10,31 +11,34 @@ import 'mapbox-gl-leaflet';
   styleUrl: './intercative-map.component.scss'
 })
 export class IntercativeMapComponent {
+  backendService = inject(BackendService); //effettua le richieste HTTP
+  toastr = inject(ToastrService); //mostra le notifiche
+
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
-  ngAfterViewInit() {
-    const myAPIKey = "8cb9e657dbaf434fb522fad850eeafb0";
-    const mapStyle = "https://maps.geoapify.com/v1/styles/osm-carto/style.json";
+  ngOnInit() {
+    // Recupera la configurazione della mappa dal back-end
+    this.backendService.getMapConfiguration().subscribe({
+      next: (data) => {
+        this.initializeMap(data);
+      },
+      error: (err) => {
+        this.toastr.error(err.message, err.statusText);
+      }
+    });
+  }
 
-    const initialState = {
-      lng: 12,
-      lat: 42,
-      zoom: 4.5
-    };
-
+  private initializeMap(config: any) {
     const map = new L.Map(this.mapContainer.nativeElement).setView(
-      [initialState.lat, initialState.lng],
-      initialState.zoom
+      [config.initialState.lat, config.initialState.lng],
+      config.initialState.zoom
     );
 
-    // the attribution is required for the Geoapify Free tariff plan
-    map.attributionControl
-      .setPrefix("")
-      .addAttribution('');
+    map.attributionControl.setPrefix("").addAttribution('');
 
     L.mapboxGL({
-      style: `${mapStyle}?apiKey=${myAPIKey}`,
+      style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
       accessToken: "no-token"
     }).addTo(map);
   }
