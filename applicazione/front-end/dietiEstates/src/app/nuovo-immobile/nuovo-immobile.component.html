@@ -123,55 +123,7 @@
         </form>
     </div>
     } @else {
-      <div class="w-full mx-auto max-w-sm mb-2">
-        <div class="text-arancione font-bold">3 di 3</div>
-        <progress class="w-full h-2 rounded-full overflow-hidden bg-pesca" value="100" max="100">
-          <!-- Valore alternativo in caso di mancato supporto -->
-          100%
-        </progress>
-
-        <app-intercative-map></app-intercative-map>
-        
-        <!-- Form Section -->   
-        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step3Form" (ngSubmit)="handleStep3Form()">
-            <div class="mb-4">
-                <label class="block text-arancione font-bold mb-2" for="citta">
-                    Città
-                </label>
-    
-                <input type="text" formControlName="citta" id="citta"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Città" required="">
-            </div>
-            <div class="mb-4">
-                <label class="block text-arancione font-bold mb-2" for="comune">
-                    Comune
-                </label>
-    
-                <input type="text" formControlName="comune" id="comune"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Comune" required="">
-            </div>
-            <div class="mb-4">
-                <label class="block text-arancione font-bold mb-2" for="viaECivico">
-                    Via e Numero Civico
-                </label>
-    
-                <input type="text" formControlName="viaECivico" id="viaECivico"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-                    placeholder="Via e Numero Civico" required="">
-            </div>
-
-            <div class="flex justify-between">
-              <button type="button" (click)="backStep();" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-                Indietro
-              </button>
-              <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-                Continua 
-              </button>
-            </div>
-        </form>
-    </div>
-  }
+      <app-intercative-map (backStepEvent)="backStep()"></app-intercative-map>      
+    }
 </section>
   

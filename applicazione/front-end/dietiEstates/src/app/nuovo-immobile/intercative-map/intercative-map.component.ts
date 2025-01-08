@@ -1,4 +1,6 @@
-import { Component, ViewChild, ElementRef, inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BackendService } from '../../_services/backend/backend.service';
 import { ToastrService } from 'ngx-toastr';
 import * as L from 'leaflet';
@@ -6,16 +8,24 @@ import 'mapbox-gl-leaflet';
 
 @Component({
   selector: 'app-intercative-map',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './intercative-map.component.html',
   styleUrl: './intercative-map.component.scss'
 })
 export class IntercativeMapComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
+  router = inject(Router);  //permette la navigazione
+
+  submittedStep3 = false;  //flag dello stato di invio del form
+    step3Form = new FormGroup({ //form per il login
+      indirizzo: new FormControl('', [Validators.required]), //campo di input dell'username
+    })
 
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
+
+  @Output() backStepEvent = new EventEmitter<void>();
 
   ngOnInit() {
     // Recupera la configurazione della mappa dal back-end
@@ -27,6 +37,14 @@ export class IntercativeMapComponent {
         this.toastr.error(err.message, err.statusText);
       }
     });
+  }
+
+  handleStep3Form(){
+    this.router.navigateByUrl("/homePageAgenteImmobiliare");
+  }
+
+  backStep(){
+    this.backStepEvent.emit();
   }
 
   private initializeMap(config: any) {

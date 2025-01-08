@@ -44,10 +44,10 @@ export class NuovoImmobileComponent {
     this.step = 3;
   }
 
-  handleStep3Form(){
+  /*handleStep3Form(){
     //this.step = 3;
     this.router.navigateByUrl("/homePageAgenteImmobiliare");
-  }
+  }*/
 
   backStep(){
     this.step--;
