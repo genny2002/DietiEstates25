@@ -39,7 +39,7 @@ export class IntercativeMapComponent {
 
     L.mapboxGL({
       style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
-      accessToken: "no-token"
+      accessToken: `${config.mapBoxToken}`
     }).addTo(map);
   }
 }
