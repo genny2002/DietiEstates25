@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from 'morgan';
 import cors from "cors";
-import axios from 'axios';
 
 //aggiungere import dei router
 import { authenticationController } from "./Controller/authenticationController.js";

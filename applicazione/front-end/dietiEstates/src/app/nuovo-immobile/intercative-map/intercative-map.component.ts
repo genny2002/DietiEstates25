@@ -18,9 +18,12 @@ export class IntercativeMapComponent {
   router = inject(Router);  //permette la navigazione
 
   submittedStep3 = false;  //flag dello stato di invio del form
-    step3Form = new FormGroup({ //form per il login
-      indirizzo: new FormControl('', [Validators.required]), //campo di input dell'username
-    })
+  step3Form = new FormGroup({ //form per il login
+    indirizzo: new FormControl('', [Validators.required]), //campo di input dell'username
+  })
+  
+  query: string = ''; 
+  suggestions: any[] = [];
 
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
@@ -59,5 +62,29 @@ export class IntercativeMapComponent {
       style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
       accessToken: `${config.mapBoxToken}`
     }).addTo(map);
+  }
+
+  onInputChange(): void {
+    if(this.step3Form.value.indirizzo != null){
+      this.query=this.step3Form.value.indirizzo;
+    
+      if (this.query.length > 2) {
+        this.backendService.getSuggestions(this.query).subscribe({
+          next: (data) => {
+            this.suggestions = data /*as any[] || []*/;
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
+      } else {
+        this.suggestions = [];
+      }
+    }
+  }
+
+  selectSuggestion(suggestion: any): void {
+    this.query = suggestion.properties.formatted; // Mostra l'indirizzo selezionato
+    this.suggestions = [];
   }
 }

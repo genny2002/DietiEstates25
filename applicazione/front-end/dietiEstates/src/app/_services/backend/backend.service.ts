@@ -113,5 +113,17 @@ export class BackendService {
 
     return this.http.get(url, this.httpOptions);
   }
+  
+  /*getSuggestions(query: { query: string;}) {
+    const url = `${this.url}/autocomplete?query=${query}`;
+
+    return this.http.get(url, query);
+  }*/
+
+  getSuggestions(query: string)/*: Observable<any>*/ {
+    const url = `${this.url}/autocomplete/${query}`;
+
+    return this.http.get<any[]>(url, this.httpOptions);
+  }
 }
 
