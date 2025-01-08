@@ -70,8 +70,9 @@ export class IntercativeMapComponent {
     
       if (this.query.length > 2) {
         this.backendService.getSuggestions(this.query).subscribe({
-          next: (data) => {
-            this.suggestions = data /*as any[] || []*/;
+          next: (data) => {  
+            this.suggestions = data.features;
+            console.log(typeof(data));
           },
           error: (err) => {
             console.error(err);
@@ -84,7 +85,9 @@ export class IntercativeMapComponent {
   }
 
   selectSuggestion(suggestion: any): void {
-    this.query = suggestion.properties.formatted; // Mostra l'indirizzo selezionato
+    this.step3Form.setValue({
+      indirizzo: suggestion.properties.formatted
+    });  // Mostra l'indirizzo selezionato
     this.suggestions = [];
   }
 }
