@@ -19,7 +19,7 @@
 
       <input type="text" formControlName="indirizzo" id="indirizzo" (input)="onInputChange()"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
-        placeholder="Indirizzo" required="">
+        placeholder="Indirizzo" required="" autocomplete="off">
     
       @if(suggestions.length > 0){
         <ul (click)="onContainerClick($event)" id="suggestion-list" class=" bg-white border border-gray-300 rounded-lg shadow-md w-full mt-1 z-10">

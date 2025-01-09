@@ -27,6 +27,9 @@ export class IntercativeMapComponent {
   query: string = ''; 
   suggestions: any[] = [];
 
+  private map?: L.Map;
+  private selectedMarker: any;
+
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
@@ -40,7 +43,7 @@ export class IntercativeMapComponent {
     // Recupera la configurazione della mappa dal back-end
     this.backendService.getMapConfiguration().subscribe({
       next: (data) => {
-        this.initializeMap(data);
+        this.map=this.initializeMap(data);
       },
       error: (err) => {
         this.toastr.error(err.message, err.statusText);
@@ -81,6 +84,8 @@ export class IntercativeMapComponent {
       style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
       accessToken: `${config.mapBoxToken}`
     }).addTo(map);
+
+    return map;
   }
 
   onInputChange(): void {
@@ -108,5 +113,26 @@ export class IntercativeMapComponent {
       indirizzo: suggestion.properties.formatted
     });  // Mostra l'indirizzo selezionato
     this.suggestions = [];
+
+    const lat = suggestion.geometry.coordinates[1]; // Latitudine
+    const lon = suggestion.geometry.coordinates[0]; // Longitudine
+
+    // Centrare la mappa sulle coordinate selezionate
+    if (this.map) {
+      this.map.setView([lat, lon], 15); // Zoom 15 per focalizzare l'indirizzo
+    }
+
+    if(this.map != null){
+    // Aggiungere un marker sulla mappa
+      if (this.selectedMarker) {
+        this.map.removeLayer(this.selectedMarker); // Rimuove eventuali marker esistenti
+      }
+
+      this.selectedMarker = L.marker([lat, lon]).addTo(this.map)
+        .bindPopup(`<b>${suggestion.properties.formatted}</b>`)
+        .openPopup();
+
+     console.log(this.selectedMarker);
+    }
   }
 }
