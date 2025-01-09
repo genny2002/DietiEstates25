@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, inject, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BackendService } from '../../_services/backend/backend.service';
@@ -16,12 +16,14 @@ export class IntercativeMapComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   router = inject(Router);  //permette la navigazione
+  renderer = inject(Renderer2); //permette di manipolare il DOM
 
   submittedStep3 = false;  //flag dello stato di invio del form
   step3Form = new FormGroup({ //form per il login
     indirizzo: new FormControl('', [Validators.required]), //campo di input dell'username
   })
-  
+
+  private clickListener?: () => void;
   query: string = ''; 
   suggestions: any[] = [];
 
@@ -31,6 +33,10 @@ export class IntercativeMapComponent {
   @Output() backStepEvent = new EventEmitter<void>();
 
   ngOnInit() {
+    this.clickListener = this.renderer.listen('document', 'click', (event: Event) => {
+      this.onDocumentClick(event);
+    });
+
     // Recupera la configurazione della mappa dal back-end
     this.backendService.getMapConfiguration().subscribe({
       next: (data) => {
@@ -40,6 +46,19 @@ export class IntercativeMapComponent {
         this.toastr.error(err.message, err.statusText);
       }
     });
+  }
+
+  onDocumentClick(event: Event) {
+    // Nascondi la lista se il clic avviene fuori
+    const target = event.target as HTMLElement;
+    if (!target.closest('#indirizzo') && !target.closest('#suggestion-list')) {
+      this.suggestions = [];
+    }
+  }
+
+  onContainerClick(event: Event) {
+    // Previeni la chiusura della lista quando si clicca dentro il contenitore
+    event.stopPropagation();
   }
 
   handleStep3Form(){
