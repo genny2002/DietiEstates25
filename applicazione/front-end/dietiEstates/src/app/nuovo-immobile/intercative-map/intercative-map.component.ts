@@ -30,12 +30,23 @@ export class IntercativeMapComponent {
   private map?: L.Map;
   private selectedMarker: any;
 
+  DefaultIcon = L.icon({
+    iconUrl: '/marker-icon.png', // Percorso relativo dalla cartella `public`
+    shadowUrl: '/marker-shadow.png',
+    iconSize: [25, 41], // Dimensioni predefinite dell'icona
+    iconAnchor: [12, 41], // Posizione dell'ancora dell'icona
+    popupAnchor: [1, -34], // Posizione dell'ancora del popup
+    shadowSize: [41, 41]  // Dimensioni dell'ombra
+  });
+
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
   @Output() backStepEvent = new EventEmitter<void>();
 
   ngOnInit() {
+    L.Marker.prototype.options.icon = this.DefaultIcon;
+
     this.clickListener = this.renderer.listen('document', 'click', (event: Event) => {
       this.onDocumentClick(event);
     });
@@ -96,7 +107,6 @@ export class IntercativeMapComponent {
         this.backendService.getSuggestions(this.query).subscribe({
           next: (data) => {  
             this.suggestions = data.features;
-            console.log(typeof(data));
           },
           error: (err) => {
             console.error(err);
