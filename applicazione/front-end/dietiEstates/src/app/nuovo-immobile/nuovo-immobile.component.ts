@@ -37,7 +37,7 @@ export class NuovoImmobileComponent {
     piano: new FormControl('', [Validators.required]),
   })
 
-  nuovoAnnuncio!: Annuncio
+  nuovoAnnuncio: Annuncio | any = {};
   selectedFiles: File[] = [];
 
   onFilesSelected(event: any): void {
@@ -45,8 +45,9 @@ export class NuovoImmobileComponent {
   }
 
   handleStep1Form(){
-    this.nuovoAnnuncio.AgenteImmobiliareUsername = this.authService.user() as string;
+    this.nuovoAnnuncio.AgenteImmobiliareUsername = this.authService.user();
     this.nuovoAnnuncio.categoria = this.step1Form.value.tipo as string;
+    console.log(this.step1Form.value.tipo);
     this.nuovoAnnuncio.prezzo = this.step1Form.value.prezzo as string;
     this.nuovoAnnuncio.descrizione = this.step1Form.value.descrizione as string;
     this.nuovoAnnuncio.nStanza = this.step1Form.value.numeroStanze as string;

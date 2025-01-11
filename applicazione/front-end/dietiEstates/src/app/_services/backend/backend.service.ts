@@ -127,6 +127,8 @@ export class BackendService {
 
     newAnnuncioRequest.immagini.forEach(image => formData.append('images', image));
 
+    console.log(newAnnuncioRequest);
+
     return this.http.post(url, newAnnuncioRequest, this.httpOptions);
   }
 }

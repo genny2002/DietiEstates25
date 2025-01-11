@@ -25,6 +25,7 @@ const uploadImages = (fieldName, maxCount) => {
 };
 
 anunncioController.post("/upload/:numeroImg", (req, res, next) => {
+    console.log(req.body);
     const numeroImg = parseInt(req.params.numeroImg, 10);
     const uploadMiddleware = uploadImages('foto', numeroImg);
     uploadMiddleware(req, res, (err) => {

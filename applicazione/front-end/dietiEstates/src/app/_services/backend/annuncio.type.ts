@@ -10,5 +10,5 @@ export interface Annuncio {
   classeEnergetica: string;
   altriServizi: string;
   categoria: string;
-  AgenteImmobiliareUsername: string;
+  AgenteImmobiliareUsername: string | null;
 }
