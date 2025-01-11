@@ -12,6 +12,7 @@ import {IntercativeMapComponent} from './intercative-map/intercative-map.compone
 export class NuovoImmobileComponent {
   router = inject(Router);  //permette la navigazione
   step: number = 1;
+
   submittedStep1 = false;  //flag dello stato di invio del form
     step1Form = new FormGroup({ //form per il login
       tipo: new FormControl('', [Validators.required]), //campo di input dell'username
@@ -29,25 +30,21 @@ export class NuovoImmobileComponent {
     piano: new FormControl('', [Validators.required]),
   })
 
-  submittedStep3 = false;  //flag dello stato di invio del form
+  /*submittedStep3 = false;  //flag dello stato di invio del form
   step3Form = new FormGroup({ //form per il login
     citta: new FormControl('', [Validators.required]), //campo di input dell'username
     comune: new FormControl('', [Validators.required]),
     viaECivico: new FormControl('', [Validators.required]),
-  })
+  })*/
 
   handleStep1Form(){
+
     this.step = 2;
   }
 
   handleStep2Form(){
     this.step = 3;
   }
-
-  /*handleStep3Form(){
-    //this.step = 3;
-    this.router.navigateByUrl("/homePageAgenteImmobiliare");
-  }*/
 
   backStep(){
     this.step--;

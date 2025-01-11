@@ -1,8 +1,7 @@
 @if(!deleted){
     <div class="mb-4 p-2 mt-2 bg-white rounded-xl shadow-lg">
-        <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.viaENumeroCivico}}, 
-            {{this.notificaItem.Annuncio.comune}}; {{this.notificaItem.Annuncio.citta}} il {{this.notificaItem.data | date:'dd/MM/YYYY'}} 
-            alle ore {{this.notificaItem.data | date:'HH:mm'}} è 
+        <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.indirizzo}}, il 
+            {{this.notificaItem.data | date:'dd/MM/YYYY'}} alle ore {{this.notificaItem.data | date:'HH:mm'}} è 
             @if(this.notificaItem.stato=="accettata"){
                 <span class="font-bold text-green-500">accettata</span>
             }@else if (this.notificaItem.stato=="rifiutata"){

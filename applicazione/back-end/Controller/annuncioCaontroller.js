@@ -50,8 +50,6 @@ anunncioController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
 });
 
-
-
 anunncioController.get("/download/annunci", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci();

@@ -6,8 +6,6 @@ export interface Appuntamento {
     AgenteImmobiliareUsername: string | null;
     data: Date;
     Annuncio: {
-        citta: string;
-        viaENumeroCivico: string;
-        comune: string;
+        indirizzo: string;
     };
   }

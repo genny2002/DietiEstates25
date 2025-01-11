@@ -141,8 +141,6 @@ export class IntercativeMapComponent {
       this.selectedMarker = L.marker([lat, lon]).addTo(this.map)
         .bindPopup(`<b>${suggestion.properties.formatted}</b>`)
         .openPopup();
-
-     console.log(this.selectedMarker);
     }
   }
 }
