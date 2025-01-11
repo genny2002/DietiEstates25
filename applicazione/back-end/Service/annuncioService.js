@@ -1,4 +1,5 @@
 import { AnnuncioRepository } from "../Repository/annuncioRepository.js";
+import { AgenteImmobiliare } from "../Repository/database.js";
 
 export class AnnuncioService {
     static async createAnnuncio(data, filePaths) {
@@ -15,6 +16,7 @@ export class AnnuncioService {
                 classeEnergetica: data.classeEnergetica,
                 altriServizzi: data.altriServizzi,
                 Categorie: data.Categorie,
+                AgenteImmobiliareUsername: data.AgenteImmobiliareUsername
             };
 
             console.log("AnnuncioDaCreare:", AnnuncioDaCreare); // Log dei dati da inserire
