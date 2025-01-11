@@ -72,16 +72,15 @@
         
         <!-- Form Section -->   
         <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step2Form" (ngSubmit)="handleStep2Form()">
-          <!-- Selezione Affitto/Vendita -->
           <div class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
             <label class="block text-arancione font-bold">Inserire immagini</label>
             <label for="image-upload">Seleziona le immagini:</label>
-            <input type="file" id="image-upload" name="image-upload[]" accept="image/*" multiple required>
+            <input type="file" (change)="onFilesSelected($event)" id="image-upload" name="image-upload[]" accept="image/*" multiple required>
         </div>
       
           <!-- Prezzo -->
           <div class="mb-4">
-            <fieldset>
+            <fieldset formGroupName="servizi">
                 <label class="block text-arancione font-bold">Selezionare i servizi dell'immobile</label>
                 <label><input type="checkbox" name="asscensore" value="ascensore"> Ascensore</label><br>
                 <label><input type="checkbox" name="portineria" value="portineria"> Portineria</label><br>
@@ -91,7 +90,7 @@
       
           <!-- Descrizione -->
           <div class="mb-4">
-            <label for="descrizione" class="block text-arancione font-bold mb-2"> Classe energetica </label>
+            <label for="classeEnergetica" class="block text-arancione font-bold mb-2"> Classe energetica </label>
             <select id="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
                 <option value="A4">A4</option>
                 <option value="A3">A3</option>
@@ -123,7 +122,7 @@
         </form>
     </div>
     } @else {
-      <app-intercative-map (backStepEvent)="backStep()"></app-intercative-map>      
+      <app-intercative-map (backStepEvent)="backStep()" [nuovoAnnuncio]="nuovoAnnuncio"></app-intercative-map>      
     }
 </section>
   

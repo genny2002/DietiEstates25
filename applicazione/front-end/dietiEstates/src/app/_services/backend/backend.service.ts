@@ -5,6 +5,7 @@ import { GestoreAgenzia } from './gestoreAgenzia.type';
 import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 import { Appuntamento } from './appuntamento.type';
 import { Offerta } from './offerta.type';
+import { Annuncio } from './annuncio.type';
 
 @Injectable({
   providedIn: 'root'
@@ -114,10 +115,19 @@ export class BackendService {
     return this.http.get(url, this.httpOptions);
   }
   
-  getSuggestions(query: string)/*: Observable<any>*/ {
+  getSuggestions(query: string) {
     const url = `${this.url}/autocomplete/${query}`;
 
     return this.http.get<any>(url, this.httpOptions);
+  }
+
+  createNewAnnuncio(newAnnuncioRequest: Annuncio){
+    const url = `${this.url}/upload/${newAnnuncioRequest.immagini.length}`;
+    const formData = new FormData();
+
+    newAnnuncioRequest.immagini.forEach(image => formData.append('images', image));
+
+    return this.http.post(url, newAnnuncioRequest, this.httpOptions);
   }
 }
 

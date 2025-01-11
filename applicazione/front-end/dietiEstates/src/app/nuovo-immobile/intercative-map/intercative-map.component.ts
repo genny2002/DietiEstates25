@@ -1,8 +1,9 @@
-import { Component, ViewChild, ElementRef, inject, EventEmitter, Output, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, EventEmitter, Output, Input, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BackendService } from '../../_services/backend/backend.service';
 import { ToastrService } from 'ngx-toastr';
+import { Annuncio } from '../../_services/backend/annuncio.type';
 import * as L from 'leaflet';
 import 'mapbox-gl-leaflet';
 
@@ -38,6 +39,9 @@ export class IntercativeMapComponent {
     popupAnchor: [1, -34], // Posizione dell'ancora del popup
     shadowSize: [41, 41]  // Dimensioni dell'ombra
   });
+
+  @Input() nuovoAnnuncio!: Annuncio;
+  submittedStep3Form: boolean = false;
 
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
@@ -76,6 +80,20 @@ export class IntercativeMapComponent {
   }
 
   handleStep3Form(){
+    this.nuovoAnnuncio.indirizzo = this.step3Form.value.indirizzo as string;
+
+    this.backendService.createNewAnnuncio(this.nuovoAnnuncio).subscribe({
+      error: (err) => {
+        this.toastr.error("L'annuncio non è stato creato", "Errore");  //mostra un messaggio di errore
+      },
+      complete: () => {
+        this.toastr.success(`Il nuovo annuncio è stato creato`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.step3Form.reset();
+        this.submittedStep3Form = false;
+        //INVIARE LA MAIL AL NUOVO UTENTE
+      }
+    })
+
     this.router.navigateByUrl("/homePageAgenteImmobiliare");
   }
 
