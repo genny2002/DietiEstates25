@@ -15,17 +15,9 @@ Content-Disposition: form-data; name="dimesioni"
 
 100
 --boundary
-Content-Disposition: form-data; name="citta"
-
-Roma
---boundary
-Content-Disposition: form-data; name="viaENumeroCivico"
+Content-Disposition: form-data; name="indirizzo"
 
 Via Roma, 1
---boundary
-Content-Disposition: form-data; name="comune"
-
-Roma
 --boundary
 Content-Disposition: form-data; name="numeroDiStanze"
 

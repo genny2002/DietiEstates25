@@ -24,15 +24,7 @@ export function createModelAnnuncio(database) {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    citta: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    viaENumeroCivico: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    comune: {
+    indirizzo: {
         type: DataTypes.STRING,
         allowNull: false,
     },

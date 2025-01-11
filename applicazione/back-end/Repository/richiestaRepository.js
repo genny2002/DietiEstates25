@@ -28,7 +28,7 @@ export class RichiestaRepository {
                 },*/
                 include: [{
                     model: Annuncio,
-                    attributes: ['citta', 'viaENumeroCivico', 'comune']
+                    attributes: ['indirizzo']
                 }]
             });
         } catch (err) {
