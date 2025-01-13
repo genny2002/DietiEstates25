@@ -15,14 +15,14 @@ export class HomePageCollaboratoreComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   submittedNewAgenteForm = false;  //flag dello stato di invio del form
-    newAgenteForm = new FormGroup({  //form per il sign up
-      user: new FormControl('', [Validators.required]), //campo di input dell'username
-      email: new FormControl('', [Validators.required]),
-      pass: new FormControl('', [ //campo di input della password
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(16)])  
-    })
+  newAgenteForm = new FormGroup({  //form per il sign up
+    user: new FormControl('', [Validators.required]), //campo di input dell'username
+    email: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [ //campo di input della password
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(16)])  
+  })
 
   handleNewAgente() {  //gestisce il sign up
     this.submittedNewAgenteForm = true;  //aggiorna la flag dello stato di invio del form

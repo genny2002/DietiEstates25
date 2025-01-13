@@ -13,11 +13,11 @@
           <fieldset id="tipo" class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
             <label class="block text-arancione font-bold">Tipo di offerta</label>
             <label class="flex items-center mb-2">
-              <input type="radio" name="tipo" value="affitto" class="mr-2" />
+              <input type="radio" formControlName="tipo" name="tipo" value="affitto" class="mr-2" />
               <span>Affitto</span>
             </label>
             <label class="flex items-center">
-              <input type="radio" name="tipo" value="vendita" class="mr-2" checked />
+              <input type="radio" formControlName="tipo" name="tipo" value="vendita" class="mr-2" checked />
               <span>Vendita</span>
             </label>
           </fieldset>
@@ -25,7 +25,7 @@
           <!-- Prezzo -->
           <div class="mb-4">
             <label for="prezzo" class="block text-arancione font-bold mb-2">Prezzo</label>
-            <input type="text" id="prezzo" placeholder="Prezzo dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+            <input type="text" formControlName="prezzo" id="prezzo" placeholder="Prezzo dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
               oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
           </div>
@@ -33,21 +33,21 @@
           <!-- Descrizione -->
           <div class="mb-4">
             <label for="descrizione" class="block text-arancione font-bold mb-2"> Descrizione</label>
-            <textarea id="descrizione" placeholder="Descrizione dell'immobile in vendita"
+            <textarea id="descrizione" formControlName="descrizione" placeholder="Descrizione dell'immobile in vendita"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"></textarea>
           </div>
       
           <!-- Numero di stanze -->
           <div class="mb-4">
             <label for="stanze" class="block text-arancione font-bold mb-2">Numero di stanze</label>
-            <input type="number" id="stanze" value="1" min="1"
+            <input type="number" formControlName="numeroStanze" id="stanze" value="1" min="1"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
           </div>
       
           <!-- Dimensioni -->
           <div class="mb-6">
             <label for="dimensioni" class="block text-arancione font-bold mb-2"> Dimensioni </label>
-            <input type="text" id="dimensioni" placeholder="Superficie dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+            <input type="text" formControlName="dimensioni" id="dimensioni" placeholder="Superficie dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
               oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
           </div>
@@ -75,23 +75,23 @@
           <div class="mb-4 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
             <label class="block text-arancione font-bold">Inserire immagini</label>
             <label for="image-upload">Seleziona le immagini:</label>
-            <input type="file" (change)="onFilesSelected($event)" id="image-upload" name="image-upload[]" accept="image/*" multiple required>
+            <input type="file" formControlName="immagini" (change)="onFilesSelected($event)" id="image-upload" name="image-upload[]" accept="image/*" multiple required>
         </div>
       
           <!-- Prezzo -->
           <div class="mb-4">
             <fieldset formGroupName="servizi">
                 <label class="block text-arancione font-bold">Selezionare i servizi dell'immobile</label>
-                <label><input type="checkbox" name="asscensore" value="ascensore"> Ascensore</label><br>
-                <label><input type="checkbox" name="portineria" value="portineria"> Portineria</label><br>
-                <label><input type="checkbox" name="climatizzazione" value="climatizzazione"> Climatizzazione</label>
+                <label><input type="checkbox" formControlName="ascensore" name="asscensore" value="ascensore"> Ascensore</label><br>
+                <label><input type="checkbox" formControlName="portineria" name="portineria" value="portineria"> Portineria</label><br>
+                <label><input type="checkbox" formControlName="climatizzazione" name="climatizzazione" value="climatizzazione"> Climatizzazione</label>
             </fieldset>
           </div>
       
           <!-- Descrizione -->
           <div class="mb-4">
             <label for="classeEnergetica" class="block text-arancione font-bold mb-2"> Classe energetica </label>
-            <select id="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+            <select id="classeEnergetica" formControlName="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
                 <option value="A4">A4</option>
                 <option value="A3">A3</option>
                 <option value="A2">A2</option>
@@ -108,7 +108,7 @@
           <!-- Numero di stanze -->
           <div class="mb-4">
             <label for="stanze" class="block text-arancione font-bold mb-2"> Piano </label>
-            <input type="number" id="stanze" value="0" min="0"
+            <input type="number" formControlName="piano" id="stanze" value="0" min="0"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
           </div>
           <div class="flex justify-between">

@@ -127,9 +127,21 @@ export class BackendService {
 
     newAnnuncioRequest.immagini.forEach(image => formData.append('images', image));
 
-    console.log(newAnnuncioRequest);
+    formData.append('descrizione', newAnnuncioRequest.descrizione);
+    formData.append('prezzo', newAnnuncioRequest.prezzo);
+    formData.append('dimensioni', newAnnuncioRequest.dimensioni);
+    formData.append('indirizzo', newAnnuncioRequest.indirizzo);
+    formData.append('nStanza', newAnnuncioRequest.nStanza);
+    formData.append('piano', newAnnuncioRequest.piano);
+    formData.append('ascensore', String(newAnnuncioRequest.ascensore));
+    formData.append('classeEnergetica', newAnnuncioRequest.classeEnergetica);
+    formData.append('altriServizi', newAnnuncioRequest.altriServizi);
+    formData.append('categoria', newAnnuncioRequest.categoria);
+    formData.append('AgenteImmobiliareUsername', newAnnuncioRequest.AgenteImmobiliareUsername ?? '');
 
-    return this.http.post(url, newAnnuncioRequest, this.httpOptions);
+    console.log(formData);
+
+    return this.http.post(url, formData, this.httpOptions);
   }
 }
 
