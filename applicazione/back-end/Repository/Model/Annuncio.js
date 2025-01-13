@@ -20,7 +20,7 @@ export function createModelAnnuncio(database) {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dimesioni: {
+    dimensioni: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -28,7 +28,7 @@ export function createModelAnnuncio(database) {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    numeroDiStanze: {
+    numeroStanze: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -44,11 +44,11 @@ export function createModelAnnuncio(database) {
         type: DataTypes.CHAR,
         allowNull: false,
     },
-    altriServizzi: {
+    altriServizi: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    Categorie: {
+    categoria: {
         type: DataTypes.STRING,
         allowNull: false,
     },

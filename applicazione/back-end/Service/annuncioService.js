@@ -3,19 +3,22 @@ import { AgenteImmobiliare } from "../Repository/database.js";
 
 export class AnnuncioService {
     static async createAnnuncio(data, filePaths) {
+
+        console.log()
+
         try {
             const AnnuncioDaCreare = {
                 foto: JSON.stringify(filePaths), // salva i percorsi delle immagini come stringa JSON
                 descrizione: data.descrizione,
                 prezzo: data.prezzo,
-                dimesioni: data.dimesioni,
+                dimensioni: data.dimensioni,
                 indirizzo: data.indirizzo,
-                numeroDiStanze: data.numeroDiStanze,
+                numeroStanze: data.nStanza,
                 piano: data.piano,
                 ascensore: data.ascensore,
                 classeEnergetica: data.classeEnergetica,
-                altriServizzi: data.altriServizzi,
-                Categorie: data.Categorie,
+                altriServizi: data.altriServizi,
+                categoria: data.categoria,
                 AgenteImmobiliareUsername: data.AgenteImmobiliareUsername
             };
 

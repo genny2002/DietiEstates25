@@ -5,5 +5,5 @@ Content-Type: application/json
   "usr": "provaAgenzia2",
   "pwd": "provaAgenzia2",
   "email": "provaAgenzia2",
-  "referente": "provaAgenzia"
+  "referente": "gestore"
 }

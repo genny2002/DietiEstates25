@@ -23,7 +23,8 @@ const __dirname = path.dirname(__filename);
 // Configura il middleware per servire file statici
 const imgDirectory = path.join(__dirname, 'img');
 app.use('/img', express.static(imgDirectory));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
 app.use(morgan('dev'));
 app.use(cors());
 
@@ -45,8 +46,7 @@ app.use(anunncioController); //aggiunge la route 'annuncioRouter'
 app.use(richiestaController); //aggiunge la route 'richiestaRouter'
 app.use(mapController); //aggiunge la route 'richiestaRouter'
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
