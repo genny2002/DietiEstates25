@@ -44,6 +44,7 @@ export class NuovoImmobileComponent {
 
   onFilesSelected(event: any): void {
     this.selectedFiles = Array.from(event.target.files);
+   
   }
 
   handleStep1Form(){
@@ -64,7 +65,7 @@ export class NuovoImmobileComponent {
   }
 
   handleStep2Form(){
-    this.nuovoAnnuncio.immagini = this.selectedFiles;
+    this.nuovoAnnuncio.foto = this.selectedFiles;
 
     if((this.step2Form.get('servizi.ascensore') as FormControl).value as boolean){
       this.nuovoAnnuncio.ascensore = true;

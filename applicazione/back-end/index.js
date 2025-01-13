@@ -26,8 +26,7 @@ app.use('/img', express.static(imgDirectory));
 
 app.use(morgan('dev'));
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
+
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
@@ -45,6 +44,9 @@ app.use(collaboratoreController); //aggiunge la route 'collaboratoreRouter'
 app.use(anunncioController); //aggiunge la route 'annuncioRouter'
 app.use(richiestaController); //aggiunge la route 'richiestaRouter'
 app.use(mapController); //aggiunge la route 'richiestaRouter'
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

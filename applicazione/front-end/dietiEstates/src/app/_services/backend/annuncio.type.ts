@@ -1,5 +1,5 @@
 export interface Annuncio {
-  immagini: File[];
+  foto: File[];
   descrizione: string;
   prezzo: string;
   dimensioni: string;

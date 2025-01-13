@@ -122,10 +122,13 @@ export class BackendService {
   }
 
   createNewAnnuncio(newAnnuncioRequest: Annuncio){
-    const url = `${this.url}/upload/${newAnnuncioRequest.immagini.length}`;
+    const url = `${this.url}/upload/${newAnnuncioRequest.foto.length}`;
     const formData = new FormData();
 
-    newAnnuncioRequest.immagini.forEach(image => formData.append('images', image));
+   // Append immagini with the field name 'foto' to match backend
+   newAnnuncioRequest.foto.forEach((image, index) => {
+    formData.append('foto', image, image.name); // 'foto' field name
+  });
 
     formData.append('descrizione', newAnnuncioRequest.descrizione);
     formData.append('prezzo', newAnnuncioRequest.prezzo);
@@ -141,7 +144,7 @@ export class BackendService {
 
     console.log(formData);
 
-    return this.http.post(url, formData, this.httpOptions);
+    return this.http.post(url, formData);
   }
 }
 

@@ -36,6 +36,8 @@ anunncioController.post("/upload/:numeroImg", (req, res, next) => {
     });
 }, async (req, res) => {
     try {
+        console.log("Files Uploaded:", req.files);
+        console.log("Request Body After Upload:", req.body);
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: "No files uploaded" });
         }
