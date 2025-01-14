@@ -38,7 +38,7 @@ export class AnnuncioService {
             const {minPrezzo, maxPrezzo, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
 
             let annunci = await AnnuncioRepository.getAnnunci();
-            let annunci = await AnnuncioRepository.getAnnunci();
+        
 
            // Filtro per range di prezzo
             if (minPrezzo && maxPrezzo) {
