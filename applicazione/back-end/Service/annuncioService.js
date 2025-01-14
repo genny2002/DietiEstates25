@@ -38,6 +38,7 @@ export class AnnuncioService {
             const {minPrezzo, maxPrezzo, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
 
             let annunci = await AnnuncioRepository.getAnnunci();
+            let annunci = await AnnuncioRepository.getAnnunci();
 
            // Filtro per range di prezzo
             if (minPrezzo && maxPrezzo) {
@@ -103,6 +104,15 @@ export class AnnuncioService {
         }
     }
 
+            // ...existing code...
+            return annunci;
+        } catch (err) {
+            console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
+            throw err;
+        }
+    }
 
+
+  
   
 }
