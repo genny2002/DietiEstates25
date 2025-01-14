@@ -3,6 +3,7 @@ import { AnnuncioService } from "../Service/annuncioService.js";
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { console } from "inspector";
 
 export const anunncioController = express.Router();
 
@@ -55,7 +56,7 @@ anunncioController.get("/", (req, res) => {
 
 anunncioController.get("/download/annunci", async (req, res) => {
     try {
-        const annunci = await AnnuncioService.getAnnunci();
+        const annunci = await AnnuncioService.getAnnunci(req);
         if (!annunci || annunci.length === 0) {
             return res.status(404).json({ error: "Nessun annuncio trovato" });
         }
@@ -65,12 +66,14 @@ anunncioController.get("/download/annunci", async (req, res) => {
                 url: `http://localhost:3000/img/${path.basename(filePath)}`,
                 nome: path.basename(filePath)
             }));
+            
+            //console.log(annunciConImmagini);
             return {
                 ...annuncio.dataValues,
                 immagini
             };
         });
-
+        
         res.status(200).json(annunciConImmagini);
     } catch (err) {
         res.status(500).json({ error: err.message });

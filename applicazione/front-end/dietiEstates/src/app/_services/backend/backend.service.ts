@@ -133,7 +133,7 @@ export class BackendService {
     formData.append('prezzo', newAnnuncioRequest.prezzo);
     formData.append('dimensioni', newAnnuncioRequest.dimensioni);
     formData.append('indirizzo', newAnnuncioRequest.indirizzo);
-    formData.append('nStanza', newAnnuncioRequest.nStanza);
+    formData.append('numeroStanze', newAnnuncioRequest.numeroStanze);
     formData.append('piano', newAnnuncioRequest.piano);
     formData.append('ascensore', String(newAnnuncioRequest.ascensore));
     formData.append('classeEnergetica', newAnnuncioRequest.classeEnergetica);
@@ -145,7 +145,7 @@ export class BackendService {
   }
 
   getAnnunci(){
-    const url= `${this.url}/getAnnunci?sort=prezzo&mode=desc`;
+    const url= `${this.url}/download/annunci?sort=prezzo&mode=desc`;
     
     return this.http.get<Annuncio[]>(url, this.httpOptions);
   }

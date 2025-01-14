@@ -13,7 +13,7 @@ export class AnnuncioService {
                 prezzo: data.prezzo,
                 dimensioni: data.dimensioni,
                 indirizzo: data.indirizzo,
-                numeroStanze: data.nStanza,
+                numeroStanze: data.numeroStanze,
                 piano: data.piano,
                 ascensore: data.ascensore,
                 classeEnergetica: data.classeEnergetica,
@@ -31,7 +31,7 @@ export class AnnuncioService {
         }
     }
 
-    static async getAnnunci() {
+    static async getAnnunci(req) {
         try {
             
                         // ...existing code...
@@ -95,6 +95,8 @@ export class AnnuncioService {
                 return 0;
                 });
             }
+            
+            console.log(annunci);
 
             // ...existing code...
             return annunci;

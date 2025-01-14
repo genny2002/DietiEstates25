@@ -5,7 +5,7 @@ export interface Annuncio {
   prezzo: string;
   dimensioni: string;
   indirizzo: string;
-  nStanza: string;
+  numeroStanze: string;
   piano: string;
   ascensore: boolean;
   classeEnergetica: string;

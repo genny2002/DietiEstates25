@@ -29,7 +29,7 @@ export function createModelAnnuncio(database) {
         allowNull: false,
     },
     numeroStanze: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     piano: {

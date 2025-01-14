@@ -57,7 +57,7 @@ export class NuovoImmobileComponent {
       this.nuovoAnnuncio.categoria = this.step1Form.value.tipo as string;
       this.nuovoAnnuncio.prezzo = this.step1Form.value.prezzo as string;
       this.nuovoAnnuncio.descrizione = this.step1Form.value.descrizione as string;
-      this.nuovoAnnuncio.nStanza = this.step1Form.value.numeroStanze as string;
+      this.nuovoAnnuncio.numeroStanze = this.step1Form.value.numeroStanze as string;
       this.nuovoAnnuncio.dimensioni = this.step1Form.value.dimensioni as string;
       this.step = 2;
     }
