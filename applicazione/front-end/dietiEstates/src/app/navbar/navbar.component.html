@@ -19,7 +19,7 @@
 
                 @if(! this.authService.isUserAuthenticated()){
                 <li>
-                    <a (click)="handleNavigationClick()" routerLink="/ricercaImmboile"
+                    <a (click)="handleNavigationClick()" routerLink="/ricerca"
                         routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                         class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca Immobile</a>
                 </li>
@@ -61,7 +61,7 @@
                     }
                     @if(this.authService.isUserCliente()){
                         <li>
-                            <a (click)="handleNavigationClick()" routerLink="/ricercaImmboile"
+                            <a (click)="handleNavigationClick()" routerLink="/ricerca"
                                 routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca immobile</a>
                         </li>

@@ -10,6 +10,7 @@ import { HomePageCollaboratoreComponent } from './home-page-collaboratore/home-p
 import { RegistraAgenziaComponent } from './registra-agenzia/registra-agenzia.component';
 import { NuovoImmobileComponent } from './nuovo-immobile/nuovo-immobile.component';
 import { NotificheComponent } from './notifiche-page/notifiche-page.component';
+import { RicercaComponent } from './ricerca/ricerca.component';
 
 export const routes: Routes = [ 
     {
@@ -56,5 +57,9 @@ export const routes: Routes = [
         path: "notifiche",
         component: NotificheComponent,
         title: "Notifiche | DietiEstates"
+    },{
+        path: "ricerca",
+        component: RicercaComponent,
+        title: "Ricerca | DietiEstates"
     },
 ];

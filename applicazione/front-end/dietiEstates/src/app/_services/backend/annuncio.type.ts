@@ -1,4 +1,5 @@
 export interface Annuncio {
+  IDimmobile: number | null;
   foto: File[];
   descrizione: string;
   prezzo: string;
