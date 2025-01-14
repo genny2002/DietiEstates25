@@ -104,15 +104,4 @@ export class AnnuncioService {
         }
     }
 
-            // ...existing code...
-            return annunci;
-        } catch (err) {
-            console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
-            throw err;
-        }
-    }
-
-
-  
-  
 }
