@@ -33,7 +33,71 @@ export class AnnuncioService {
 
     static async getAnnunci() {
         try {
-            return await AnnuncioRepository.getAnnunci();
+            
+                        // ...existing code...
+            const { prezzo, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
+
+            let annunci = await AnnuncioRepository.getAnnunci();
+
+            // Filtro per prezzo
+            if (prezzo) {
+            annunci = annunci.filter(item => item.prezzo == prezzo);
+            }
+
+            // Filtro per dimensioni
+            if (dimensioni) {
+            annunci = annunci.filter(item => item.dimensioni == dimensioni);
+            }
+
+            // Filtro per indirizzo
+            if (indirizzo) {
+            annunci = annunci.filter(item => item.indirizzo.includes(indirizzo));//includes: Verifica se una stringa contiene una determinata sottostringa e restituisce true o false.
+            }
+
+            // Filtro per numeroStanze
+            if (numeroStanze) {
+            annunci = annunci.filter(item => item.numeroStanze == numeroStanze);
+            }
+
+            // Filtro per piano
+            if (piano) {
+            annunci = annunci.filter(item => item.piano == piano);
+            }
+
+            // Filtro per ascensore
+            if (ascensore) {
+            annunci = annunci.filter(item => item.ascensore == ascensore);
+            }
+
+            // Filtro per classeEnergetica
+            if (classeEnergetica) {
+            annunci = annunci.filter(item => item.classeEnergetica == classeEnergetica);
+            }
+
+            // Filtro per altriServizi
+            if (altriServizi) {
+            annunci = annunci.filter(item => item.altriServizi.includes(altriServizi));
+            }
+
+            // Filtro per categoria
+            if (categoria) {
+            annunci = annunci.filter(item => item.categoria == categoria);
+            }
+
+            // Ordinamento
+            if (sort) {
+            annunci.sort((a, b) => {
+                if (mode === 'asc') {
+                return a[sort] > b[sort] ? 1 : -1;
+                } else if (mode === 'desc') {
+                return a[sort] < b[sort] ? 1 : -1;
+                }
+                return 0;
+            });
+            }
+
+            // ...existing code...
+            return annunci;
         } catch (err) {
             console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
             throw err;
@@ -41,37 +105,5 @@ export class AnnuncioService {
     }
 
 
-    /* static async getAnnunci(req) {
-    try {
-        const { sort, mode, ...filters } = req.query;
-
-        let annunci = await AnnuncioRepository.getAnnunci();
-
-        // Apply filters
-        for (const [key, value] of Object.entries(filters)) {
-            if (value) {
-                annunci = annunci.filter(item => item[key] === value);
-            }
-        }
-
-        // Apply sorting
-        if (sort) {
-            annunci.sort((a, b) => {
-                if (mode === 'asc') {
-                    return a[sort] > b[sort] ? 1 : -1;
-                } else if (mode === 'desc') {
-                    return a[sort] < b[sort] ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-
-        return annunci;
-    } catch (err) {
-        console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
-        throw err;
-    }
-} */
-
-
+  
 }
