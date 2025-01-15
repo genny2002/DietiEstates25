@@ -3,23 +3,25 @@
     <p class="font-bold">Prezzo: {{annuncioItem.prezzo}}</p>
     <p class="font-bold">Indirizzo: {{annuncioItem.indirizzo}}</p>
 
-    <img src="../../../../public/dimensioni.png" display="block" alt="Dimensioni: " width="16" height="16"> 
-    <p>{{annuncioItem.dimensioni}}</p>
-
-    <img src="../../../../public/numeroStanze.png" display="block" alt="Numero Stanze: " width="16" height="16">
-    <p>{{annuncioItem.numeroStanze}}</p>
-
-    <img src="../../../../public/piano.png" display="block" alt="Piano: " width="16" height="16">
-    <p>{{annuncioItem.piano}}</p>
-
-    <img src="../../../../public/classeEnergetica.png" display="block" alt="classe Energetica: " width="16" height="16">
-    <p>{{annuncioItem.classeEnergetica}}</p>
+  <!-- ...existing code... -->
+<img ngSrc="dimensioni.png" alt="Dimensioni" width="16" height="16">
+<p>{{annuncioItem.dimensioni}}</p>
+<!-- ...existing code... -->
+<img ngSrc="numeroStanze.png" alt="Numero Stanze" width="16" height="16">
+<p>{{annuncioItem.numeroStanze}}</p>
+<!-- ...existing code... -->
+<img ngSrc="piano.png" alt="Piano" width="16" height="16">
+<p>{{annuncioItem.piano}}</p>
+<!-- ...existing code... -->
+<img ngSrc="classeEnergetica.png" alt="Classe Energetica" width="16" height="16">
+<p>{{annuncioItem.classeEnergetica}}</p>
+<!-- ...existing code... -->
 
     <p>ascensore: </p> 
     @if(annuncioItem.ascensore){
-        <img src="../../../../public/si.png" alt="SI" width="16" height="16">
+        <img ngSrc="si.png" alt="SI" width="16" height="16">
     } @else {
-        <img src="../../../../public/no.png" alt="NO" width="16" height="16">
+        <img ngSrc="no.png" alt="NO" width="16" height="16">
     }
 
     <p>servizi: {{annuncioItem.altriServizi}}</p>

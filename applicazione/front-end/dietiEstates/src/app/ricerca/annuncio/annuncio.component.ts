@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Annuncio } from '../../_services/backend/annuncio.type';
+import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-annuncio',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './annuncio.component.html',
   styleUrl: './annuncio.component.scss'
 })
