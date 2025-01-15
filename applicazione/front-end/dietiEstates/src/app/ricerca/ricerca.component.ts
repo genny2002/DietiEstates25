@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Annuncio } from '../_services/backend/annuncio.type'
+import { AnnuncioGet } from '../_services/backend/annuncio.type'
 import { BackendService } from '../_services/backend/backend.service';
 import { AnnuncioComponent } from './annuncio/annuncio.component';
 
@@ -12,7 +12,7 @@ import { AnnuncioComponent } from './annuncio/annuncio.component';
 })
 export class RicercaComponent {
   showFilters = false;
-  immobili: Annuncio [] = [];
+  immobili: AnnuncioGet [] = [];
 
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
@@ -23,7 +23,7 @@ export class RicercaComponent {
 
   getImmobili() {
     this.backendService.getAnnunci().subscribe({ //cerca tutte le idee controverse
-      next: (data: Annuncio[]) => {
+      next: (data: AnnuncioGet[]) => {
         this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
       },
       error: (err) => {

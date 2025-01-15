@@ -5,7 +5,7 @@ import { GestoreAgenzia } from './gestoreAgenzia.type';
 import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 import { Appuntamento } from './appuntamento.type';
 import { Offerta } from './offerta.type';
-import { Annuncio } from './annuncio.type';
+import { Annuncio, AnnuncioGet } from './annuncio.type';
 
 @Injectable({
   providedIn: 'root'
@@ -147,7 +147,7 @@ export class BackendService {
   getAnnunci(){
     const url= `${this.url}/download/annunci?sort=prezzo&mode=desc`;
     
-    return this.http.get<Annuncio[]>(url, this.httpOptions);
+    return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
 }
 
