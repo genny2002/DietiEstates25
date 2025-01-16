@@ -106,4 +106,14 @@ export class AnnuncioService {
         }
     }
 
+
+    static async getAnnuncioById(id) {
+        try {
+            return await AnnuncioRepository.getAnnuncioById(id);
+        } catch (err) {
+            console.error("Errore durante il recupero dell'annuncio:", err); // Log dell'errore
+            throw err;
+        }
+    }   
+
 }

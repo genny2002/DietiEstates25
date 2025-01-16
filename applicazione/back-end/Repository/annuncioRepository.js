@@ -18,6 +18,15 @@ export class AnnuncioRepository {
             throw err;
         }
     }
+
+    static async getAnnuncioById(id){
+        try {
+            return await Annuncio.findByPk(id);
+        } catch (err) {
+            console.error("Error in getAnnuncioById:", err);
+            throw err;
+        }
+    }
 }
 
 
