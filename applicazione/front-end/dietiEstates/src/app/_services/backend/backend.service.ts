@@ -6,6 +6,7 @@ import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 import { Appuntamento } from './appuntamento.type';
 import { Offerta } from './offerta.type';
 import { Annuncio, AnnuncioGet } from './annuncio.type';
+import { Filtro } from './filtro.type';
 
 @Injectable({
   providedIn: 'root'
@@ -147,6 +148,53 @@ export class BackendService {
   getAnnunci(){
     const url= `${this.url}/download/annunci?sort=prezzo&mode=desc`;
     
+    return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
+  }
+
+  getAnnunciWithFilter(filtro: Filtro){
+    let url= `${this.url}/download/annunci?sort=prezzo&mode=desc`;
+
+    if(filtro.indirizzo)
+    {
+      url=`${url}&indirizzo=${filtro.indirizzo}`;
+    }
+    if(filtro.tipo)
+    {
+      url=`${url}&tipo=${filtro.tipo}`;
+    }
+    if(filtro.servizi.ascensore)
+    {
+      url=`${url}&ascensore=${filtro.servizi.ascensore}`;
+    }
+    if(filtro.servizi.climatizzazione)
+    {
+      url=`${url}&climatizzazione=${filtro.servizi.climatizzazione}`;
+    }
+    if(filtro.servizi.portineria)
+    {
+      url=`${url}&portineria=${filtro.servizi.portineria}`;
+    }
+    if(filtro.prezzoMin)
+    {
+      url=`${url}&prezzoMin=${filtro.prezzoMin}`;
+    }
+    if(filtro.prezzoMax)
+    {
+      url=`${url}&prezzoMax=${filtro.prezzoMax}`;
+    }
+    if(filtro.numeroStanze)
+    {
+      url=`${url}&numeroStanze=${filtro.numeroStanze}`;
+    }
+    if(filtro.piano)
+    {
+      url=`${url}&piano=${filtro.piano}`;
+    }
+    if(filtro.classeEnergetica)
+    {
+      url=`${url}&classeEnergetica=${filtro.classeEnergetica}`;
+    }
+
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
 }

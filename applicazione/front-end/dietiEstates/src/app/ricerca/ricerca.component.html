@@ -1,5 +1,5 @@
 <section>
-    <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione py-2 px-4 rounded ml-2 mr-2" (click)="openFilters()">
+    <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione py-2 px-4 rounded-lg font-semibold text-center text-lg ml-2 mr-2 mt-2" (click)="openFilters()">
         Aggiungi Filtri 
     </button>
 
@@ -10,7 +10,94 @@
             <li class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
                 Non sono stati trovati immobili
             </li>
-        }                
+        } 
     </ul>
+
+    <div class="{{showFilters ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 w-96 text-center">
+            <h3 class="text-base font-bold text-arancione mb-2">Aggiungi i filtri</h3>
+            <form class="grid grid-cols-2 gap-4 mt-4" [formGroup]="filterForm" (ngSubmit)="handleFilters()">
+                <div class="col-span-2">
+                    <label class="block text-arancione font-bold" for="indirizzo">
+                        Indirizzo
+                    </label>
+    
+                    <input type="text" formControlName="indirizzo" id="indirizzo" placeholder="indirizzo"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+                </div>
+
+                <fieldset id="tipo" class="mb-2 border-dashed border-2 border-gray-300 bg-gray-50 p-4 rounded-md">
+                    <label class="block text-arancione font-bold">Tipo di offerta</label>
+                    <label class="flex items-center">
+                      <input type="radio" formControlName="tipo" name="tipo" value="affitto" class="mr-2" />
+                      <span>Affitto</span>
+                    </label>
+                    <label class="flex items-center">
+                      <input type="radio" formControlName="tipo" name="tipo" value="vendita" class="mr-2" checked />
+                      <span>Vendita</span>
+                    </label>
+                </fieldset>
+                <fieldset formGroupName="servizi">
+                    <label class="block text-arancione font-bold">Servizi dell'immobile</label>
+                    <label><input type="checkbox" formControlName="ascensore" name="asscensore" value="ascensore"> Ascensore</label><br>
+                    <label><input type="checkbox" formControlName="portineria" name="portineria" value="portineria"> Portineria</label><br>
+                    <label><input type="checkbox" formControlName="climatizzazione" name="climatizzazione" value="climatizzazione"> Climatizzazione</label>
+                </fieldset>
+                  
+                <div>
+                    <label for="prezzoMin" class="block text-arancione font-bold">Prezzo Minimo</label>
+                    <input type="text" formControlName="prezzoMin" id="prezzoMin" placeholder="Prezzo dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+                </div>
+                <div>
+                    <label for="prezzoMax" class="block text-arancione font-bold">Prezzo Massimo</label>
+                    <input type="text" formControlName="prezzoMax" id="prezzoMax" placeholder="Prezzo dell'immobile in vendita" 
+                        pattern="^\d+([.,]?\d+)?$" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+                </div>
+                <div>
+                    <label for="stanze" class="block text-arancione font-bold">Numero di stanze</label>
+                    <input type="number" formControlName="numeroStanze" id="stanze" value="1" min="1" 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
+                </div>
+                <div>
+                    <label for="piano" class="block text-arancione font-bold"> Piano </label>
+                    <input type="number" formControlName="piano" id="piano" value="0" min="0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
+                </div>
+                <div>
+                    <label for="dimensioni" class="block text-arancione font-bold"> Dimensioni </label>
+                    <input type="text" formControlName="dimensioni" id="dimensioni" placeholder="Superficie dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5" 
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+                </div>
+                <div>
+                    <label for="classeEnergetica" class="block text-arancione font-bold"> Classe energetica </label>
+                    <select id="classeEnergetica" formControlName="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+                        <option value="A4">A4</option>
+                        <option value="A3">A3</option>
+                        <option value="A2">A2</option>
+                        <option value="A1">A1</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
+                </div>
+                <button type="submit" 
+                    class=" col-span-2 w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Reset</button>
+                
+                <button type="button"  class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                    Indietro
+                </button>
+                <button type="submit" 
+                    class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Avanti</button>
+                
+            </form>
+        </div>
+    </div>
 </section>
 

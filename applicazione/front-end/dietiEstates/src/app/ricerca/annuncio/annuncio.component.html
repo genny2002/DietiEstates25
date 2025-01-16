@@ -1,49 +1,55 @@
-<div class="mb-4 w-full bg-pesca " >
-    <img src={{this.annuncioItem.immagini[0].url}} />
-    <p class="font-bold">Immobile in {{annuncioItem.categoria}}</p>
-    <p class="font-bold">Prezzo: {{annuncioItem.prezzo}}</p>
-    <p class="font-bold mb-4">Indirizzo: {{annuncioItem.indirizzo}}</p>
+<div class="mb-4 w-full bg-pesca h-1/4 flex flex-row items-start space-x-4 mt-2">
+    <img src={{this.annuncioItem.immagini[0].url}} class="h-64 w-1/5"/>
+    
+    <div>
+        <p class="font-bold">Immobile in {{annuncioItem.categoria}}</p>
+        <p class="font-bold">Prezzo: {{annuncioItem.prezzo}}</p>
+        <p class="font-bold mb-4">Indirizzo: {{annuncioItem.indirizzo}}</p>
 
-    <div class="flex items-center space-x-6 mb-4 ml-2">
-        <div class="flex items-center space-x-2">
-            <img ngSrc="dimensioni.png" alt="Dimensioni: " width="40" height="40" />
-            <p>{{annuncioItem.dimensioni}}</p>
-        </div>
-        <div class="flex items-center space-x-2">
-            <img ngSrc="numeroStanze.png" alt="Numero Stanze: " width="40" height="40">
-            <p>{{annuncioItem.numeroStanze}}</p>
-        </div>
-        <div class="flex items-center space-x-2">
-            <img ngSrc="piano.png" alt="Piano: " width="40" height="40">
-            <p>{{annuncioItem.piano}}</p>
-        </div>
-        <div class="flex items-center space-x-2">
-            <img ngSrc="classeEnergetica.png" alt="Classe Energetica: " width="40" height="40">
-            <p>{{annuncioItem.classeEnergetica}}</p>
-        </div>
-    </div>
-        
-    <p class="font-bold mb-4">Servizi</p>
-    <div class="flex items-center space-x-6 mb-4 ml-2">
-        <div class="flex items-center space-x-2">
-            <img ngSrc="ascensore.png" alt="Ascensore: " width="40" height="40" />
-            @if(annuncioItem.ascensore){
-                <img ngSrc="si.png" alt="SI" width="16" height="16">
-            } @else {
-                <img ngSrc="no.png" alt="NO" width="16" height="16">
-            }
-        </div>    
-
-        @for(s of servizi; track s.nome){
+        <div class="flex items-center space-x-6 mb-4 ml-2 mt-6">
             <div class="flex items-center space-x-2">
-                <img ngSrc={{s.nomeFile}} alt={{s.nome}} width="40" height="40" />
-                @if(s.valore == "true"){
+                <img ngSrc="dimensioni.png" alt="Dimensioni: " width="40" height="40" />
+                <p>{{annuncioItem.dimensioni}}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <img ngSrc="numeroStanze.png" alt="Numero Stanze: " width="40" height="40">
+                <p>{{annuncioItem.numeroStanze}}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <img ngSrc="piano.png" alt="Piano: " width="40" height="40">
+                <p>{{annuncioItem.piano}}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <img ngSrc="classeEnergetica.png" alt="Classe Energetica: " width="40" height="40">
+                <p>{{annuncioItem.classeEnergetica}}</p>
+            </div>
+        </div>
+
+        <p class="font-bold mb-4 mt-8">Servizi</p>
+        <div class="flex items-center space-x-6 mb-4 ml-2">
+            <div class="flex items-center space-x-2">
+                <img ngSrc="ascensore.png" alt="Ascensore: " width="40" height="40" />
+                @if(annuncioItem.ascensore){
                     <img ngSrc="si.png" alt="SI" width="16" height="16">
-                }@else {
+                } @else {
                     <img ngSrc="no.png" alt="NO" width="16" height="16">
                 }
-            </div>
-        }
+            </div>    
+
+            @for(s of servizi; track s.nome){
+                <div class="flex items-center space-x-2">
+                    <img ngSrc={{s.nomeFile}} alt={{s.nome}} width="40" height="40" />
+                    @if(s.valore == "true"){
+                        <img ngSrc="si.png" alt="SI" width="16" height="16">
+                    }@else {
+                        <img ngSrc="no.png" alt="NO" width="16" height="16">
+                    }
+                </div>
+            }
+        </div>
     </div>
-    <br>
+    
+    <button type="button" class="text-white bg-arancione hover:bg-gray-100 hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg self-end mt-auto mb-4 ">
+        Dettagli
+    </button>
 </div>
