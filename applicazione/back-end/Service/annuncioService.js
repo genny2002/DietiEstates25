@@ -35,15 +35,18 @@ export class AnnuncioService {
         try {
             
                         // ...existing code...
-            const {minPrezzo, maxPrezzo, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
+            const {minPrezzo: prezzoMin, maxPrezzo: prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
 
             let annunci = await AnnuncioRepository.getAnnunci();
         
 
            // Filtro per range di prezzo
-            if (minPrezzo && maxPrezzo) {
-                annunci = annunci.filter(item => item.prezzo >= minPrezzo && item.prezzo <= maxPrezzo);
-            } 
+            if (prezzoMin ) {
+                annunci = annunci.filter(item => item.prezzo >= prezzoMin);
+            }
+            if (prezzoMax) {
+                annunci = annunci.filter(item => item.prezzo <= prezzoMax);
+            }
             // Filtro per dimensioni
             if (dimensioni) {
             annunci = annunci.filter(item => item.dimensioni == dimensioni);
