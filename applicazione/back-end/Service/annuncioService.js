@@ -35,7 +35,7 @@ export class AnnuncioService {
         try {
             
                         // ...existing code...
-            const {minPrezzo: prezzoMin, maxPrezzo: prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
+            const {prezzoMin, prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
 
             let annunci = await AnnuncioRepository.getAnnunci();
         
@@ -49,7 +49,7 @@ export class AnnuncioService {
             }
             // Filtro per dimensioni
             if (dimensioni) {
-            annunci = annunci.filter(item => item.dimensioni == dimensioni);
+            annunci = annunci.filter(item => item.dimensioni >= dimensioni);
             }
 
             // Filtro per indirizzo
@@ -69,17 +69,22 @@ export class AnnuncioService {
 
             // Filtro per ascensore
             if (ascensore) {
-            annunci = annunci.filter(item => item.ascensore == ascensore);
+            annunci = annunci.filter(item => item.ascensore == true);
             }
 
             // Filtro per classeEnergetica
             if (classeEnergetica) {
-            annunci = annunci.filter(item => item.classeEnergetica == classeEnergetica);
+            annunci = annunci.filter(item => item.classeEnergetica.includes(classeEnergetica));
             }
 
             // Filtro per altriServizi
             if (altriServizi) {
-            annunci = annunci.filter(item => item.altriServizi.includes(altriServizi));
+                if(altriServizi.includes("portineria")){
+                    annunci = annunci.filter(item => item.altriServizi.includes("portineria:true"));
+                }
+                if(altriServizi.includes("climatizzazione")){
+                    annunci = annunci.filter(item => item.altriServizi.includes("climatizzazione:true"));
+                }
             }
 
             // Filtro per categoria
@@ -98,8 +103,6 @@ export class AnnuncioService {
                 return 0;
                 });
             }
-            
-            console.log(annunci);
 
             // ...existing code...
             return annunci;

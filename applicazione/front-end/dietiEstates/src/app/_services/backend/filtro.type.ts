@@ -1,7 +1,7 @@
 export interface Filtro
 {
     indirizzo: string | null
-    tipo: string | null
+    categoria: string | null
     servizi: {
         ascensore: string | null
         portineria: string | null
@@ -11,5 +11,6 @@ export interface Filtro
     prezzoMax: string | null
     numeroStanze: string | null
     piano: string | null
+    dimensioni: string | null
     classeEnergetica: string | null
 }

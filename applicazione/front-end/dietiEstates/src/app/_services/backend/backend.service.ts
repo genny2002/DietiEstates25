@@ -158,21 +158,26 @@ export class BackendService {
     {
       url=`${url}&indirizzo=${filtro.indirizzo}`;
     }
-    if(filtro.tipo)
+    if(filtro.categoria)
     {
-      url=`${url}&tipo=${filtro.tipo}`;
+      url=`${url}&categoria=${filtro.categoria}`;
     }
     if(filtro.servizi.ascensore)
     {
       url=`${url}&ascensore=${filtro.servizi.ascensore}`;
     }
-    if(filtro.servizi.climatizzazione)
+    if(filtro.servizi.climatizzazione || filtro.servizi.portineria)
     {
-      url=`${url}&climatizzazione=${filtro.servizi.climatizzazione}`;
-    }
-    if(filtro.servizi.portineria)
-    {
-      url=`${url}&portineria=${filtro.servizi.portineria}`;
+      url=`${url}&altriServizi=`
+
+      if(filtro.servizi.climatizzazione)
+      {
+        url=`${url}climatizzazione:true`;
+      }
+      if(filtro.servizi.portineria)
+      {
+        url=`${url}portineria:true`;
+      }
     }
     if(filtro.prezzoMin)
     {
@@ -190,10 +195,16 @@ export class BackendService {
     {
       url=`${url}&piano=${filtro.piano}`;
     }
+    if(filtro.dimensioni)
+    {
+      url=`${url}&dimensioni=${filtro.dimensioni}`;
+    }
     if(filtro.classeEnergetica)
     {
       url=`${url}&classeEnergetica=${filtro.classeEnergetica}`;
     }
+
+    console.log(url);
 
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }

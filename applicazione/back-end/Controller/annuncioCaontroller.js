@@ -57,9 +57,9 @@ anunncioController.get("/", (req, res) => {
 anunncioController.get("/download/annunci", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci(req);
-        if (!annunci || annunci.length === 0) {
+        /*if (!annunci || annunci.length === 0) {
             return res.status(404).json({ error: "Nessun annuncio trovato" });
-        }
+        }*/
 
         const annunciConImmagini = annunci.map(annuncio => {
             const immagini = JSON.parse(annuncio.foto).map(filePath => ({
