@@ -17,12 +17,18 @@ export class RicercaComponent {
   immobili: AnnuncioGet [] = [];
   filterSubmitted = false;
 
+  query: string = ''; 
+  suggestions: any[] = [];
+
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   router = inject(Router);  //permette la navigazione
 
-  filterForm = new FormGroup({ //form per il login
+  addressForm = new FormGroup({
     indirizzo: new FormControl(''), //campo di input dell'username
+  })
+
+  filterForm = new FormGroup({ //form per il login
     tipo: new FormControl(''),
     servizi: new FormGroup({
       ascensore: new FormControl(''),
@@ -63,7 +69,7 @@ export class RicercaComponent {
       this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
     } else {
       this.backendService.getAnnunciWithFilter({  //effettua il login con i dati inseriti nel form
-        indirizzo: this.filterForm.value.indirizzo as string,
+        indirizzo: this.addressForm.value.indirizzo  as string,
         categoria: this.filterForm.value.tipo as string,
         servizi: {
           ascensore: this.filterForm.value.servizi?.ascensore as string,
@@ -96,4 +102,66 @@ export class RicercaComponent {
   openFilters(){
     this.showFilters=true;
   }
+
+  onDocumentClick(event: Event) {
+    // Nascondi la lista se il clic avviene fuori
+    const target = event.target as HTMLElement;
+    if (!target.closest('#indirizzo') && !target.closest('#suggestion-list')) {
+      this.suggestions = [];
+    }
+  }
+
+  onContainerClick(event: Event) {
+    // Previeni la chiusura della lista quando si clicca dentro il contenitore
+    event.stopPropagation();
+  }
+
+  onInputChange(): void {
+    if(this.addressForm.value.indirizzo != null){
+      this.query=this.addressForm.value.indirizzo;
+    
+      if (this.query.length > 2) {
+        this.backendService.getSuggestions(this.query).subscribe({
+          next: (data) => {  
+            this.suggestions = data.features;
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
+      } else {
+        this.suggestions = [];
+      }
+    }
+  }
+
+  selectSuggestion(suggestion: any): void {
+      this.addressForm.setValue({
+        indirizzo: suggestion.properties.formatted
+      });  // Mostra l'indirizzo selezionato
+      this.suggestions = [];
+  
+      /*const lat = suggestion.geometry.coordinates[1]; // Latitudine
+      const lon = suggestion.geometry.coordinates[0]; // Longitudine
+  
+      // Centrare la mappa sulle coordinate selezionate
+      if (this.map) {
+        this.map.setView([lat, lon], 15); // Zoom 15 per focalizzare l'indirizzo
+      }
+  
+      if(this.map != null){
+      // Aggiungere un marker sulla mappa
+        if (this.selectedMarker) {
+          this.map.removeLayer(this.selectedMarker); // Rimuove eventuali marker esistenti
+        }
+  
+        this.selectedMarker = L.marker([lat, lon]).addTo(this.map)
+          .bindPopup(`<b>${suggestion.properties.formatted}</b>`)
+          .openPopup();
+      }*/
+    }
+
+    handleAddress(){
+      this.handleFilters();
+    }
 }
