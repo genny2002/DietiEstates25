@@ -5,10 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { AnnuncioGet } from '../_services/backend/annuncio.type'
 import { BackendService } from '../_services/backend/backend.service';
 import { AnnuncioComponent } from './annuncio/annuncio.component';
+import { MapWithHousesComponent } from './map-with-houses/map-with-houses.component';
+
 
 @Component({
   selector: 'app-ricerca',
-  imports: [AnnuncioComponent, ReactiveFormsModule],
+  imports: [AnnuncioComponent, ReactiveFormsModule, MapWithHousesComponent],
   templateUrl: './ricerca.component.html',
   styleUrl: './ricerca.component.scss'
 })
@@ -163,5 +165,14 @@ export class RicercaComponent {
 
     handleAddress(){
       this.handleFilters();
+    }
+
+    closeShowFilters(){
+      this.showFilters=false;
+    }
+
+    reset(){
+      this.filterForm.reset();
+      this.filterSubmitted = false;
     }
 }

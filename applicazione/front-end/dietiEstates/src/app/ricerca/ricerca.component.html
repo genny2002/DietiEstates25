@@ -5,13 +5,14 @@
         </button>
     
         <form class="grid grid-cols-2 gap-4 mt-2 flex-grow" [formGroup]="addressForm" (ngSubmit)="handleAddress()">
-            <div class="flex items-center space-x-2 ml-2 mr-2 ">
+            <div class="flex items-center space-x-2 ml-2 mr-2 relative">
                 <input type="text" formControlName="indirizzo" id="indirizzo" (input)="onInputChange()"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
                 placeholder="Indirizzo" required="" autocomplete="off">
 
                 @if(suggestions.length > 0){
-                    <ul (click)="onContainerClick($event)" id="suggestion-list" class=" bg-white border border-gray-300 rounded-lg shadow-md w-full mt-1 z-10">
+                    <ul (click)="onContainerClick($event)" id="suggestion-list" class="absolute bg-white border border-gray-300 rounded-lg shadow-md w-full z-10"
+                    style="top: 100%; left: 0; margin-top: 0.25rem;">
                         @for (suggestion of suggestions; track $index) {
                             <li (click)="selectSuggestion(suggestion)" class="cursor-pointer hover:bg-gray-100 px-4 py-2 text-gray-700">
                             {{ suggestion.properties.formatted }}
@@ -25,19 +26,23 @@
             </div>
         </form>
     </div>
-        
-
-    <ul class="w-full text-sm font-medium text-black border border-gray-100 rounded-lg">
-        @for(item of immobili; track item.IDimmobile){
-            <app-annuncio [annuncioItem]=item />
-        } @empty {
-            <li class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
-                Non sono stati trovati immobili
-            </li>
-        } 
-    </ul>
-
-    <div class="{{showFilters ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="flex space-x-4 mt-2">
+        <div class="flex-1 overflow-y-auto max-h-[72vh]">
+            <ul class="w-full text-sm font-medium text-black border border-gray-100 rounded-lg">
+                @for(item of immobili; track item.IDimmobile){
+                    <app-annuncio [annuncioItem]=item />
+                } @empty {
+                    <li class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
+                        Non sono stati trovati immobili
+                    </li>
+                } 
+            </ul>
+        </div>
+        <div class="flex-1 sticky top-0">
+            <app-map-with-houses></app-map-with-houses>
+        </div>
+    </div>
+    <div class="{{showFilters ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
         <div class="bg-white rounded-lg p-6 w-96 text-center">
             <h3 class="text-base font-bold text-arancione mb-2">Aggiungi i filtri</h3>
 
@@ -103,10 +108,10 @@
                         <option value="G">G</option>
                     </select>
                 </div>
-                <button type="button" 
-                    class=" col-span-2 w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Reset</button>
+                <button type="button" (click)="reset()"
+                    class= " col-span-2 w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">Reset</button>
                 
-                <button type="button"  class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                <button type="button" (click)="closeShowFilters()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
                     Indietro
                 </button>
                 <button type="submit" 
