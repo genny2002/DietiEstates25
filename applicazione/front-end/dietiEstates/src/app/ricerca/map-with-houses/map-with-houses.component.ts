@@ -28,35 +28,35 @@ export class MapWithHousesComponent {
   });
 
   @ViewChild('map')
-    private mapContainer!: ElementRef<HTMLElement>;
+  private mapContainer!: ElementRef<HTMLElement>;
 
-    ngOnInit() {
-        L.Marker.prototype.options.icon = this.DefaultIcon;
-    
-        // Recupera la configurazione della mappa dal back-end
-        this.backendService.getMapConfiguration().subscribe({
-          next: (data) => {
-            this.map=this.initializeMap(data);
-          },
-          error: (err) => {
-            this.toastr.error(err.message, err.statusText);
-          }
-        });
+  ngOnInit() {
+    L.Marker.prototype.options.icon = this.DefaultIcon;
+  
+    // Recupera la configurazione della mappa dal back-end
+    this.backendService.getMapConfiguration().subscribe({
+      next: (data) => {
+        this.map=this.initializeMap(data);
+      },
+      error: (err) => {
+        this.toastr.error(err.message, err.statusText);
       }
+    });
+  }
 
-      private initializeMap(config: any) {
-          const map = new L.Map(this.mapContainer.nativeElement).setView(
-            [config.initialState.lat, config.initialState.lng],
-            config.initialState.zoom
-          );
-      
-          map.attributionControl.setPrefix("").addAttribution('');
-      
-          L.mapboxGL({
-            style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
-            accessToken: `${config.mapBoxToken}`
-          }).addTo(map);
-      
-          return map;
-        }
+  private initializeMap(config: any) {
+    const map = new L.Map(this.mapContainer.nativeElement).setView(
+      [config.initialState.lat, config.initialState.lng],
+      config.initialState.zoom
+    );
+  
+    map.attributionControl.setPrefix("").addAttribution('');
+  
+    L.mapboxGL({
+      style: `${config.mapStyle}?apiKey=${config.myAPIKey}`,
+      accessToken: `${config.mapBoxToken}`
+    }).addTo(map);
+  
+    return map;
+  }
 }
