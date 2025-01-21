@@ -54,7 +54,11 @@ export class AnnuncioService {
 
             // Filtro per indirizzo
             if (indirizzo) {
-            annunci = annunci.filter(item => item.indirizzo.includes(indirizzo));//includes: Verifica se una stringa contiene una determinata sottostringa e restituisce true o false.
+                const paroleIndirizzo = indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/);
+
+                for (const parola of paroleIndirizzo) {
+                    annunci = annunci.filter(item => item.indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').includes(parola));
+                }
             }
 
             // Filtro per numeroStanze
