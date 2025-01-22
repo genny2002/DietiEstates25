@@ -61,13 +61,8 @@ export class MapService {
           },
         }
       );
-
-      const results = response;
-      //console.log("result: " + results);
-
-      if (results && results.length > 0) {
-        /*const { lat, lon } = results[0];
-        res.status(200).json({ latitude: lat, longitude: lon });*/
+      const results = response.data.features || [];
+      if (results.length > 0) {
         res.status(200).json(results);
       } else {
         res.status(404).json({ error: 'Indirizzo non trovato' });
