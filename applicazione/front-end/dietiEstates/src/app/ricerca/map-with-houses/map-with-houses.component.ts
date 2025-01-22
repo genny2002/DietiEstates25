@@ -19,6 +19,7 @@ export class MapWithHousesComponent {
   private clickListener?: () => void;
   private map?: L.Map;
   private selectedMarker: any;
+  private markersGroup?: L.LayerGroup;
 
   DefaultIcon = L.icon({
     iconUrl: '/marker-icon.png', // Percorso relativo dalla cartella `public`
@@ -36,6 +37,7 @@ export class MapWithHousesComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['immobili'] && changes['immobili'].currentValue) {
+      
       console.log('Nuovi immobili ricevuti:');
       this.setPointsOnMap();
     }
@@ -76,6 +78,12 @@ export class MapWithHousesComponent {
 
   setPointsOnMap() {
     console.log(this.immobili);
+    if (!this.markersGroup && this.map) {
+      this.markersGroup = L.layerGroup().addTo(this.map);
+    }
+
+    this.markersGroup?.clearLayers();
+
     this.immobili.forEach((immobile) => {
       this.backendService.getCoordinates(immobile.indirizzo).subscribe({
         next: (data) => {
@@ -83,9 +91,11 @@ export class MapWithHousesComponent {
           const longitude = data[0].longitude;
 
           if(this.map != null){
-            this.selectedMarker = L.marker([latitude, longitude]).addTo(this.map)
-              .openPopup();
-          }
+            const marker = L.marker([latitude, longitude]).addTo(this.map)
+            .bindPopup(immobile.indirizzo || 'Indirizzo')
+
+              this.markersGroup?.addLayer(marker);
+            }
         },
         error: (err) => {
           this.toastr.error(err.message, err.statusText);
