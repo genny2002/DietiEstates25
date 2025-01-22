@@ -62,13 +62,17 @@ export class MapService {
       );
       const results = response.data.features || [];
       if (results.length > 0) {
-        res.status(200).json(results);
+        const coords = results.map(feature => ({
+          lat: feature.geometry.coordinates[1],
+          lng: feature.geometry.coordinates[0],
+        }));
+        res.status(200).json(coords);
       } else {
         res.status(404).json({ error: 'Indirizzo non trovato' });
       }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Errore del server' });
-    }    
+    }
   }
 }
