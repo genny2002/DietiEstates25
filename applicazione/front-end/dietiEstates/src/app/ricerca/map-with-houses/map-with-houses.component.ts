@@ -79,10 +79,8 @@ export class MapWithHousesComponent {
     this.immobili.forEach((immobile) => {
       this.backendService.getCoordinates(immobile.indirizzo).subscribe({
         next: (data) => {
-          const latitude = data.latitude;
-          const longitude = data.longitude;
-
-          console.log(data.latitude, data.longitude);
+          const latitude = data[0].latitude;
+          const longitude = data[0].longitude;
 
           if(this.map != null){
             this.selectedMarker = L.marker([latitude, longitude]).addTo(this.map)

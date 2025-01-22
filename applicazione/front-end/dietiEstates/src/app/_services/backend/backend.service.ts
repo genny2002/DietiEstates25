@@ -212,7 +212,7 @@ export class BackendService {
   getCoordinates(indirizzo: String){ 
     const url = `${this.url}/geocode/${indirizzo}`;
 
-    return this.http.get<{ latitude: number, longitude: number }>(url, this.httpOptions);
+    return this.http.get<{ latitude: number, longitude: number }[]>(url, this.httpOptions);
   }
 }
 
