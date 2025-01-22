@@ -82,6 +82,8 @@ export class MapWithHousesComponent {
           const latitude = data.latitude;
           const longitude = data.longitude;
 
+          console.log(data.latitude, data.longitude);
+
           if(this.map != null){
             this.selectedMarker = L.marker([latitude, longitude]).addTo(this.map)
               .openPopup();

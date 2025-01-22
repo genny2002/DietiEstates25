@@ -49,8 +49,8 @@ export class MapService {
     const results = response.data.features || [];
     if (results.length > 0) {
       return results.map(feature => ({
-        lat: feature.geometry.coordinates[1],
-        lng: feature.geometry.coordinates[0],
+        latitude: feature.geometry.coordinates[1],
+        longitude: feature.geometry.coordinates[0],
       }));
     } else {
       throw new Error('Indirizzo non trovato');
