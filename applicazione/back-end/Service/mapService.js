@@ -38,4 +38,43 @@ export class MapService {
       return { error: 'Failed to fetch data from Geoapify' };
     }
   }
+
+  static async getGeocode(req, res) {
+    let address = req.params.address;
+    address = address.replace(/ /g, "%20");
+    address = address.replace(/,/g, "%2C");
+    console.log("indirizzo inserito nella richiesta: " +address);
+
+    if (!address) {
+      return res.status(400).json({ error: 'L\'indirizzo è obbligatorio' });
+    }
+
+
+
+    try {
+      const response = await axios.get(
+        `https://api.geoapify.com/v1/geocode/search`,
+        {
+          params: {
+            text: address,
+            apiKey: GEOAPIFY_API_KEY,
+          },
+        }
+      );
+
+      const results = response;
+      //console.log("result: " + results);
+
+      if (results && results.length > 0) {
+        /*const { lat, lon } = results[0];
+        res.status(200).json({ latitude: lat, longitude: lon });*/
+        res.status(200).json(results);
+      } else {
+        res.status(404).json({ error: 'Indirizzo non trovato' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Errore del server' });
+    }    
+  }
 }

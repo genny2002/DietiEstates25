@@ -1,6 +1,7 @@
-import { Component, ViewChild, ElementRef, inject, EventEmitter, Output, Input, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, inject, EventEmitter, Output, Input, Renderer2, SimpleChanges } from '@angular/core';
 import { ToastrService } from 'ngx-toastr'
 import { BackendService } from '../../_services/backend/backend.service';
+import { AnnuncioGet } from '../../_services/backend/annuncio.type'
 import * as L from 'leaflet';
 import 'mapbox-gl-leaflet';
 
@@ -17,6 +18,7 @@ export class MapWithHousesComponent {
 
   private clickListener?: () => void;
   private map?: L.Map;
+  private selectedMarker: any;
 
   DefaultIcon = L.icon({
     iconUrl: '/marker-icon.png', // Percorso relativo dalla cartella `public`
@@ -30,6 +32,15 @@ export class MapWithHousesComponent {
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
 
+  @Input() immobili: AnnuncioGet[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['immobili'] && changes['immobili'].currentValue) {
+      console.log('Nuovi immobili ricevuti:');
+      this.setPointsOnMap();
+    }
+  }
+
   ngOnInit() {
     L.Marker.prototype.options.icon = this.DefaultIcon;
   
@@ -42,6 +53,9 @@ export class MapWithHousesComponent {
         this.toastr.error(err.message, err.statusText);
       }
     });
+
+    
+    //this.setPointsOnMap();
   }
 
   private initializeMap(config: any) {
@@ -58,5 +72,25 @@ export class MapWithHousesComponent {
     }).addTo(map);
   
     return map;
+  }
+
+  setPointsOnMap() {
+    console.log(this.immobili);
+    this.immobili.forEach((immobile) => {
+      this.backendService.getCoordinates(immobile.indirizzo).subscribe({
+        next: (data) => {
+          const latitude = data.latitude;
+          const longitude = data.longitude;
+
+          if(this.map != null){
+            this.selectedMarker = L.marker([latitude, longitude]).addTo(this.map)
+              .openPopup();
+          }
+        },
+        error: (err) => {
+          this.toastr.error(err.message, err.statusText);
+        }
+      });
+    });
   }
 }

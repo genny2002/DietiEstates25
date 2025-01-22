@@ -208,5 +208,11 @@ export class BackendService {
 
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
+
+  getCoordinates(indirizzo: String){ 
+    const url = `${this.url}/geocode/${indirizzo}`;
+
+    return this.http.get<{ latitude: number, longitude: number }>(url, this.httpOptions);
+  }
 }
 

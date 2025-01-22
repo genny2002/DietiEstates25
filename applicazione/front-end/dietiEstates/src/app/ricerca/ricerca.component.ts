@@ -53,6 +53,7 @@ export class RicercaComponent {
     this.backendService.getAnnunci().subscribe({ //cerca tutte le idee controverse
       next: (data: AnnuncioGet[]) => {
         this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
+      
       },
       error: (err) => {
         if (err.status === 401) {

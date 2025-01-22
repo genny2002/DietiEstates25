@@ -22,3 +22,13 @@ mapController.get('/autocomplete/:query', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch data from Geoapify' });
     }
   });
+
+mapController.get('/geocode/:address', async (req, res) => {
+    try {
+        const response = await MapService.getGeocode(req, res);
+        res.json(response);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch data from Geoapify' });
+    }
+})
