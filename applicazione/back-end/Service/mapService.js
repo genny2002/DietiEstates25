@@ -39,40 +39,21 @@ export class MapService {
     }
   }
 
-  static async getGeocode(req, res) {
-    let address = req.params.address;
+  static async getGeocode(req) {
+    const address = req.params.address;
+    if (!address) throw new Error('L\'indirizzo è obbligatorio');
   
-    console.log("indirizzo inserito nella richiesta: " +address);
-
-    if (!address) {
-      return res.status(400).json({ error: 'L\'indirizzo è obbligatorio' });
-    }
-
-
-
-    try {
-      const response = await axios.get(
-        `https://api.geoapify.com/v1/geocode/search`,
-        {
-          params: {
-            text: address,
-            apiKey: GEOAPIFY_API_KEY,
-          },
-        }
-      );
-      const results = response.data.features || [];
-      if (results.length > 0) {
-        const coords = results.map(feature => ({
-          lat: feature.geometry.coordinates[1],
-          lng: feature.geometry.coordinates[0],
-        }));
-        res.status(200).json(coords);
-      } else {
-        res.status(404).json({ error: 'Indirizzo non trovato' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Errore del server' });
+    const response = await axios.get(`https://api.geoapify.com/v1/geocode/search`, {
+      params: { text: address, apiKey: GEOAPIFY_API_KEY },
+    });
+    const results = response.data.features || [];
+    if (results.length > 0) {
+      return results.map(feature => ({
+        lat: feature.geometry.coordinates[1],
+        lng: feature.geometry.coordinates[0],
+      }));
+    } else {
+      throw new Error('Indirizzo non trovato');
     }
   }
 }
