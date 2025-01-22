@@ -41,8 +41,7 @@ export class MapService {
 
   static async getGeocode(req, res) {
     let address = req.params.address;
-    address = address.replace(/ /g, "%20");
-    address = address.replace(/,/g, "%2C");
+  
     console.log("indirizzo inserito nella richiesta: " +address);
 
     if (!address) {
