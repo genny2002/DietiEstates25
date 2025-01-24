@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ interface Servizio {
   templateUrl: './annuncio-detail.component.html',
   styleUrl: './annuncio-detail.component.scss'
 })
-export class AnnuncioDetailComponent {
+export class AnnuncioDetailComponent  {
   constructor(private route: ActivatedRoute) { }
 
   annuncioItem?: AnnuncioGet;
@@ -25,7 +25,7 @@ export class AnnuncioDetailComponent {
   servizi: Servizio[] = []
 
   currentIndex = 0;
-  slides = document.querySelectorAll("#carousel > div");
+  slides: NodeListOf<HTMLDivElement> = document.querySelectorAll("#carousel > div");
 
   backendService = inject(BackendService);
   router = inject(Router);
@@ -66,10 +66,15 @@ export class AnnuncioDetailComponent {
     })
   }//initIdea
 
-  
+  ngAfterViewInit() {
+    this.slides = document.querySelectorAll("#carousel > div");
+  }
   
   moveSlide(direction: number) {
     this.currentIndex = (this.currentIndex + direction + this.slides.length) % this.slides.length;
-    document.getElementById("carousel").style.transform = `translateX(-${this.currentIndex * 100}%)`;
+    const carousel = document.getElementById("carousel");
+    if (carousel) {
+      carousel.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+    }
   }
 }
