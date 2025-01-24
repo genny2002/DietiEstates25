@@ -1,4 +1,4 @@
-import { Component, inject, AfterViewInit } from '@angular/core';
+import { Component, inject, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
@@ -20,12 +20,13 @@ interface Servizio {
 export class AnnuncioDetailComponent  {
   constructor(private route: ActivatedRoute) { }
 
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef<HTMLDivElement>;
   annuncioItem?: AnnuncioGet;
   editLink = "";  //link per modificare l'idea 'ideaItem'
   servizi: Servizio[] = []
 
   currentIndex = 0;
-  slides: NodeListOf<HTMLDivElement> = document.querySelectorAll("#carousel > div");
+  slides!: NodeListOf<HTMLDivElement>;
 
   backendService = inject(BackendService);
   router = inject(Router);
@@ -67,14 +68,19 @@ export class AnnuncioDetailComponent  {
   }//initIdea
 
   ngAfterViewInit() {
-    this.slides = document.querySelectorAll("#carousel > div");
+    const slides = this.carousel.nativeElement.querySelectorAll('div');
+    console.log(slides); // Ora hai accesso a tutti i <div> figli
   }
   
   moveSlide(direction: number) {
+    console.log(direction);
     this.currentIndex = (this.currentIndex + direction + this.slides.length) % this.slides.length;
-    const carousel = document.getElementById("carousel");
-    if (carousel) {
-      carousel.style.transform = `translateX(-${this.currentIndex * 100}%)`;
-    }
+  
+    setTimeout(() => {
+      const carousel = document.getElementById("carousel");
+      if (carousel) {
+        carousel.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+      }
+    }, 0); // Permette al DOM di completare il rendering
   }
 }

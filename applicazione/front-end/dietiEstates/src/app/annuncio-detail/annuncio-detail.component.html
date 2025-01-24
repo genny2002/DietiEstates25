@@ -8,6 +8,11 @@
     <!-- Carosello -->
     <div class="overflow-hidden">
       <div class="flex transition-transform duration-500" id="carousel">
+        <!--@for ( i of  this.annuncioItem?.immagini; track $index){
+            <div class="w-full flex-shrink-0">
+                <img src={{i.url}} alt="Prodotto {{$index}}" class="w-full object-cover">
+            </div>
+          }-->
         <div class="w-full flex-shrink-0">
           <img src={{this.annuncioItem?.immagini?.[0]?.url}} alt="Prodotto 1" class="w-full object-cover">
         </div>
