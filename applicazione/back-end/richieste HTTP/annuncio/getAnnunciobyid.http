@@ -1,2 +1,2 @@
-get http://localhost:3000/download/annunci/1
+get http://localhost:3000/download/annunci?id=4
 Content-Type: multipart/form-data; boundary=boundary

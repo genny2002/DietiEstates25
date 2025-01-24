@@ -13,7 +13,7 @@ export function createModelAnnuncio(database) {
         allowNull: false,
     },
     descrizione: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     prezzo: {

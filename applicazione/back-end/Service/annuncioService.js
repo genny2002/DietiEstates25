@@ -33,97 +33,74 @@ export class AnnuncioService {
 
     static async getAnnunci(req) {
         try {
-            
-                        // ...existing code...
-            const {prezzoMin, prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode } = req.query;
+            const {prezzoMin, prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode, id } = req.query;
 
-            let annunci = await AnnuncioRepository.getAnnunci();
-        
+            if (id) {
+                try {
+                    let annunci = [await AnnuncioRepository.getAnnuncioById(id)];
 
-           // Filtro per range di prezzo
-            if (prezzoMin ) {
-                annunci = annunci.filter(item => item.prezzo >= prezzoMin);
-            }
-            if (prezzoMax) {
-                annunci = annunci.filter(item => item.prezzo <= prezzoMax);
-            }
-            // Filtro per dimensioni
-            if (dimensioni) {
-            annunci = annunci.filter(item => item.dimensioni >= dimensioni);
-            }
-
-            // Filtro per indirizzo
-            if (indirizzo) {
-                const paroleIndirizzo = indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/);
-
-                for (const parola of paroleIndirizzo) {
-                    annunci = annunci.filter(item => item.indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').includes(parola));
+                    return annunci;
+                } catch (err) {
+                    console.error("Errore durante il recupero dell'annuncio:", err); // Log dell'errore
+                    throw err;
                 }
-            }
-
-            // Filtro per numeroStanze
-            if (numeroStanze) {
-            annunci = annunci.filter(item => item.numeroStanze == numeroStanze);
-            }
-
-            // Filtro per piano
-            if (piano) {
-            annunci = annunci.filter(item => item.piano == piano);
-            }
-
-            // Filtro per ascensore
-            if (ascensore) {
-            annunci = annunci.filter(item => item.ascensore == true);
-            }
-
-            // Filtro per classeEnergetica
-            if (classeEnergetica) {
-            annunci = annunci.filter(item => item.classeEnergetica.includes(classeEnergetica));
-            }
-
-            // Filtro per altriServizi
-            if (altriServizi) {
-                if(altriServizi.includes("portineria")){
-                    annunci = annunci.filter(item => item.altriServizi.includes("portineria:true"));
+            }else{
+                let annunci = await AnnuncioRepository.getAnnunci();
+    
+                if (prezzoMin ) {
+                    annunci = annunci.filter(item => item.prezzo >= prezzoMin);
                 }
-                if(altriServizi.includes("climatizzazione")){
-                    annunci = annunci.filter(item => item.altriServizi.includes("climatizzazione:true"));
+                if (prezzoMax) {
+                    annunci = annunci.filter(item => item.prezzo <= prezzoMax);
                 }
-            }
-
-            // Filtro per categoria
-            if (categoria) {
-            annunci = annunci.filter(item => item.categoria == categoria);
-            }
-
-           // Ordinamento su prezzo
-            if (sort === 'prezzo') {
-                annunci.sort((a, b) => {
-                if (mode === 'asc') {
-                    return a.prezzo - b.prezzo;
-                } else if (mode === 'desc') {
-                    return b.prezzo - a.prezzo;
+                if (dimensioni) {
+                    annunci = annunci.filter(item => item.dimensioni >= dimensioni);
                 }
-                return 0;
-                });
-            }
+                if (indirizzo) {
+                    const paroleIndirizzo = indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/);
 
-            // ...existing code...
-            return annunci;
+                    for (const parola of paroleIndirizzo) {
+                        annunci = annunci.filter(item => item.indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').includes(parola));
+                    }
+                }
+                if (numeroStanze) {
+                    annunci = annunci.filter(item => item.numeroStanze == numeroStanze);
+                }
+                if (piano) {
+                    annunci = annunci.filter(item => item.piano == piano);
+                }
+                if (ascensore) {
+                    annunci = annunci.filter(item => item.ascensore == true);
+                }
+                if (classeEnergetica) {
+                    annunci = annunci.filter(item => item.classeEnergetica.includes(classeEnergetica));
+                }
+                if (altriServizi) {
+                    if(altriServizi.includes("portineria")){
+                        annunci = annunci.filter(item => item.altriServizi.includes("portineria:true"));
+                    }
+                    if(altriServizi.includes("climatizzazione")){
+                        annunci = annunci.filter(item => item.altriServizi.includes("climatizzazione:true"));
+                    }
+                }
+                if (categoria) {
+                    annunci = annunci.filter(item => item.categoria == categoria);
+                }
+                if (sort === 'prezzo') {
+                    annunci.sort((a, b) => {
+                        if (mode === 'asc') {
+                            return a.prezzo - b.prezzo;
+                        } else if (mode === 'desc') {
+                            return b.prezzo - a.prezzo;
+                        }
+                        return 0;
+                    });
+                }
+                return annunci;
+            }
         } catch (err) {
             console.error("Errore durante il recupero degli annunci:", err); // Log dell'errore
             throw err;
         }
     }
-
-
-    static async getAnnuncioById(id) {
-        try {
-            return await AnnuncioRepository.getAnnuncioById(id);
-        } catch (err) {
-            console.error("Errore durante il recupero dell'annuncio:", err); // Log dell'errore
-            throw err;
-        }
-    }   
-
 }

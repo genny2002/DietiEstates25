@@ -57,17 +57,12 @@ anunncioController.get("/", (req, res) => {
 anunncioController.get("/download/annunci", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci(req);
-        /*if (!annunci || annunci.length === 0) {
-            return res.status(404).json({ error: "Nessun annuncio trovato" });
-        }*/
-
         const annunciConImmagini = annunci.map(annuncio => {
             const immagini = JSON.parse(annuncio.foto).map(filePath => ({
                 url: `http://localhost:3000/img/${path.basename(filePath)}`,
                 nome: path.basename(filePath)
             }));
             
-            //console.log(annunciConImmagini);
             return {
                 ...annuncio.dataValues,
                 immagini
@@ -82,7 +77,7 @@ anunncioController.get("/download/annunci", async (req, res) => {
 
 
 
-anunncioController.get("/download/annunci/:id", async (req, res) => {
+/*anunncioController.get("/download/annunci/:id", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci(req);
         if (!annunci || annunci.length === 0) {
@@ -106,4 +101,4 @@ anunncioController.get("/download/annunci/:id", async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-});
+});*/

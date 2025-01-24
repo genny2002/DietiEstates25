@@ -39,8 +39,6 @@ Richiesta.Cliente=Richiesta.belongsTo(Cliente);
 GestoreAgenzia.Collaboratores=GestoreAgenzia.hasMany(Collaboratore);
 Collaboratore.GestoreAgenzia=Collaboratore.belongsTo(GestoreAgenzia);
 
-
-
 database.sync().then(() => {
     console.log("Database synced correctly");
 }).catch(err => {

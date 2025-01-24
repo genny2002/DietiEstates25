@@ -214,5 +214,11 @@ export class BackendService {
 
     return this.http.get<{ latitude: number, longitude: number }[]>(url, this.httpOptions);
   }
+
+  getAnnuncioToShow(id: number){
+    const url= `${this.url}/download/annunci?id=${id}`;
+
+    return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
+  }
 }
 

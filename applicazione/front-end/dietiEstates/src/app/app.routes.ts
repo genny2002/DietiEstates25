@@ -11,6 +11,7 @@ import { RegistraAgenziaComponent } from './registra-agenzia/registra-agenzia.co
 import { NuovoImmobileComponent } from './nuovo-immobile/nuovo-immobile.component';
 import { NotificheComponent } from './notifiche-page/notifiche-page.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
+import { AnnuncioDetailComponent } from './annuncio-detail/annuncio-detail.component';
 
 export const routes: Routes = [ 
     {
@@ -61,5 +62,10 @@ export const routes: Routes = [
         path: "ricerca",
         component: RicercaComponent,
         title: "Ricerca | DietiEstates"
-    },
+    }, {
+        path: "immobile/:id",
+        component: AnnuncioDetailComponent,
+        title: "Annuncio Detail | DietiEstates",
+        //canActivate: [authGuard]
+    }
 ];
