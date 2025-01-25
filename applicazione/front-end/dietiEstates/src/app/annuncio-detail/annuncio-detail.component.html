@@ -1,76 +1,94 @@
-<!--<div class="w-1/2 h-screen/2 bg-blue-500 flex flex-col">
-    <img src={{this.annuncioItem?.immagini?.[0]?.url}} class="flex-1 w-full object-cover"/>
-    <img src={{this.annuncioItem?.immagini?.[1]?.url}} class="flex-1 w-full object-cover"/>
-    <img src={{this.annuncioItem?.immagini?.[2]?.url}} class="flex-1 w-full object-cover"/>
-</div>-->
-
-<div class="relative">
+<div class="flex items-start gap-4">
+  <div class="relative  w-[40%] mt-2 ml-2" >
     <!-- Carosello -->
     <div class="overflow-hidden">
       <div class="flex transition-transform duration-500" id="carousel">
-        <!--@for ( i of  this.annuncioItem?.immagini; track $index){
-            <div class="w-full flex-shrink-0">
-                <img src={{i.url}} alt="Prodotto {{$index}}" class="w-full object-cover">
-            </div>
-          }-->
-        <div class="w-full flex-shrink-0">
-          <img src={{this.annuncioItem?.immagini?.[0]?.url}} alt="Prodotto 1" class="w-full object-cover">
-        </div>
-        <div class="w-full flex-shrink-0">
-          <img src={{this.annuncioItem?.immagini?.[1]?.url}} alt="Prodotto 2" class="w-full object-cover">
-        </div>
-        <div class="w-full flex-shrink-0">
-          <img src={{this.annuncioItem?.immagini?.[2]?.url}} alt="Prodotto 3" class="w-full object-cover">
-        </div>
-        <div class="w-full flex-shrink-0">
-          <img src={{this.annuncioItem?.immagini?.[3]?.url}} alt="Prodotto 4" class="w-full object-cover">
-        </div>
+        @for ( i of  this.annuncioItem?.immagini; track $index){
+          <div class="w-full flex-shrink-0">
+            <img src={{i.url}} alt="Prodotto {{$index}}" class="w-[100%] h-[100%] object-cover mx-auto cursor-pointer" (click)="showImmage($index)">
+          </div>
+        }
       </div>
     </div>
-  
+
     <!-- Punteggiatori (Navigazione) -->
-    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black px-4 py-2 rounded-full" (click)="moveSlide(-1)">❮</button>
-    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black px-4 py-2 rounded-full" (click)="moveSlide(1)">❯</button>
+    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-arancione hover:bg-pesca text-white hover:text-arancione px-4 py-2 rounded-full" (click)="moveSlide(-1)">❮</button>
+    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-arancione hover:bg-pesca text-white hover:text-arancione px-4 py-2 rounded-full" (click)="moveSlide(1)">❯</button>
   </div>
-
-
-<p class="font-bold">Descrzione</p> 
-<p>{{annuncioItem?.descrizione}}</p>
-<p class="font-bold">Indirizzo: {{annuncioItem?.indirizzo}}</p>
-<p class="font-extrabold">Prezzo: € {{annuncioItem?.prezzo}}</p>
-
-<div class="flex items-center space-x-2 mt-2 ml-2">
-    <img ngSrc="dimensioni.png" alt="Dimensioni: " width="40" height="40" />
-    <p>Dimensioni: {{annuncioItem?.dimensioni}}</p>
-</div>
-<div class="flex items-center space-x-2 mt-2 ml-2">
-    <img ngSrc="numeroStanze.png" alt="Numero Stanze: " width="40" height="40">
-    <p>Numero Stanze: {{annuncioItem?.numeroStanze}}</p>
-</div>
-<div class="flex items-center space-x-2 mt-2 ml-2">
-    <img ngSrc="piano.png" alt="Piano: " width="40" height="40">
-    <p>Piano: {{annuncioItem?.piano}}</p>
-</div>
-<div class="flex items-center space-x-2 mt-2 ml-2">
-    <img ngSrc="classeEnergetica.png" alt="Classe Energetica: " width="40" height="40">
-    <p>Classe Energetica: {{annuncioItem?.classeEnergetica}}</p>
-</div>
-<div class="flex items-center space-x-2 mt-2 ml-2">
-    <img ngSrc="ascensore.png" alt="Ascensore: " width="40" height="40" />
-    @if(annuncioItem?.ascensore){
-        <img ngSrc="si.png" alt="SI" width="16" height="16">
-    } @else {
-        <img ngSrc="no.png" alt="NO" width="16" height="16">
-    }
+  <div class="w-[60%]">
+    <p class="font-bold">Descrzione</p>
+    <p>{{annuncioItem?.descrizione}}</p>
+  </div>
 </div>
 
-@for(s of servizi; track s.nome){
+<p class="font-bold ml-2">Indirizzo: {{annuncioItem?.indirizzo}}</p>
+<p class="font-extrabold ml-2">Prezzo: € {{annuncioItem?.prezzo}}</p>
+
+<div class="w-[40%] flex space-x-12">
+  <div class="text-left flex-1 pl-2">
     <div class="flex items-center space-x-2 mt-2 ml-2">
-        <img ngSrc={{s.nomeFile}} alt={{s.nome}} width="40" height="40" />
-        @if(s.valore == "true"){
+        <img ngSrc="dimensioni.png" alt="Dimensioni: " width="40" height="40" />
+        <p>Dimensioni: {{annuncioItem?.dimensioni}}</p>
+    </div>
+    <div class="flex items-center space-x-2 mt-2 ml-2">
+        <img ngSrc="numeroStanze.png" alt="Numero Stanze: " width="40" height="40">
+        <p>Numero Stanze: {{annuncioItem?.numeroStanze}}</p>
+    </div>
+    <div class="flex items-center space-x-2 mt-2 ml-2">
+      <img ngSrc="piano.png" alt="Piano: " width="40" height="40">
+      <p>Piano: {{annuncioItem?.piano}}</p>
+    </div>
+    <div class="flex items-center space-x-2 mt-2 ml-2">
+        <img ngSrc="classeEnergetica.png" alt="Classe Energetica: " width="40" height="40">
+        <p>Classe Energetica: {{annuncioItem?.classeEnergetica}}</p>
+    </div>
+  </div>
+  <div class="text-right flex-1 pl-2">
+    <div class="flex items-center space-x-2 mt-2 ml-2">
+        <img ngSrc="ascensore.png" alt="Ascensore: " width="40" height="40" />
+        @if(annuncioItem?.ascensore){
             <img ngSrc="si.png" alt="SI" width="16" height="16">
-        }@else {
+        } @else {
             <img ngSrc="no.png" alt="NO" width="16" height="16">
         }
     </div>
+
+    @for(s of servizi; track s.nome){
+        <div class="flex items-center space-x-2 mt-2 ml-2">
+            <img ngSrc={{s.nomeFile}} alt={{s.nome}} width="40" height="40" />
+            @if(s.valore == "true"){
+                <img ngSrc="si.png" alt="SI" width="16" height="16">
+            }@else {
+                <img ngSrc="no.png" alt="NO" width="16" height="16">
+            }
+        </div>
+    }
+  </div>
+</div>
+<div class="flex justify-between mt-4 ml-2 mr-2 mb-2"> 
+  <!-- Bottone Indietro, allineato a sinistra -->
+  <button type="button" [routerLink]="backLink" 
+    class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg">
+    Indietro
+  </button>
+
+  @if(this.authService.isUserAuthenticated()){
+  <!-- Bottone Prenota, allineato a destra -->
+    <button type="button" [routerLink]="editLink" 
+      class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg self-end mt-auto ml-auto">
+      Prenota
+    </button>
+  }
+</div>
+
+@if(selectedImageIndex >= 0){
+  <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+    <div class="relative bg-white rounded-lg p-4 w-full max-w-6xl max-h-screen mt-16">
+      <button (click)="closeModal()" class="absolute top-2 right-2 text-black">✖</button>
+      <img [src]="immagineDaMostrare.url" [alt]="'Prodotto ' + selectedImageIndex" class="w-full h-auto object-contain max-h-[80vh]">
+    </div>
+
+    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-arancione hover:bg-pesca text-white hover:text-arancione px-4 py-2 rounded-full" (click)="changeImage(-1)">❮</button>
+    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-arancione hover:bg-pesca text-white hover:text-arancione px-4 py-2 rounded-full" (click)="changeImage(1)">❯</button>
+  </div>
 }

@@ -1,4 +1,4 @@
-interface Immagine{
+export interface Immagine{
   url: string;
   nome: string;
 }

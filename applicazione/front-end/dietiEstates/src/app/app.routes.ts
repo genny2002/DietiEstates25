@@ -12,6 +12,7 @@ import { NuovoImmobileComponent } from './nuovo-immobile/nuovo-immobile.componen
 import { NotificheComponent } from './notifiche-page/notifiche-page.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
 import { AnnuncioDetailComponent } from './annuncio-detail/annuncio-detail.component';
+import { PrenotaComponent } from './prenota/prenota.component';
 
 export const routes: Routes = [ 
     {
@@ -67,5 +68,9 @@ export const routes: Routes = [
         component: AnnuncioDetailComponent,
         title: "Annuncio Detail | DietiEstates",
         //canActivate: [authGuard]
+    }, {
+        path: "immobile/:id/prenota",
+        component: PrenotaComponent,
+        title: "Prenota | DietiEstates",
     }
 ];

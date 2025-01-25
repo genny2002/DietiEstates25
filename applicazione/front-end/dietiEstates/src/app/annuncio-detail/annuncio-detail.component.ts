@@ -2,8 +2,9 @@ import { Component, inject, AfterViewInit, ViewChild, ElementRef, } from '@angul
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
-import { AnnuncioGet } from '../_services/backend/annuncio.type';
+import { AnnuncioGet, Immagine } from '../_services/backend/annuncio.type';
 import { BackendService } from '../_services/backend/backend.service';
+import { AuthService } from '../_services/AuthService/auth-service.service';
 
 interface Servizio {
   nome: string;
@@ -13,7 +14,7 @@ interface Servizio {
 
 @Component({
   selector: 'app-annuncio-detail',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, RouterLink],
   templateUrl: './annuncio-detail.component.html',
   styleUrl: './annuncio-detail.component.scss'
 })
@@ -23,14 +24,18 @@ export class AnnuncioDetailComponent  {
   @ViewChild('carousel', { static: false }) carousel!: ElementRef<HTMLDivElement>;
   annuncioItem?: AnnuncioGet;
   editLink = "";  //link per modificare l'idea 'ideaItem'
+  backLink="/ricerca";  //link per tornare alla pagina di ricerca
   servizi: Servizio[] = []
 
   currentIndex = 0;
   slides!: NodeListOf<HTMLDivElement>;
+  selectedImageIndex = -1;
+  immagineDaMostrare : Immagine = {url: "", nome: ""}
 
   backendService = inject(BackendService);
   router = inject(Router);
   toastr = inject(ToastrService); //mostra le notifiche
+  authService = inject(AuthService);
 
   async ngOnInit() {  //inizializza il componente
     await this.initIdea();  //inizializza 'ideaItem'
@@ -65,22 +70,37 @@ export class AnnuncioDetailComponent  {
         }
       });
     })
-  }//initIdea
-
-  ngAfterViewInit() {
-    const slides = this.carousel.nativeElement.querySelectorAll('div');
-    console.log(slides); // Ora hai accesso a tutti i <div> figli
-  }
+  }//initIdeas
   
   moveSlide(direction: number) {
-    console.log(direction);
-    this.currentIndex = (this.currentIndex + direction + this.slides.length) % this.slides.length;
-  
+    if(this.annuncioItem){
+      this.currentIndex = (this.currentIndex + direction + this.annuncioItem?.immagini.length) % this.annuncioItem?.immagini.length;
+    }
+    
     setTimeout(() => {
       const carousel = document.getElementById("carousel");
       if (carousel) {
         carousel.style.transform = `translateX(-${this.currentIndex * 100}%)`;
       }
     }, 0); // Permette al DOM di completare il rendering
+  }
+
+  showImmage(index: number): void {
+    this.selectedImageIndex = index;
+
+    if(this.annuncioItem?.immagini[index] != undefined){
+      this.immagineDaMostrare = this.annuncioItem?.immagini[index];
+    }
+  }
+
+  closeModal(): void {
+    this.selectedImageIndex = -1;
+  }
+
+  changeImage(direction: number): void {
+    if(this.annuncioItem){
+      this.selectedImageIndex = (this.selectedImageIndex + direction + this.annuncioItem?.immagini.length) % this.annuncioItem?.immagini.length;
+      this.immagineDaMostrare = this.annuncioItem?.immagini[this.selectedImageIndex];
+    }
   }
 }
