@@ -224,7 +224,7 @@ export class BackendService {
   getMeteo(lat: number, lon: number){
     const url= `${this.url}/meteo/${lat}/${lon}`;
 
-    return this.http.get<ApiResponse[]>(url, this.httpOptions);
+    return this.http.get<any>(url, this.httpOptions);
   }
 }
 

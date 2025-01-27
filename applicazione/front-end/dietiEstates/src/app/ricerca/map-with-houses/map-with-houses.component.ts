@@ -37,8 +37,6 @@ export class MapWithHousesComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['immobili'] && changes['immobili'].currentValue) {
-      
-      console.log('Nuovi immobili ricevuti:');
       this.setPointsOnMap();
     }
   }
@@ -55,9 +53,6 @@ export class MapWithHousesComponent {
         this.toastr.error(err.message, err.statusText);
       }
     });
-
-    
-    //this.setPointsOnMap();
   }
 
   private initializeMap(config: any) {
@@ -77,7 +72,6 @@ export class MapWithHousesComponent {
   }
 
   setPointsOnMap() {
-    console.log(this.immobili);
     if (!this.markersGroup && this.map) {
       this.markersGroup = L.layerGroup().addTo(this.map);
     }
