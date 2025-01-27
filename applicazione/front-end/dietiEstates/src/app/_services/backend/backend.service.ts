@@ -7,6 +7,7 @@ import { Appuntamento } from './appuntamento.type';
 import { Offerta } from './offerta.type';
 import { Annuncio, AnnuncioGet } from './annuncio.type';
 import { Filtro } from './filtro.type';
+import { ApiResponse } from './meteo.type';
 
 @Injectable({
   providedIn: 'root'
@@ -219,6 +220,11 @@ export class BackendService {
     const url= `${this.url}/download/annunci?id=${id}`;
 
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
+  }
+  getMeteo(lat: number, lon: number){
+    const url= `${this.url}/meteo/${lat}/${lon}`;
+
+    return this.http.get<ApiResponse[]>(url, this.httpOptions);
   }
 }
 

@@ -12,6 +12,7 @@ import {collaboratoreController} from "./Controller/collaboratoreController.js";
 import { anunncioController } from  "./Controller/annuncioCaontroller.js";
 import {richiestaController} from "./Controller/richiestaController.js";
 import { mapController } from './Controller/mapController.js';
+import { meteoContoller } from './Controller/meteoController.js';
 
 const app = express();
 const PORT = 3000;
@@ -45,6 +46,7 @@ app.use(collaboratoreController); //aggiunge la route 'collaboratoreRouter'
 app.use(anunncioController); //aggiunge la route 'annuncioRouter'
 app.use(richiestaController); //aggiunge la route 'richiestaRouter'
 app.use(mapController); //aggiunge la route 'richiestaRouter'
+app.use(meteoContoller); //aggiunge la route 'meteoRouter'
 
 
 
