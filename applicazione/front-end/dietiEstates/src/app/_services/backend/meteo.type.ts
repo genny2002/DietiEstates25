@@ -3,7 +3,7 @@ export interface ApiMeteoResponse {
     time: string;
     temperature_2m_max: string;
     temperature_2m_min: string;
-    precipation_sum: string;
+    precipitation_sum: string;
     rain_sum: string;
     showers_sum: string;
     snowfall_sum: string;
@@ -11,7 +11,7 @@ export interface ApiMeteoResponse {
   }
   daily: {
     time: number[];
-    wheatcode: number[];
+    weathercode: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
     precipitation_sum: number[];

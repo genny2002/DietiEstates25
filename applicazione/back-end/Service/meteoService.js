@@ -17,6 +17,7 @@ export class MeteoService {
           latitude: lat,
           longitude: lon,
           daily: [
+            "weathercode",
             "temperature_2m_max",
             "temperature_2m_min",
             "precipitation_sum",
