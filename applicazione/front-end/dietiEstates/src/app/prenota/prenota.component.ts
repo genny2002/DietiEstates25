@@ -1,12 +1,11 @@
 import { Component , inject} from '@angular/core';
-import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
 import {ApiMeteoResponse} from '../_services/backend/meteo.type';
 
 @Component({
   selector: 'app-prenota',
-  imports: [NgOptimizedImage],
+  imports: [],
   templateUrl: './prenota.component.html',
   styleUrl: './prenota.component.scss'
 })
