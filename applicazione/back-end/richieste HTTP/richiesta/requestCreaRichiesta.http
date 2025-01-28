@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "stato": "accettata",
   "offerta": null,
-  "data": "2024-12-09T18:00:00Z",
+  "data": "2025-02-03T16:00:00Z",
   "ClienteUsername": "jasmine",
   "AgenteImmobiliareUsername":"provaAgenzia2",
   "AnnuncioIDimmobile": 1

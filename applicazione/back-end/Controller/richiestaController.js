@@ -76,3 +76,14 @@ richiestaController.put("/updateRichiesta/:id", async (req, res, next) => {
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+
+richiestaController.get("/getRichiesteGiornoX/:AgenteImmobiliareUsername/:data", async (req, res, next) => {
+    try {
+        const Richiesta = await RichiestaService.GetOrariRichiestaDisponibili(req, res);
+        res.status(200).json(Richiesta);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});

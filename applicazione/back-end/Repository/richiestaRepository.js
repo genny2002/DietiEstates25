@@ -101,6 +101,31 @@ export class RichiestaRepository {
             throw err;
         }
     }
+       
+    static async getRichiesteByDateOnly(username, date) {
+        try {
+
+    
+            // Ottieni l'inizio e la fine della giornata per la data fornita
+            const startDate = new Date(date);
+            startDate.setHours(0, 0, 0, 0); // Inizio giornata
+            const endDate = new Date(date);
+            endDate.setHours(23, 59, 59, 999); // Fine giornata
+    
+            // Query per ottenere le richieste
+            return await Richiesta.findAll({
+                where: {
+                    data: {
+                        [Op.between]: [startDate, endDate], // Filtra per la data specifica
+                    },
+                    AgenteImmobiliareUsername: username, // Filtra per username dell'agente immobiliare
+                },
+            });
+        } catch (err) {
+            console.error("Error in getRichiesteByDateOnly:", err);
+            throw err;
+        }
+    }
 
     
 }
