@@ -1,10 +1,18 @@
-<div class="w-full flex">
-
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">1</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">2</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">3</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">4</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">5</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">6</div>
-    <div class="flex-1 bg-blue-500 p-4 text-white text-center">7</div>
+<h1 class="text-xl font-semibold text-center">Seleziona una data</h1>
+<div class="w-full flex space-x-2 px-2 h-1/2">
+    <div class="flex-1 bg-arancione p-4 text-white text-center">
+        <p class="font-bold">{{this.weatherData?.daily?.time?.[0]}}</p>
+        <p class="font-semibold"> Max {{this.weatherData?.daily?.temperature_2m_max?.[0]}}
+            {{this.weatherData?.daily_units?.temperature_2m_max}} / {{this.weatherData?.daily?.temperature_2m_min?.[0]}}
+            {{this.weatherData?.daily_units?.temperature_2m_min}} min
+        </p>
+        <p class="font-semibold"> Probabilità pioggia {{this.weatherData?.daily?.precipitation_probability_max?.[0]}}
+            {{this.weatherData?.daily_units?.precipitation_probability_max}}</p>
+    </div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">2</div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">3</div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">4</div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">5</div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">6</div>
+    <div class="flex-1 bg-arancione p-4 text-white text-center">7</div>
 </div>

@@ -1,7 +1,6 @@
 export interface ApiMeteoResponse {
   daily_units: {
     time: string;
-    weathercode: string;
     temperature_2m_max: string;
     temperature_2m_min: string;
     precipation_sum: string;

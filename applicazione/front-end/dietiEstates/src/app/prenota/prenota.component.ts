@@ -10,15 +10,14 @@ import {ApiMeteoResponse} from '../_services/backend/meteo.type';
   styleUrl: './prenota.component.scss'
 })
 export class PrenotaComponent {
-  response?: ApiMeteoResponse;
+  //response?: ApiMeteoResponse;
 
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
-  weatherData?: any;
+  weatherData?: ApiMeteoResponse;
 
   ngOnInit() {  //inizializza il componente
     this.getMeteo();
-    //console.log(this.weatherData);
   }
 
   getMeteo(){
