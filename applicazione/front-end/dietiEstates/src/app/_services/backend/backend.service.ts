@@ -7,7 +7,7 @@ import { Appuntamento } from './appuntamento.type';
 import { Offerta } from './offerta.type';
 import { Annuncio, AnnuncioGet } from './annuncio.type';
 import { Filtro } from './filtro.type';
-import { ApiResponse } from './meteo.type';
+import { ApiMeteoResponse } from './meteo.type';
 
 @Injectable({
   providedIn: 'root'
@@ -224,7 +224,7 @@ export class BackendService {
   getMeteo(lat: number, lon: number){
     const url= `${this.url}/meteo/${lat}/${lon}`;
 
-    return this.http.get<any>(url, this.httpOptions);
+    return this.http.get<ApiMeteoResponse>(url, this.httpOptions);
   }
 }
 

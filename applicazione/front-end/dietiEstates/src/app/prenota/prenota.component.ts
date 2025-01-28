@@ -1,7 +1,7 @@
 import { Component , inject} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
-import {ApiResponse, WeatherData} from '../_services/backend/meteo.type';
+import {ApiMeteoResponse} from '../_services/backend/meteo.type';
 
 @Component({
   selector: 'app-prenota',
@@ -10,7 +10,7 @@ import {ApiResponse, WeatherData} from '../_services/backend/meteo.type';
   styleUrl: './prenota.component.scss'
 })
 export class PrenotaComponent {
-  response?: ApiResponse;
+  response?: ApiMeteoResponse;
 
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
@@ -18,14 +18,14 @@ export class PrenotaComponent {
 
   ngOnInit() {  //inizializza il componente
     this.getMeteo();
+    //console.log(this.weatherData);
   }
 
   getMeteo(){
     this.backendService.getMeteo(52.52, 13.41).subscribe({
       next: (data) => {
-        //console.log(data);
+        console.log(data);
         this.weatherData = data;
-        console.log(this.response);
       },
       error: (err) => {
         if (err.status === 401) {

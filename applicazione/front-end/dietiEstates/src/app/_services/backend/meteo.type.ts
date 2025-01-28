@@ -1,26 +1,24 @@
-export interface ApiResponse {
-    daily: {
-      time: number; // Timestamp di inizio
-      timeEnd: number; // Timestamp di fine
-      interval: number; // Intervallo in secondi
-      variables: {
-        valuesArray: number[]; // Array dei valori per ogni variabile
-      }[];
-    };
-    utcOffsetSeconds: number; // Offset UTC in secondi
+export interface ApiMeteoResponse {
+  daily_units: {
+    time: string;
+    weathercode: string;
+    temperature_2m_max: string;
+    temperature_2m_min: string;
+    precipation_sum: string;
+    rain_sum: string;
+    showers_sum: string;
+    snowfall_sum: string;
+    precipitation_probability_max: string;
+  }
+  daily: {
+    time: number[];
+    wheatcode: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    precipitation_sum: number[];
+    rain_sum: number[];
+    showers_sum: number[];
+    snowfall_sum: number[];
+    precipitation_probability_max: number[];
   };
-
-
-  export interface WeatherData  {
-    daily: {
-      time: Date[]; // Array di date calcolate dai timestamp
-      weatherCode: number[]; // Codici meteo giornalieri
-      temperature2mMax: number[]; // Temperature massime
-      temperature2mMin: number[]; // Temperature minime
-      precipitationSum: number[]; // Precipitazioni totali
-      rainSum: number[]; // Pioggia totale
-      showersSum: number[]; // Temporali totali
-      snowfallSum: number[]; // Neve totale
-      precipitationProbabilityMax: number[]; // Probabilità massima di precipitazione
-    };
-  };
+};

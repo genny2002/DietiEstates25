@@ -17,7 +17,6 @@ export class MeteoService {
           latitude: lat,
           longitude: lon,
           daily: [
-            "weathercode",
             "temperature_2m_max",
             "temperature_2m_min",
             "precipitation_sum",
@@ -30,8 +29,13 @@ export class MeteoService {
         },
       });
 
-      console.log(response.data);
-      return response.data;
+      let result={
+        daily_units: response.data.daily_units,
+        daily: response.data.daily
+      };
+
+      console.log(result);
+      return result;
 
     } catch (error) {
       console.error(error);
