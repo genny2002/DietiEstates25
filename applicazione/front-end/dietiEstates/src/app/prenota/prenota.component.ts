@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef} from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
@@ -9,13 +9,12 @@ import {AnnuncioGet} from '../_services/backend/annuncio.type';
   selector: 'app-prenota',
   imports: [],
   templateUrl: './prenota.component.html',
-  styleUrl: './prenota.component.scss'
+  styleUrl: './prenota.component.scss',
 })
 export class PrenotaComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   route = inject(ActivatedRoute);
-  //cdr=inject(ChangeDetectorRef);
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
@@ -120,25 +119,20 @@ export class PrenotaComponent {
 
   clicked(direction: number) {
     this.numberClick += direction;
-    let app = this.dayToShow;
-    this.dayToShow = [];
 
     if(direction>0){
-      app.shift();
+      this.dayToShow.shift();
 
       if(this.weatherData?.daily?.time[6+this.numberClick]){
-        app.push(this.weatherData?.daily?.time[6+this.numberClick]);
+        this.dayToShow.push(this.weatherData?.daily?.time[6+this.numberClick]);
       }
     }else{
-      app.pop();
+      this.dayToShow.pop();
 
       if(this.weatherData?.daily?.time[this.numberClick]){
-        app.unshift(this.weatherData?.daily?.time[this.numberClick]);
+        this.dayToShow.unshift(this.weatherData?.daily?.time[this.numberClick]);
       }
     }
-
-    this.dayToShow = app;
-    //this.cdr.detectChanges();
   }
 
   initDayToShow() {
