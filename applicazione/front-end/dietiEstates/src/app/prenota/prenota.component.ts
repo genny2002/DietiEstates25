@@ -1,4 +1,4 @@
-import { Component , inject} from '@angular/core';
+import { Component, inject, ChangeDetectorRef} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
@@ -15,13 +15,18 @@ export class PrenotaComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   route = inject(ActivatedRoute);
+  //cdr=inject(ChangeDetectorRef);
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
 
+  numberClick: number = 0;
+  dayToShow: number[]=[];
+
   async ngOnInit() {  //inizializza il componente
     await this.initAnnuncioItem();
     this.getCordinates();
+    this.initDayToShow();
   }
 
   async initAnnuncioItem(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
@@ -56,6 +61,7 @@ export class PrenotaComponent {
     this.backendService.getMeteo(lat, lon).subscribe({
       next: (data) => {
         this.weatherData = data;
+        this.initDayToShow();
       },
       error: (err) => {
         if (err.status === 401) {
@@ -109,6 +115,37 @@ export class PrenotaComponent {
 
       default:
         return "";
+    }
+  } 
+
+  clicked(direction: number) {
+    this.numberClick += direction;
+    let app = this.dayToShow;
+    this.dayToShow = [];
+
+    if(direction>0){
+      app.shift();
+
+      if(this.weatherData?.daily?.time[6+this.numberClick]){
+        app.push(this.weatherData?.daily?.time[6+this.numberClick]);
+      }
+    }else{
+      app.pop();
+
+      if(this.weatherData?.daily?.time[this.numberClick]){
+        app.unshift(this.weatherData?.daily?.time[this.numberClick]);
+      }
+    }
+
+    this.dayToShow = app;
+    //this.cdr.detectChanges();
+  }
+
+  initDayToShow() {
+    for(let i=this.numberClick; i<7+this.numberClick; i++){
+      if(this.weatherData?.daily?.time[i]){
+        this.dayToShow.push(this.weatherData?.daily?.time[i]);
+      }
     }
   }
 }

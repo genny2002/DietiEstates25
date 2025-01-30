@@ -1,6 +1,6 @@
 <h1 class="text-xl font-semibold text-center">Seleziona una data</h1>
 <div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
-    @for(i of this.weatherData?.daily?.time; track $index){
+    @for(i of this.dayToShow; track $index){
         <div class="flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center">
             <p class="font-bold">{{this.weatherData?.daily?.time?.[$index]}}</p>
 
@@ -18,4 +18,17 @@
                 {{this.weatherData?.daily_units?.precipitation_sum}}</p>
         </div>
     }
+
+    <button 
+        class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded"
+        (click)="this.clicked(-1)"
+    >
+        Precedente
+    </button>
+    <button 
+        class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded"
+        (click)="this.clicked(1)"
+    >
+        Successivo
+    </button>
 </div>
