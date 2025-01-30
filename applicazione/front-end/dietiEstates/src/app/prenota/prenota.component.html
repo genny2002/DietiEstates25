@@ -1,20 +1,20 @@
 <h1 class="text-xl font-semibold text-center">Seleziona una data</h1>
-<div class="w-full flex space-x-2 px-2 h-1/2">
+<div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
     @for(i of this.weatherData?.daily?.time; track $index){
-        <div class="flex-1 bg-arancione p-4 text-white text-center">
+        <div class="flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center">
             <p class="font-bold">{{this.weatherData?.daily?.time?.[$index]}}</p>
 
             <div class="flex justify-center mt-2">
                 <img src={{this.getUrlIcon($index)}} alt="icona meteo" class="mt-2 mb-2" />
             </div>
 
-            <p class="font-semibold"> Max {{this.weatherData?.daily?.temperature_2m_max?.[$index]}}
+            <p class="font-semibold mt-4"> Max {{this.weatherData?.daily?.temperature_2m_max?.[$index]}}
                 {{this.weatherData?.daily_units?.temperature_2m_max}} / {{this.weatherData?.daily?.temperature_2m_min?.[$index]}}
                 {{this.weatherData?.daily_units?.temperature_2m_min}} min
             </p>
-            <p class="font-semibold"> Probabilità pioggia {{this.weatherData?.daily?.precipitation_probability_max?.[$index]}}
+            <p class="font-semibold mt-2"> Probabilità pioggia {{this.weatherData?.daily?.precipitation_probability_max?.[$index]}}
                 {{this.weatherData?.daily_units?.precipitation_probability_max}}</p>
-            <p class="font-semibold"> Quantità pioggia {{this.weatherData?.daily?.precipitation_sum?.[$index]}}
+            <p class="font-semibold mt-2 mb-4"> Quantità pioggia {{this.weatherData?.daily?.precipitation_sum?.[$index]}}
                 {{this.weatherData?.daily_units?.precipitation_sum}}</p>
         </div>
     }

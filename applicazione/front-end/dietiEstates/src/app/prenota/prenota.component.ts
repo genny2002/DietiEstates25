@@ -1,7 +1,9 @@
 import { Component , inject} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
 import {ApiMeteoResponse} from '../_services/backend/meteo.type';
+import {AnnuncioGet} from '../_services/backend/annuncio.type';
 
 @Component({
   selector: 'app-prenota',
@@ -12,16 +14,47 @@ import {ApiMeteoResponse} from '../_services/backend/meteo.type';
 export class PrenotaComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
-  weatherData?: ApiMeteoResponse;
+  route = inject(ActivatedRoute);
 
-  ngOnInit() {  //inizializza il componente
-    this.getMeteo();
+  weatherData?: ApiMeteoResponse;
+  annuncioItem?: AnnuncioGet;
+
+  async ngOnInit() {  //inizializza il componente
+    await this.initAnnuncioItem();
+    this.getCordinates();
   }
 
-  getMeteo(){
-    this.backendService.getMeteo(52.52, 13.41).subscribe({
+  async initAnnuncioItem(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
+    return new Promise((resolve, reject) => {
+      this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({ //recupera le informazioni di 'ideaItem'
+        next: (annuncio) => {
+          this.annuncioItem = annuncio[0]; //inizializza 'ideaItem' con i dati trovati
+          resolve();
+        },
+        error: (err) => {
+          this.toastr.error(err.message, err.statusText); //mostra un messaggio di errore
+          reject(err);
+        }
+      });
+    })
+  }//initIdeas
+
+  getCordinates()  {
+    if(this.annuncioItem?.indirizzo) {
+      this.backendService.getCoordinates(this.annuncioItem?.indirizzo).subscribe({
+        next: (data) => {
+          this.getMeteo(data[0].latitude, data[0].longitude)
+        },
+        error: (err) => {
+          this.toastr.error(err.message, err.statusText);
+        }
+      });
+    }
+  }
+
+  getMeteo(lat: number, lon: number) {
+    this.backendService.getMeteo(lat, lon).subscribe({
       next: (data) => {
-        console.log(data);
         this.weatherData = data;
       },
       error: (err) => {
@@ -33,7 +66,6 @@ export class PrenotaComponent {
   }
 
   getUrlIcon(day: number): string {
-    console.log(this.weatherData?.daily.weathercode[day]);
     switch (this.weatherData?.daily.weathercode[day]) {
       case 0:
       case 1:

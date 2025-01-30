@@ -27,6 +27,7 @@ export class MeteoService {
             "precipitation_probability_max",
           ],
           timezone: "GMT",
+          forecast_days: 14
         },
       });
 

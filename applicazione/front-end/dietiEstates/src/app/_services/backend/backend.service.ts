@@ -205,8 +205,6 @@ export class BackendService {
       url=`${url}&classeEnergetica=${filtro.classeEnergetica}`;
     }
 
-    console.log(url);
-
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
 
@@ -221,6 +219,7 @@ export class BackendService {
 
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
+  
   getMeteo(lat: number, lon: number){
     const url= `${this.url}/meteo/${lat}/${lon}`;
 

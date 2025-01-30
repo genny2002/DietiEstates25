@@ -38,7 +38,7 @@ export class AnnuncioDetailComponent  {
   authService = inject(AuthService);
 
   async ngOnInit() {  //inizializza il componente
-    await this.initIdea();  //inizializza 'ideaItem'
+    await this.initAnnuncio();  //inizializza 'ideaItem'
     this.editLink = "/immobile/" + this.annuncioItem?.IDimmobile + "/prenota";  //inizializza 'editLink'
 
     const pairs = this.annuncioItem?.altriServizi.split('-');
@@ -56,12 +56,11 @@ export class AnnuncioDetailComponent  {
     }
   }//fine ngOnInit
 
-  async initIdea(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
+  async initAnnuncio(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
     return new Promise((resolve, reject) => {
       this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({ //recupera le informazioni di 'ideaItem'
         next: (annuncio) => {
           this.annuncioItem = annuncio[0]; //inizializza 'ideaItem' con i dati trovati
-          console.log(this.annuncioItem);
           resolve();
         },
         error: (err) => {
