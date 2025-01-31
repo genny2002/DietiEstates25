@@ -166,19 +166,21 @@ export class RichiestaService {
                             break;
                         }
                     }
-                    if (disponibile) {
-                        orariDisponibili.push(`${hour}:00`);
-                    }
                 }
-    
-                results.push({ data: dateOnly, orariDisponibili });
+                if (disponibile) {
+                    orariDisponibili.push(`${hour}:00`);
+                }
             }
-    
-            return results;
-        } catch (err) {
-            console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
-            throw err;
+
+            results.push({ data: dateOnly, orariDisponibili });
         }
+
+        return results;
+    } catch (err) {
+        console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
+        throw err;
     }
+}
+
 
 }
