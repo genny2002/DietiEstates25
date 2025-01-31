@@ -147,27 +147,34 @@ export class RichiestaService {
         try {
             const agent = req.params.AgenteImmobiliareUsername;
             const rawDate = req.params.data;
-            const dateOnly = rawDate.split('T')[0];
-            const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
-            console.log("richieste:"+richieste);
-            
-            const orariDisponibili = [];
-            for (let hour = 8; hour <= 18; hour += 2) {
-                let disponibile = true;
-                for (const richiesta of richieste) {
-
-                    const oraRichiesta = new Date(richiesta.data).getHours();
-                    if (Math.abs(hour - oraRichiesta) < 2) {
-                        disponibile = false;
-                        break;
+            const startDate = new Date(rawDate);
+            const results = [];
+    
+            for (let i = 0; i <= 14; i++) {
+                const currentDate = new Date(startDate);
+                currentDate.setDate(currentDate.getDate() + i);
+                const dateOnly = currentDate.toISOString().split('T')[0];
+                const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
+    
+                const orariDisponibili = [];
+                for (let hour = 8; hour <= 18; hour += 2) {
+                    let disponibile = true;
+                    for (const richiesta of richieste) {
+                        const oraRichiesta = new Date(richiesta.data).getHours();
+                        if (Math.abs(hour - oraRichiesta) < 2) {
+                            disponibile = false;
+                            break;
+                        }
+                    }
+                    if (disponibile) {
+                        orariDisponibili.push(`${hour}:00`);
                     }
                 }
-                if (disponibile) {
-                    orariDisponibili.push(`${hour}:00`);
-                }
+    
+                results.push({ data: dateOnly, orariDisponibili });
             }
-            
-            return orariDisponibili;
+    
+            return results;
         } catch (err) {
             console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
             throw err;
