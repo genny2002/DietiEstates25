@@ -160,27 +160,26 @@ export class RichiestaService {
                 for (let hour = 8; hour <= 18; hour += 2) {
                     let disponibile = true;
                     for (const richiesta of richieste) {
-                        const oraRichiesta = new Date(richiesta.data).getHours();
-                        if (Math.abs(hour - oraRichiesta) < 2) {
-                            disponibile = false;
-                            break;
+                        if (richiesta.status === 'accetto') {
+                            const oraRichiesta = new Date(richiesta.data).getHours();
+                            if (Math.abs(hour - oraRichiesta) < 2) {
+                                disponibile = false;
+                                break;
+                            }
                         }
                     }
+                    if (disponibile) {
+                        orariDisponibili.push(`${hour}:00`);
+                    }
                 }
-                if (disponibile) {
-                    orariDisponibili.push(`${hour}:00`);
-                }
+    
+                results.push({ data: dateOnly, orariDisponibili });
             }
-
-            results.push({ data: dateOnly, orariDisponibili });
+    
+            return results;
+        } catch (err) {
+            console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
+            throw err;
         }
-
-        return results;
-    } catch (err) {
-        console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
-        throw err;
     }
-}
-
-
 }
