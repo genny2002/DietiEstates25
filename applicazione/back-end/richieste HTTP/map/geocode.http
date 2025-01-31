@@ -1,1 +1,1 @@
-GET http://localhost:3000/geocode/Via%20Bergamo,%206,%2067056%20Luco%20dei%20Marsi%20AQ,%20Italy
+GET http://localhost:3000/geocode/Rome, LAZ, Italy
