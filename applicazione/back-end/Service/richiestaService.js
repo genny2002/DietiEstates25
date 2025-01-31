@@ -143,42 +143,45 @@ export class RichiestaService {
         }
     }
 
-    static async GetOrariRichiestaDisponibili(req, res) {
-        try {
-            const agent = req.params.AgenteImmobiliareUsername;
-            const rawDate = req.params.data;
-            const startDate = new Date(rawDate);
-            const results = [];
-    
-            for (let i = 0; i <= 14; i++) {
-                const currentDate = new Date(startDate);
-                currentDate.setDate(currentDate.getDate() + i);
-                const dateOnly = currentDate.toISOString().split('T')[0];
-                const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
-    
-                const orariDisponibili = [];
-                for (let hour = 8; hour <= 18; hour += 2) {
-                    let disponibile = true;
-                    for (const richiesta of richieste) {
+static async GetOrariRichiestaDisponibili(req, res) {
+    try {
+        const agent = req.params.AgenteImmobiliareUsername;
+        const rawDate = req.params.data;
+        const startDate = new Date(rawDate);
+        const results = [];
+
+        for (let i = 0; i <= 13; i++) {
+            const currentDate = new Date(startDate);
+            currentDate.setDate(currentDate.getDate() + i);
+            const dateOnly = currentDate.toISOString().split('T')[0];
+            const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
+
+            const orariDisponibili = [];
+            for (let hour = 8; hour <= 18; hour += 2) {
+                let disponibile = true;
+                for (const richiesta of richieste) {
+                    if (richiesta.status === 'accetto') {
                         const oraRichiesta = new Date(richiesta.data).getHours();
                         if (Math.abs(hour - oraRichiesta) < 2) {
                             disponibile = false;
                             break;
                         }
                     }
-                    if (disponibile) {
-                        orariDisponibili.push(`${hour}:00`);
-                    }
                 }
-    
-                results.push({ data: dateOnly, orariDisponibili });
+                if (disponibile) {
+                    orariDisponibili.push(`${hour}:00`);
+                }
             }
-    
-            return results;
-        } catch (err) {
-            console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
-            throw err;
+
+            results.push({ data: dateOnly, orariDisponibili });
         }
+
+        return results;
+    } catch (err) {
+        console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
+        throw err;
     }
+}
+
 
 }
