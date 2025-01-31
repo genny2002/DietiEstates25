@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
 import {ApiMeteoResponse} from '../_services/backend/meteo.type';
 import {AnnuncioGet} from '../_services/backend/annuncio.type';
+import {Disponibilita} from '../_services/backend/disponibilita.type';
 
 @Component({
   selector: 'app-prenota',
@@ -25,10 +26,31 @@ export class PrenotaComponent {
   numberClick: number = 0;
   dayToShow: number[]=[];
 
+  disponibilita: Disponibilita[] = []
+
   async ngOnInit() {  //inizializza il componente
     await this.initAnnuncioItem();
+    this.initDisponibilita();
     this.getCordinates();
-    //this.initDayToShow();
+  }
+
+  initDisponibilita() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Aggiungi 1 perché i mesi partono da 0
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    if(this.annuncioItem?.AgenteImmobiliareUsername){
+      this.backendService.getDisponibilita(this.annuncioItem?.AgenteImmobiliareUsername, todayString).subscribe({
+        next: (data) => {
+          this.disponibilita = data;
+        },
+        error: (err) => {
+          this.toastr.error(err.message, err.statusText);
+        }
+      });
+    }
   }
 
   async initAnnuncioItem(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
@@ -63,7 +85,7 @@ export class PrenotaComponent {
     this.backendService.getMeteo(lat, lon).subscribe({
       next: (data) => {
         this.weatherData = data;
-        this.initAnnuncioItema();
+        this.initAnnuncioToShow();
       },
       error: (err) => {
         if (err.status === 401) {
@@ -120,12 +142,11 @@ export class PrenotaComponent {
     }
   } 
 
-  async initAnnuncioItema(): Promise<void> {
+  async initAnnuncioToShow(): Promise<void> {
     this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({
       next: (annuncio) => {
         this.annuncioItem = annuncio[0]; // Assumendo che i dati siano qui
         this.fullDayList = this.weatherData?.daily?.time || [];
-        console.log("Dati meteo ricevuti:", this.fullDayList); // Controlla se i dati ci sono
         this.updateVisibleDays();
       },
       error: (err) => {
@@ -136,6 +157,17 @@ export class PrenotaComponent {
 
   updateVisibleDays() {
     this.visibleDays = this.fullDayList.slice(this.startIndex, this.startIndex + 7);
+
+    let i=0
+
+    for (let day of this.visibleDays) {
+      if(this.disponibilita.find(d => d.data == day.toString())?.orariDisponibili.length==0){
+        document.getElementById(`${i}`)!.classList.remove("flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center");
+        document.getElementById(`${i}`)!.classList.add("flex-1 bg-verdeScuro p-4 text-white text-center opacity-60");
+      };
+
+      i++;
+    }
   }
 
   nextPage() {

@@ -150,7 +150,7 @@ export class RichiestaService {
             const startDate = new Date(rawDate);
             const results = [];
     
-            for (let i = 0; i <= 14; i++) {
+            for (let i = 0; i <= 13; i++) {
                 const currentDate = new Date(startDate);
                 currentDate.setDate(currentDate.getDate() + i);
                 const dateOnly = currentDate.toISOString().split('T')[0];

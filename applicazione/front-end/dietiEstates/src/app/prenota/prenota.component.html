@@ -2,7 +2,7 @@
 
 <div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
     @for (day of this.visibleDays; track $index) {
-        <div class="flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center">
+        <div class="flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center" id="{{$index}}">
             <!-- Usare l'indice globale corretto -->
             <p class="font-bold">
                 {{ this.weatherData?.daily?.time?.[startIndex + $index] }}

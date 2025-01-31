@@ -8,6 +8,7 @@ import { Offerta } from './offerta.type';
 import { Annuncio, AnnuncioGet } from './annuncio.type';
 import { Filtro } from './filtro.type';
 import { ApiMeteoResponse } from './meteo.type';
+import { Disponibilita } from './disponibilita.type';
 
 @Injectable({
   providedIn: 'root'
@@ -224,6 +225,12 @@ export class BackendService {
     const url= `${this.url}/meteo/${lat}/${lon}`;
 
     return this.http.get<ApiMeteoResponse>(url, this.httpOptions);
+  }
+
+  getDisponibilita(usr: string, data: string){
+    const url= `${this.url}/getRichiesteGiornoX/${usr}/${data}`;
+
+    return this.http.get<Disponibilita[]>(url, this.httpOptions);
   }
 }
 
