@@ -18,6 +18,9 @@ export class PrenotaComponent {
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
+  fullDayList: number[] = []; // L'array completo di 14 giorni
+  visibleDays: number[] = []; // Gli elementi attualmente visibili
+  startIndex: number = 0; // Indice di partenza per lo slice
 
   numberClick: number = 0;
   dayToShow: number[]=[];
@@ -25,7 +28,7 @@ export class PrenotaComponent {
   async ngOnInit() {  //inizializza il componente
     await this.initAnnuncioItem();
     this.getCordinates();
-    this.initDayToShow();
+    //this.initDayToShow();
   }
 
   async initAnnuncioItem(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
@@ -60,7 +63,7 @@ export class PrenotaComponent {
     this.backendService.getMeteo(lat, lon).subscribe({
       next: (data) => {
         this.weatherData = data;
-        this.initDayToShow();
+        this.initAnnuncioItema();
       },
       error: (err) => {
         if (err.status === 401) {
@@ -117,29 +120,37 @@ export class PrenotaComponent {
     }
   } 
 
-  clicked(direction: number) {
-    this.numberClick += direction;
-
-    if(direction>0){
-      this.dayToShow.shift();
-
-      if(this.weatherData?.daily?.time[6+this.numberClick]){
-        this.dayToShow.push(this.weatherData?.daily?.time[6+this.numberClick]);
+  async initAnnuncioItema(): Promise<void> {
+    this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({
+      next: (annuncio) => {
+        this.annuncioItem = annuncio[0]; // Assumendo che i dati siano qui
+        this.fullDayList = this.weatherData?.daily?.time || [];
+        console.log("Dati meteo ricevuti:", this.fullDayList); // Controlla se i dati ci sono
+        this.updateVisibleDays();
+      },
+      error: (err) => {
+        this.toastr.error(err.message, err.statusText);
       }
-    }else{
-      this.dayToShow.pop();
+    });
+  }
 
-      if(this.weatherData?.daily?.time[this.numberClick]){
-        this.dayToShow.unshift(this.weatherData?.daily?.time[this.numberClick]);
-      }
+  updateVisibleDays() {
+    this.visibleDays = this.fullDayList.slice(this.startIndex, this.startIndex + 7);
+    console.log('Elementi visibili:', this.visibleDays);
+  }
+
+  nextPage() {
+    if (this.startIndex + 7 < this.fullDayList.length) {
+      this.startIndex += 7;
+      this.updateVisibleDays();
     }
   }
 
-  initDayToShow() {
-    for(let i=this.numberClick; i<7+this.numberClick; i++){
-      if(this.weatherData?.daily?.time[i]){
-        this.dayToShow.push(this.weatherData?.daily?.time[i]);
-      }
+  prevPage() {
+    if (this.startIndex - 7 >= 0) {
+      this.startIndex -= 7;
+      this.updateVisibleDays();
     }
   }
+
 }
