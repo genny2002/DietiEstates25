@@ -136,7 +136,6 @@ export class PrenotaComponent {
 
   updateVisibleDays() {
     this.visibleDays = this.fullDayList.slice(this.startIndex, this.startIndex + 7);
-    console.log('Elementi visibili:', this.visibleDays);
   }
 
   nextPage() {
