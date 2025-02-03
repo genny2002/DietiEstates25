@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject,  Renderer2, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,8 @@ export class PrenotaComponent {
   route = inject(ActivatedRoute);
   authService = inject(AuthService);
   router = inject(Router);  //permette la navigazione
+  renderer = inject(Renderer2);
+  elementRef = inject(ElementRef);
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
@@ -183,10 +185,21 @@ export class PrenotaComponent {
     return 'flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center';
   }
 
+  
+
   selectDay(day: number) {
     this.showRichiestaForm=true;
     this.dateSelected=this.disponibilita[day].data;
     this.orari=this.disponibilita[day].orariDisponibili;
+    //let selectedDayElement: HTMLElement | null = null;
+
+    const selectedDayElement = document.querySelector(`#d${day}`);
+    
+    if (selectedDayElement) {
+      //le classi non devono avere spazi, provare mettere il nome della classe in una variabile stringa
+      this.renderer.removeClass(selectedDayElement, 'flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center');
+      this.renderer.addClass(selectedDayElement, 'flex-1 bg-arancione cursor-pointer p-4 text-white text-center');
+    }
   }
 
   nextPage() {

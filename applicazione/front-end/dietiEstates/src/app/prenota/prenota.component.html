@@ -3,7 +3,7 @@
 
     <div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
         @for (day of this.visibleDays; track $index) {
-            <div class="{{getDayClass(this.weatherData?.daily?.time?.[startIndex + $index])}}" id="{{$index}}" (click)="selectDay($index)">
+            <div class="{{getDayClass(this.weatherData?.daily?.time?.[startIndex + $index])}}" id="d{{$index}}" (click)="selectDay($index)">
                 <!-- Usare l'indice globale corretto -->
                 <p class="font-bold">
                     {{ this.weatherData?.daily?.time?.[startIndex + $index] }}
