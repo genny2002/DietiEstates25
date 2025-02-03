@@ -155,12 +155,13 @@ export class RichiestaService {
                 currentDate.setDate(currentDate.getDate() + i);
                 const dateOnly = currentDate.toISOString().split('T')[0];
                 const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
+                console.log(richieste);
     
                 const orariDisponibili = [];
                 for (let hour = 8; hour <= 18; hour += 2) {
                     let disponibile = true;
                     for (const richiesta of richieste) {
-                        if (richiesta.status === 'accetto') {
+                        if (richiesta.stato == 'accettata') {
                             const oraRichiesta = new Date(richiesta.data).getHours();
                             if (Math.abs(hour - oraRichiesta) < 2) {
                                 disponibile = false;
