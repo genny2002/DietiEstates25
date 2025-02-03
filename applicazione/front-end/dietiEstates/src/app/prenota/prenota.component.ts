@@ -1,14 +1,17 @@
 import { Component, inject} from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
+import { AuthService } from '../_services/AuthService/auth-service.service';
 import {ApiMeteoResponse} from '../_services/backend/meteo.type';
 import {AnnuncioGet} from '../_services/backend/annuncio.type';
 import {Disponibilita} from '../_services/backend/disponibilita.type';
 
 @Component({
   selector: 'app-prenota',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './prenota.component.html',
   styleUrl: './prenota.component.scss',
 })
@@ -16,6 +19,8 @@ export class PrenotaComponent {
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
   route = inject(ActivatedRoute);
+  authService = inject(AuthService);
+  router = inject(Router);  //permette la navigazione
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
@@ -26,7 +31,17 @@ export class PrenotaComponent {
   numberClick: number = 0;
   dayToShow: number[]=[];
 
-  disponibilita: Disponibilita[] = []
+  disponibilita: Disponibilita[] = [];
+
+  showRichiestaForm: boolean = false;
+  orari: string[] = [];
+  dateSelected: string = '';  
+
+  submittedRichiestaForm = false;  //flag dello stato di invio del form
+  richiestaForm = new FormGroup({ //form per il login
+    orario: new FormControl('', [Validators.required]), //campo di input dell'username
+    offerta: new FormControl(),
+  })
 
   async ngOnInit() {  //inizializza il componente
     await this.initAnnuncioItem();
@@ -157,17 +172,21 @@ export class PrenotaComponent {
 
   updateVisibleDays() {
     this.visibleDays = this.fullDayList.slice(this.startIndex, this.startIndex + 7);
+  }
 
-    let i=0
-
-    for (let day of this.visibleDays) {
-      if(this.disponibilita.find(d => d.data == day.toString())?.orariDisponibili.length==0){
-        document.getElementById(`${i}`)!.classList.remove("flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center");
-        document.getElementById(`${i}`)!.classList.add("flex-1 bg-verdeScuro p-4 text-white text-center opacity-60");
-      };
-
-      i++;
+  getDayClass(day: number | undefined): string {
+    const disponibilita = this.disponibilita.find(d => d.data == day?.toString());
+    if (disponibilita?.orariDisponibili.length == 0) {
+      return 'flex-1 bg-verdeScuro p-4 text-white text-center opacity-60';
     }
+
+    return 'flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center';
+  }
+
+  selectDay(day: number) {
+    this.showRichiestaForm=true;
+    this.dateSelected=this.disponibilita[day].data;
+    this.orari=this.disponibilita[day].orariDisponibili;
   }
 
   nextPage() {
@@ -184,4 +203,30 @@ export class PrenotaComponent {
     }
   }
 
+  handleRichiestaForm(){
+    this.submittedRichiestaForm = true;  //aggiorna la flag dello stato di invio del form
+
+    if (this.richiestaForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    } else {
+      this.backendService.createRichiesta({ //effettua il sign up con i dati inseriti nel form
+        offerta: this.richiestaForm.value.offerta as number,
+        data: this.dateSelected +'T'+(this.richiestaForm.value.orario as string)+':00Z',
+        ClienteUsername: this.authService.user(),
+        AgenteImmobiliareUsername: this.annuncioItem?.AgenteImmobiliareUsername as string,
+        AnnuncioIDimmobile: this.route.snapshot.params["id"],
+      }).subscribe({
+        error: (err) => {
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+        },
+        complete: () => {
+          this.toastr.success(`E' stata inviata una mail al nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          this.richiestaForm.reset();
+          this.submittedRichiestaForm = false;
+          this.router.navigateByUrl("/homePageCliente");
+          //INVIARE LA MAIL ALL'AGENTE
+        }
+      })
+    }
+  }
 }

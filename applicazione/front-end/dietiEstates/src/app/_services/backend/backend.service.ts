@@ -9,6 +9,7 @@ import { Annuncio, AnnuncioGet } from './annuncio.type';
 import { Filtro } from './filtro.type';
 import { ApiMeteoResponse } from './meteo.type';
 import { Disponibilita } from './disponibilita.type';
+import { Richiesta } from './richiesta.type';
 
 @Injectable({
   providedIn: 'root'
@@ -231,6 +232,12 @@ export class BackendService {
     const url= `${this.url}/getRichiesteGiornoX/${usr}/${data}`;
 
     return this.http.get<Disponibilita[]>(url, this.httpOptions);
+  }
+
+  createRichiesta(richiesta: Richiesta){
+    const url = `${this.url}/insertRichiesta`; //URL per la richiesta
+    console.log(richiesta.data);
+    return this.http.post(url, richiesta, this.httpOptions);
   }
 }
 

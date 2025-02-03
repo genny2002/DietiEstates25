@@ -11,7 +11,6 @@ export class RichiestaService {
             date.setHours(date.getHours() -1 );
 
             const richiestaDaCreare ={
-                stato: req.body.stato,
                 offerta: req.body.offerta,
                 data: date,
                 ClienteUsername: req.body.ClienteUsername,

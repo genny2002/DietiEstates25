@@ -1,47 +1,71 @@
-<h1 class="text-xl font-semibold text-center">Seleziona una data</h1>
+<section>
+    <h1 class="text-xl font-semibold text-center">Seleziona una data</h1>
 
-<div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
-    @for (day of this.visibleDays; track $index) {
-        <div class="flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center" id="{{$index}}">
-            <!-- Usare l'indice globale corretto -->
-            <p class="font-bold">
-                {{ this.weatherData?.daily?.time?.[startIndex + $index] }}
-            </p>
+    <div class="w-full flex space-x-2 px-2 h-1/2 mt-2">
+        @for (day of this.visibleDays; track $index) {
+            <div class="{{getDayClass(this.weatherData?.daily?.time?.[startIndex + $index])}}" id="{{$index}}" (click)="selectDay($index)">
+                <!-- Usare l'indice globale corretto -->
+                <p class="font-bold">
+                    {{ this.weatherData?.daily?.time?.[startIndex + $index] }}
+                </p>
 
-            <div class="flex justify-center mt-2">
-                <img [src]="getUrlIcon(startIndex + $index)" alt="icona meteo" class="mt-2 mb-2" />
+                <div class="flex justify-center mt-2">
+                    <img [src]="getUrlIcon(startIndex + $index)" alt="icona meteo" class="mt-2 mb-2" />
+                </div>
+
+                <p class="font-semibold mt-4">
+                    Max {{ this.weatherData?.daily?.temperature_2m_max?.[startIndex + $index] }}
+                    {{ this.weatherData?.daily_units?.temperature_2m_max }} / 
+                    {{ this.weatherData?.daily?.temperature_2m_min?.[startIndex + $index] }}
+                    {{ this.weatherData?.daily_units?.temperature_2m_min }} min
+                </p>
+
+                <p class="font-semibold mt-2">
+                    Probabilità pioggia {{ this.weatherData?.daily?.precipitation_probability_max?.[startIndex + $index] }}
+                    {{ this.weatherData?.daily_units?.precipitation_probability_max }}
+                </p>
+
+                <p class="font-semibold mt-2 mb-4">
+                    Quantità pioggia {{ this.weatherData?.daily?.precipitation_sum?.[startIndex + $index] }}
+                    {{ this.weatherData?.daily_units?.precipitation_sum }}
+                </p>
+            </div>
+        }
+    </div>
+
+    <!-- Pulsanti per navigare -->
+    <div class="flex justify-center mt-4">
+        @if(startIndex != 0){
+            <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg" (click)="prevPage()">
+                &#60; Precedente
+            </button>
+        }
+        @if(startIndex + 7 < fullDayList.length){
+            <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg" (click)="nextPage()">
+                Successivo &#62;
+            </button>
+        }
+    </div>
+
+    @if(showRichiestaForm){
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="richiestaForm" (ngSubmit)="handleRichiestaForm()">
+            <label for="orario" class="block text-arancione font-bold mb-2"> Selezionare un orario</label>
+            <select id="orario" formControlName="orario" name="orario" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+                @for(o of orari; track $index) {
+                    <option value="{{o}}">{{o}}</option>
+                }
+            </select>
+
+            <div class="mb-4">
+                <label for="offerta" class="block text-arancione font-bold mb-2"> Offerta </label>
+                <input type="number" formControlName="offerta" id="offerta" value="0" min="0"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
             </div>
 
-            <p class="font-semibold mt-4">
-                Max {{ this.weatherData?.daily?.temperature_2m_max?.[startIndex + $index] }}
-                {{ this.weatherData?.daily_units?.temperature_2m_max }} / 
-                {{ this.weatherData?.daily?.temperature_2m_min?.[startIndex + $index] }}
-                {{ this.weatherData?.daily_units?.temperature_2m_min }} min
-            </p>
-
-            <p class="font-semibold mt-2">
-                Probabilità pioggia {{ this.weatherData?.daily?.precipitation_probability_max?.[startIndex + $index] }}
-                {{ this.weatherData?.daily_units?.precipitation_probability_max }}
-            </p>
-
-            <p class="font-semibold mt-2 mb-4">
-                Quantità pioggia {{ this.weatherData?.daily?.precipitation_sum?.[startIndex + $index] }}
-                {{ this.weatherData?.daily_units?.precipitation_sum }}
-            </p>
-        </div>
+            <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                Continua 
+              </button>
+        </form>
     }
-</div>
-
-<!-- Pulsanti per navigare -->
-<div class="flex justify-center mt-4">
-    @if(startIndex != 0){
-        <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg" (click)="prevPage()">
-            &#60; Precedente
-        </button>
-    }
-    @if(startIndex + 7 < fullDayList.length){
-        <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg" (click)="nextPage()">
-            Successivo &#62;
-        </button>
-    }
-</div>
+    
+</section>
