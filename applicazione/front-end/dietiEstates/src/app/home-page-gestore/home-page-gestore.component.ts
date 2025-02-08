@@ -131,7 +131,10 @@ export class HomePageGestoreComponent {
   }//fine handleSignup
 
   sendEmail(sender: string | null, emailReciver: string, usernameReceiver: string, passwordReceiver: string){
-    let message=`${sender} ha creato il tuo nuovo eccount di DietiEstates. Per accedere usare le seguenti credenziali: Username: ${usernameReceiver} Password: ${passwordReceiver}.`
+    let message = `${sender} ha creato il tuo nuovo account di DietiEstates.\n` +
+              `Per accedere, usa le seguenti credenziali:\n` +
+              `Username: ${usernameReceiver}\n` +
+              `Password: ${passwordReceiver}.\n`;
 
     this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
       to: emailReciver,
