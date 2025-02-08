@@ -2,7 +2,7 @@ POST http://localhost:3000/sendEmail
 Content-Type: application/json
 
 {
-    "to": "fabr.quaranta@studenti.unina.it",
-    "subject": "Ciao da SendGrid!",
-    "text": "Questo è un messaggio di prova."
+    "to": "fabry40@outlook.it",
+    "subject": "Ciao da SendGrid!1",
+    "text": "Riga1\nRiga2\nRiga3"
 }

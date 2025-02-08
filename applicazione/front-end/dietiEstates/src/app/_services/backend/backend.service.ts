@@ -10,6 +10,7 @@ import { Filtro } from './filtro.type';
 import { ApiMeteoResponse } from './meteo.type';
 import { Disponibilita } from './disponibilita.type';
 import { Richiesta } from './richiesta.type';
+import { Email } from './email.type'
 
 @Injectable({
   providedIn: 'root'
@@ -238,6 +239,12 @@ export class BackendService {
     const url = `${this.url}/insertRichiesta`; //URL per la richiesta
     console.log(richiesta.data);
     return this.http.post(url, richiesta, this.httpOptions);
+  }
+
+  inviaEmail(email: Email){
+    const url = `${this.url}/sendEmail`; //URL per la richiesta
+
+    return this.http.post(url, email, this.httpOptions);
   }
 }
 

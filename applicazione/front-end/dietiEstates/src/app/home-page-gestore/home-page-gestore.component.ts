@@ -98,8 +98,8 @@ export class HomePageGestoreComponent {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
         },
         complete: () => {
-          this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
-          this.newCollaboratoreForm.reset();//INVIARE LA MAIL AL NUOVO UTENTE
+          this.sendEmail(this.authService.user(), this.newCollaboratoreForm.value.email as string, this.newCollaboratoreForm.value.user as string, this.newCollaboratoreForm.value.pass as string);
+          this.newCollaboratoreForm.reset();
           this.submittedNewCollaboratoreForm = false;
         }
       })
@@ -122,12 +122,29 @@ export class HomePageGestoreComponent {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
         },
         complete: () => {
-          this.toastr.success(`E' stata inviata una mail al tuo nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
-          this.newAgenteForm.reset();
-          this.submittedNewAgenteForm = false;
-          //INVIARE LA MAIL AL NUOVO UTENTE
+          this.sendEmail(this.authService.user(), this.newAgenteForm.value.email as string, this.newAgenteForm.value.user as string, this.newAgenteForm.value.pass as string);
+          this.newCollaboratoreForm.reset();
+          this.submittedNewCollaboratoreForm = false;
         }
       })
     }
   }//fine handleSignup
+
+  sendEmail(sender: string | null, emailReciver: string, usernameReceiver: string, passwordReceiver: string){
+    let message=`${sender} ha creato il tuo nuovo eccount di DietiEstates. Per accedere usare le seguenti credenziali: Username: ${usernameReceiver} Password: ${passwordReceiver}.`
+
+    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+      to: emailReciver,
+      subject: "Il tuo nuovo account di DietiEstates è stato creato",
+      text: message
+        //text: "ciaoo"
+    }).subscribe({
+      error: (err) => {
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+      },
+      complete: () => {
+        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+      }
+    })
+  }
 }
