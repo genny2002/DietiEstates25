@@ -1,0 +1,8 @@
+POST http://localhost:3000/sendEmail
+Content-Type: application/json
+
+{
+    "to": "fabr.quaranta@studenti.unina.it",
+    "subject": "Ciao da SendGrid!",
+    "text": "Questo è un messaggio di prova."
+}
