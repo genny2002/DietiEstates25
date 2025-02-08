@@ -185,20 +185,42 @@ export class PrenotaComponent {
     return 'flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center';
   }
 
-  
-
   selectDay(day: number) {
     this.showRichiestaForm=true;
     this.dateSelected=this.disponibilita[day].data;
     this.orari=this.disponibilita[day].orariDisponibili;
-    //let selectedDayElement: HTMLElement | null = null;
 
     const selectedDayElement = document.querySelector(`#d${day}`);
-    
+    const classesToRemove = ['flex-1','bg-verdeScuro','hover:bg-arancione','cursor-pointer','p-4','text-white','text-center'];
+    const classesToAdd = ['flex-1','bg-arancione','cursor-pointer','p-4','text-white','text-center'];
+
     if (selectedDayElement) {
-      //le classi non devono avere spazi, provare mettere il nome della classe in una variabile stringa
-      this.renderer.removeClass(selectedDayElement, 'flex-1 bg-verdeScuro hover:bg-arancione cursor-pointer p-4 text-white text-center');
-      this.renderer.addClass(selectedDayElement, 'flex-1 bg-arancione cursor-pointer p-4 text-white text-center');
+      const parent = selectedDayElement.parentNode;
+  
+      if(parent){ 
+        let siblings = Array.from(parent.children);
+        let otherSiblings = siblings.filter((el) => el !== selectedDayElement);
+
+        otherSiblings.forEach((el) => {
+          if (el) {
+            classesToAdd.forEach((className) => {
+              this.renderer.removeClass(el, className);
+            });
+            classesToRemove.forEach((className) => {
+              this.renderer.addClass(el, className);
+            });
+          }
+        });
+      }
+    }
+
+    if (selectedDayElement) {
+      classesToRemove.forEach((className) => {
+        this.renderer.removeClass(selectedDayElement, className);
+      });
+      classesToAdd.forEach((className) => {
+        this.renderer.addClass(selectedDayElement, className);
+      });
     }
   }
 
