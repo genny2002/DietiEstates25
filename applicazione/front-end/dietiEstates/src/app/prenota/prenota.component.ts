@@ -239,9 +239,6 @@ export class PrenotaComponent {
   }
 
   async getAgentEmail(): Promise<string> {
-    
-    //let email: string;
-
     return new Promise((resolve, reject) => {
       this.backendService.getAgentEmail(this.annuncioItem?.AgenteImmobiliareUsername).subscribe({
         next: (data) => {
@@ -287,8 +284,6 @@ export class PrenotaComponent {
   }
 
   sendEmail(usernameSender: string | null, emailReciver: string, address: string | undefined, orario: string, offert: string, date: string){
-    console.log(emailReciver);
-    
     let message = `${usernameSender} ha richiesto un'appuntamento per il giorno ${date} alle ore ${orario}, per visitare l'immobile a ${address}.\n`
 
     if(offert){

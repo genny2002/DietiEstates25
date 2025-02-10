@@ -1,4 +1,4 @@
-GET  http://localhost:3000/getRichiesta?sort=data&mode=asc&AgenteImmobiliare=provaAgenzia3
+GET  http://localhost:3000/getRichiesta?sort=data&mode=asc&AgenteImmobiliare=fabrizio
 Content-Type: application/json
 
 {

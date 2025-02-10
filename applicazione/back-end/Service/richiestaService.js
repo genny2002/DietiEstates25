@@ -37,13 +37,11 @@ export class RichiestaService {
                 throw new Error('deve esserci una differenza di due ore tra una richiesta e l\'altra');
             }
         }
-
-      
     }
 
     static async getRichiesta(req, res) {
         try {
-            const { sort, mode, stato, AgenteImmobiliare, Cliente, dataSelected } = req.query;
+            const { sort, mode, stato, agenteImmobiliare, Cliente, dataSelected } = req.query;
 
             let richieste = await RichiestaRepository.getRichieste();
     
@@ -53,8 +51,8 @@ export class RichiestaService {
             }
     
             // Filtro per AgenteImmobiliareUsername
-            if (AgenteImmobiliare) {
-                richieste = richieste.filter(item => item.AgenteImmobiliareUsername === AgenteImmobiliare);
+            if (agenteImmobiliare) {
+                richieste = richieste.filter(item => item.AgenteImmobiliareUsername === agenteImmobiliare);
             }
 
             if (Cliente) {

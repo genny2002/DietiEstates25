@@ -92,6 +92,7 @@ export class BackendService {
 
   getUserAppuntamenti(usr: string | null, role: string | null){
     const url= `${this.url}/getRichiesta?sort=data&mode=asc&${role}=${usr}`;
+    console.log(url);
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
@@ -255,6 +256,12 @@ export class BackendService {
 
   getAgentEmail(username: string | null | undefined){
     const url = `${this.url}/getAgente/${username}`;
+
+    return this.http.get<string>(url, this.httpOptions);
+  }
+
+  getCustomerEmail(username: string | null | undefined){
+    const url = `${this.url}/getCliente/${username}`;
 
     return this.http.get<string>(url, this.httpOptions);
   }
