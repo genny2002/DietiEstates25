@@ -27,8 +27,17 @@ export class AgenteImmobiliareRepository {
             throw err;
         }
     }
-}
 
+
+    static async getAgente(username) {
+       try {
+            return await AgenteImmobiliare.findByPk(username);
+        } catch (err) {
+             console.error("Error in AgenteImmobiliare:", err);
+            throw err;
+        }
+    }
+}
 
 
 

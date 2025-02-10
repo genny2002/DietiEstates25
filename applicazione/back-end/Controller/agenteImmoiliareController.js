@@ -32,3 +32,13 @@ agenteImmobiliareController.post("/collaboratore/insertAgenteImmobiliare", async
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+
+agenteImmobiliareController.get("/getAgente/:username", async (req, res, next) => {
+    try {
+        const agente = await AgenteImmobiliareService.getAgente(req.params.username);
+        res.status(200).json(agente);
+    } catch (err) {
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
+    }
+});

@@ -41,4 +41,13 @@ export class AgenteImmobiliareService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
+
+    static async getAgente(username) {
+        try {
+            const agente = await AgenteImmobiliareRepository.getAgente(username);
+            return agente;
+        } catch (err) {
+            throw new Error(err.message || "Errore durante la registrazione");
+        }
+    }
 }

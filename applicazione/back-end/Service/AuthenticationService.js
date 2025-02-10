@@ -93,4 +93,10 @@ export class AuthenticationService {
 
         return vote ? vote.valore : null;
     }//fine userVotedIdea*/
+
+
+
+    static async getCliente(req) {    //cerca un utente con 'req.params.user'
+        return await ClienteRepository.getClienteByUsername(req.params.user);
+    }//fine getUser
 }

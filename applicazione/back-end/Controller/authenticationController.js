@@ -30,3 +30,14 @@ authenticationController.post("/signupCliente", (req, res, next) => {  //tenta d
         next ({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
+
+
+
+authenticationController.get("/getCliente/:user", async (req, res, next) => {  //tenta di ottenere un utente e invia una risposta
+    try{
+        const cliente = await AuthenticationService.getCliente(req);
+        res.status(200).json(cliente);
+    } catch(err) {
+        next ({ status: 500, message: err.message || "Errore durante la ricerca dell'utente" });
+    }
+});

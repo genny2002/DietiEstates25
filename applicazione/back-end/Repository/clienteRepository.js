@@ -33,6 +33,18 @@ export class ClienteRepository {
             throw err;
         }
     }
+
+
+    static async getClienteByUsername(username){
+        try {
+            return await Cliente.findByPk(username);
+        } catch (err) {
+            console.error("Error in getClienteByUsername:", err);
+            throw err;
+         }
+
+    }
+        
 }
 
 
