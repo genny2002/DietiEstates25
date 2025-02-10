@@ -39,7 +39,6 @@ export class LoginComponent {
       }).subscribe({
         next: (token) => {
           this.authService.updateToken(token);  //aggiorna il token
-          
         },
         error: (err) => {
           this.toastr.error("Inserire username e password corretti.", "Errore: credenziali errate"); //mostra un messaggio di errore

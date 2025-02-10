@@ -40,12 +40,31 @@ export class HomePageCollaboratoreComponent {
           this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
         },
         complete: () => {
-          this.toastr.success(`E' stata inviata una mail al nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          this.sendEmail(this.authService.user(), this.newAgenteForm.value.email as string, this.newAgenteForm.value.user as string, this.newAgenteForm.value.pass as string);
           this.newAgenteForm.reset();
           this.submittedNewAgenteForm = false;
-          //INVIARE LA MAIL AL NUOVO UTENTE
         }
       })
     }
   }//fine handleSignup
+
+  sendEmail(sender: string | null, emailReciver: string, usernameReceiver: string, passwordReceiver: string){
+    let message = `${sender} ha creato il tuo nuovo account di DietiEstates.\n` +
+              `Per accedere, usa le seguenti credenziali:\n` +
+              `Username: ${usernameReceiver}\n` +
+              `Password: ${passwordReceiver}.\n`;
+
+    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+      to: emailReciver,
+      subject: "Il tuo nuovo account di DietiEstates è stato creato",
+      text: message
+    }).subscribe({
+      error: (err) => {
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+      },
+      complete: () => {
+        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+      }
+    })
+  }
 }

@@ -246,5 +246,17 @@ export class BackendService {
 
     return this.http.post(url, email, this.httpOptions);
   }
+
+  getUserEmail(username: string | null){
+    const url = `${this.url}/getCliente/${username}`;
+
+    return this.http.get<string>(url, this.httpOptions);
+  }
+
+  getAgentEmail(username: string | null | undefined){
+    const url = `${this.url}/getAgente/${username}`;
+
+    return this.http.get<string>(url, this.httpOptions);
+  }
 }
 

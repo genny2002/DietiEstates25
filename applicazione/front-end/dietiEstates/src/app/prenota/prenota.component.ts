@@ -238,6 +238,21 @@ export class PrenotaComponent {
     }
   }
 
+  getAgentEmail(): string {
+    let email: string = '';
+
+    this.backendService.getAgentEmail(this.annuncioItem?.AgenteImmobiliareUsername).subscribe({
+      next: (data) => {
+        email=data;
+      },
+      error: (err) => {
+        this.toastr.error("Non è stata trovata nessuna email per questo utente.", "Errore: email non trovata"); //mostra un messaggio di errore
+      },
+    })
+
+    return email
+  }
+
   handleRichiestaForm(){
     this.submittedRichiestaForm = true;  //aggiorna la flag dello stato di invio del form
 
@@ -252,16 +267,38 @@ export class PrenotaComponent {
         AnnuncioIDimmobile: this.route.snapshot.params["id"],
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("Non è stato possibile inviare la richiesta di prenotazione", "Errore");  //mostra un messaggio di errore
         },
         complete: () => {
-          this.toastr.success(`E' stata inviata una mail al nuovo agente`, `Registrazione effettuata`);  //mostra un messaggio di successo
+          this.sendEmail(this.authService.user(), this.getAgentEmail(), this.annuncioItem?.indirizzo, this.richiestaForm.value.orario as string, this.richiestaForm.value.offerta as string, this.dateSelected);
           this.richiestaForm.reset();
           this.submittedRichiestaForm = false;
-          this.router.navigateByUrl("/homePageCliente");
-          //INVIARE LA MAIL ALL'AGENTE
         }
       })
     }
+  }
+
+  sendEmail(usernameSender: string | null, emailReciver: string, address: string | undefined, orario: string, offert: string, date: string){
+    let message = `${usernameSender} ha richiesto un'appuntamento per il giorno ${date} alle ore ${orario}, per visitare l'immobile a ${address}.\n`
+
+    if(offert){
+      message = message + `Offerta proposta: ${usernameSender}\n`
+    }
+
+    message = message + `Accedi alle notifiche del tuo account DietiEstates per visualizzare e rispondere a questa richiesta`
+
+    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+      to: emailReciver,
+      subject: "Nuova Richiesta",
+      text: message
+    }).subscribe({
+      error: (err) => {
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+      },
+      complete: () => {
+        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.router.navigateByUrl("/homePageCliente");
+      }
+    })
   }
 }

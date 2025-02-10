@@ -123,8 +123,8 @@ export class HomePageGestoreComponent {
         },
         complete: () => {
           this.sendEmail(this.authService.user(), this.newAgenteForm.value.email as string, this.newAgenteForm.value.user as string, this.newAgenteForm.value.pass as string);
-          this.newCollaboratoreForm.reset();
-          this.submittedNewCollaboratoreForm = false;
+          this.newAgenteForm.reset();
+          this.submittedNewAgenteForm = false;
         }
       })
     }
@@ -140,7 +140,6 @@ export class HomePageGestoreComponent {
       to: emailReciver,
       subject: "Il tuo nuovo account di DietiEstates è stato creato",
       text: message
-        //text: "ciaoo"
     }).subscribe({
       error: (err) => {
         this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
