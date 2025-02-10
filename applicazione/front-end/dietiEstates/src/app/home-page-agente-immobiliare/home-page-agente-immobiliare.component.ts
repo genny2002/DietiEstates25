@@ -26,7 +26,7 @@ export class HomePageAgenteImmobiliareComponent {
   }
 
   getDates(selectedData: Date) { //recupera tutte le idee controverse
-    this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user()).subscribe({ //cerca tutte le idee controverse
+    this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user(), this.authService.getRuolo()).subscribe({ //cerca tutte le idee controverse
       next: (data: Appuntamento[]) => {
         this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'
       },
@@ -62,5 +62,4 @@ export class HomePageAgenteImmobiliareComponent {
     this.dayToShow = this.currentDay;
     this.getDates(this.dayToShow);
   }
-
 }

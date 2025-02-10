@@ -48,14 +48,18 @@ export class NotificaComponent {
           
           this.sendEmail(this.authService.user(), emailReciver, this.notificaItem.data, this.notificaItem.Annuncio.indirizzo, newState);
         }catch(err){
-          this.toastr.error("Errore durante il recupero dell'email dell'agente", "Errore");
+          this.toastr.error("Errore durante il recupero dell'email del cliente", "Errore");
         }
       }
     });
   }
 
   sendEmail(usernameSender: string | null, emailReciver: string, date: Date, address: string, state: string){
-    let message = `La tua richiesta per visitare l'immobile a ${address} il giorno ${date} è stata ${state} da ${usernameSender}.\n`
+    const dateString: string = date.toString(); // Ad esempio: "2025-02-14T09:00:00.000Z"
+    const [day, time] = dateString.split('T'); // Divide la stringa in data e orario
+    const cleanTime = time.split('.')[0]; // Rimuove i millisecondi
+
+    let message = `La tua richiesta per visitare l'immobile a ${address} il giorno ${day} alle ore ${cleanTime} è stata ${state} da ${usernameSender}.\n`
 
     if(state=="rifiutata"){
       message = message + `Accedi alle notifiche del tuo account DietiEstates per inviare una nuova offerta all'agente immobiliare.`
@@ -67,7 +71,7 @@ export class NotificaComponent {
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.error("L'email non è stata inviata al cliente", "Email non inviata");  //mostra un messaggio di errore
       },
       complete: () => {
         this.toastr.success(`La notifica è stata ${state}`, `Risposta inviata!`);  //mostra un messaggio di successo

@@ -82,10 +82,10 @@ export class BackendService {
     return this.http.post(url, newAgenteRequest, this.httpOptions);
   }
 
-  getAppuntamentiWithDate(date: Date, usr: string | null){
+  getAppuntamentiWithDate(date: Date, usr: string | null, role: string | null){
     const stringDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     
-    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&AgenteImmobiliareUsername=${usr}&dataSelected=${stringDate}`;
+    const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&${role}=${usr}&dataSelected=${stringDate}`;
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }

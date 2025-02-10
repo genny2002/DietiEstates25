@@ -1,11 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../_services/AuthService/auth-service.service';
+import { BackendService } from '../_services/backend/backend.service';
+import { CommonModule } from '@angular/common';
+import {Appuntamento} from '../_services/backend/appuntamento.type';
 
 @Component({
   selector: 'app-home-page-cliente',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home-page-cliente.component.html',
   styleUrl: './home-page-cliente.component.scss'
 })
 export class HomePageClienteComponent {
+  authService = inject(AuthService);  //gestisce le informazioni della sessione
+  backendService = inject(BackendService); //effettua le richieste HTTP
+  toastr = inject(ToastrService); //mostra le notifiche
 
+  dates: Appuntamento [] = [];
+  dayToShow = new Date();
+  currentDay = new Date();
+  changeDayClicked = 0;
+
+  ngOnInit() {  //inizializza il componente
+    this.getDates(this.dayToShow); 
+  }
+
+  getDates(selectedData: Date) { //recupera tutte le idee controverse
+    this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user(), this.authService.getRuolo()).subscribe({ //cerca tutte le idee controverse
+      next: (data: Appuntamento[]) => {
+        this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+        } else {
+          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+        }
+      }
+    });
+  }//fine fetchControversialIdeas
+
+  nextDay() {
+    this.changeDayClicked++;
+    this.changeDay(); // Aggiorna la lista
+  }
+
+  previousDay() {
+    this.changeDayClicked--;
+    this.changeDay(); // Aggiorna la lista
+  }
+
+  private changeDay() {
+    const newDate = new Date(this.currentDay); // Crea una copia della data corrente
+    newDate.setDate(newDate.getDate() + this.changeDayClicked); // Incrementa il giorno
+    this.dayToShow = newDate; // Assegna un nuovo oggetto a dayToShow
+    this.getDates(this.dayToShow); // Aggiorna la lista
+  }
+
+  setCurrentDay() {  //mostra le idee controverse del giorno corrente
+    this.changeDayClicked = 0;
+    this.dayToShow = this.currentDay;
+    this.getDates(this.dayToShow);
+  }
 }

@@ -41,7 +41,7 @@ export class RichiestaService {
 
     static async getRichiesta(req, res) {
         try {
-            const { sort, mode, stato, agenteImmobiliare, Cliente, dataSelected } = req.query;
+            const { sort, mode, stato, agenteImmobiliare, cliente, dataSelected } = req.query;
 
             let richieste = await RichiestaRepository.getRichieste();
     
@@ -55,8 +55,8 @@ export class RichiestaService {
                 richieste = richieste.filter(item => item.AgenteImmobiliareUsername === agenteImmobiliare);
             }
 
-            if (Cliente) {
-                richieste = richieste.filter(item => item.ClienteUsername === Cliente);
+            if (cliente) {
+                richieste = richieste.filter(item => item.ClienteUsername === cliente);
             }
            
             if (dataSelected) {

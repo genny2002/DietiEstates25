@@ -24,4 +24,27 @@ export class NavbarComponent {
   toggleDropdown() { //aggiorna il flag di apertura del dropdown
     this.isDropdownOpen = !this.isDropdownOpen;
   }//fine toggleDropdown
+
+  setRouter(): string {
+    if(! this.authService.isUserAuthenticated()){
+      return ""
+    }else{
+      const role = this.authService.authState().role;
+          
+      switch (role) {
+        case "gestoreAgenzia":
+          return "/homePageGestore";
+
+        case "agenteImmobiliare":
+          return "/homePageAgenteImmobiliare";
+        case "cliente":
+          return "/homePageCliente";
+        case "collaboratore":
+          return "/homePageCollaboratore";
+        default:
+          return ""
+      }
+    }
+
+  }
 }
