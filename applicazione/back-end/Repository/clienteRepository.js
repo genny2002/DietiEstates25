@@ -37,12 +37,12 @@ export class ClienteRepository {
 
     static async getClienteByUsername(username){
         try {
-            return await Cliente.findByPk(username);
+            let cliente = await Cliente.findByPk(username, { attributes: ['email'] });
+            return cliente ? { email: cliente.email } : null;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);
             throw err;
-         }
-
+        }
     }
         
 }
