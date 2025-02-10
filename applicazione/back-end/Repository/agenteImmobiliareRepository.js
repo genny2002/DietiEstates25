@@ -32,7 +32,7 @@ export class AgenteImmobiliareRepository {
     static async getAgente(username) {
         try {
             let agente = await AgenteImmobiliare.findByPk(username, { attributes: ['email'] });
-            return agente ? { email: agente.email } : null;
+            return agente ? agente.email : null;
         } catch (err) {
             console.error("Error in AgenteImmobiliare:", err);
             throw err;
