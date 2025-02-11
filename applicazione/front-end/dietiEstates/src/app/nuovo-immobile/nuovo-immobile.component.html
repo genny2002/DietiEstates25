@@ -22,44 +22,50 @@
             </label>
           </fieldset>
       
-          <!-- Prezzo -->
-          <div class="mb-4">
-            <label for="prezzo" class="block text-arancione font-bold mb-2">Prezzo</label>
-            <input type="text" formControlName="prezzo" id="prezzo" placeholder="Prezzo dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
-              oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
-          </div>
-      
-          <!-- Descrizione -->
-          <div class="mb-4">
-            <label for="descrizione" class="block text-arancione font-bold mb-2"> Descrizione</label>
-            <textarea id="descrizione" formControlName="descrizione" placeholder="Descrizione dell'immobile in vendita"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"></textarea>
-          </div>
-      
-          <!-- Numero di stanze -->
-          <div class="mb-4">
-            <label for="stanze" class="block text-arancione font-bold mb-2">Numero di stanze</label>
-            <input type="number" formControlName="numeroStanze" id="stanze" value="1" min="1"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
-          </div>
-      
-          <!-- Dimensioni -->
-          <div class="mb-6">
-            <label for="dimensioni" class="block text-arancione font-bold mb-2"> Dimensioni </label>
-            <input type="text" formControlName="dimensioni" id="dimensioni" placeholder="Superficie dell'immobile in vendita" pattern="^\d+([.,]?\d+)?$"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
-              oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
-          </div>
-    
-          <div class="flex justify-between">
-            <button type="button" routerLink="/homePageAgenteImmobiliare"  class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-              Indietro
-            </button>
-            <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
-              Continua 
-            </button>
-          </div>
+          @if(this.step1Form.value.tipo){
+            <!-- Prezzo -->
+            <div class="mb-4">
+              @if(this.step1Form.value.tipo==="affitto"){
+                <label for="prezzo" class="block text-arancione font-bold mb-2">Prezzo Mensile</label>
+              }@else {
+                <label for="prezzo" class="block text-arancione font-bold mb-2">Prezzo</label>
+              }
+              <input type="text" formControlName="prezzo" id="prezzo" placeholder="Prezzo dell'immobile in {{this.step1Form.value.tipo}}" pattern="^\d+([.,]?\d+)?$"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+            </div>
+          
+            <!-- Descrizione -->
+            <div class="mb-4">
+              <label for="descrizione" class="block text-arancione font-bold mb-2"> Descrizione</label>
+              <textarea id="descrizione" formControlName="descrizione" placeholder="Descrizione dell'immobile in {{this.step1Form.value.tipo}}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"></textarea>
+            </div>
+          
+            <!-- Numero di stanze -->
+            <div class="mb-4">
+              <label for="stanze" class="block text-arancione font-bold mb-2">Numero di stanze</label>
+              <input type="number" formControlName="numeroStanze" id="stanze" value="1" min="1" placeholder="Numero di stanze dell'immobile in {{this.step1Form.value.tipo}}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
+            </div>
+          
+            <!-- Dimensioni -->
+            <div class="mb-6">
+              <label for="dimensioni" class="block text-arancione font-bold mb-2"> Dimensioni </label>
+              <input type="text" formControlName="dimensioni" id="dimensioni" placeholder="Superficie dell'immobile in {{this.step1Form.value.tipo}}" pattern="^\d+([.,]?\d+)?$"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
+                oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"/>
+            </div>
+          
+            <div class="flex justify-between">
+              <button type="button" routerLink="/homePageAgenteImmobiliare" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                Indietro
+              </button>
+              <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                Continua 
+              </button>
+            </div>
+          }
         </form>
     </div>
     } @else if (step === 2) {
@@ -81,7 +87,7 @@
           <!-- Prezzo -->
           <div class="mb-4">
             <fieldset formGroupName="servizi">
-                <label class="block text-arancione font-bold">Selezionare i servizi dell'immobile</label>
+                <label class="block text-arancione font-bold">Selezionare i servizi dell'immobile in {{this.step1Form.value.tipo}}</label>
                 <label><input type="checkbox" formControlName="ascensore" name="asscensore" value="ascensore"> Ascensore</label><br>
                 <label><input type="checkbox" formControlName="portineria" name="portineria" value="portineria"> Portineria</label><br>
                 <label><input type="checkbox" formControlName="climatizzazione" name="climatizzazione" value="climatizzazione"> Climatizzazione</label>
@@ -90,7 +96,7 @@
       
           <!-- Descrizione -->
           <div class="mb-4">
-            <label for="classeEnergetica" class="block text-arancione font-bold mb-2"> Classe energetica </label>
+            <label for="classeEnergetica" class="block text-arancione font-bold mb-2"> Classe energetica dell'immobile in {{this.step1Form.value.tipo}}</label>
             <select id="classeEnergetica" formControlName="classeEnergetica" name="classeEnergetica" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
                 <option value="A4">A4</option>
                 <option value="A3">A3</option>
@@ -107,8 +113,8 @@
       
           <!-- Numero di stanze -->
           <div class="mb-4">
-            <label for="piano" class="block text-arancione font-bold mb-2"> Piano </label>
-            <input type="number" formControlName="piano" id="piano" value="0" min="0"
+            <label for="piano" class="block text-arancione font-bold mb-2"> Piano dell'immobile</label>
+            <input type="number" formControlName="piano" id="piano" value="0" min="0" placeholder="Piano dell'immobile in {{this.step1Form.value.tipo}}"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"/>
           </div>
           <div class="flex justify-between">
