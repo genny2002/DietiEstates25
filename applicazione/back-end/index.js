@@ -52,6 +52,8 @@ app.use(emailController);
 
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
 });
+
+console.log("\n\n\naggiornato!!\n\n\n");

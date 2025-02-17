@@ -2,7 +2,7 @@ POST http://localhost:3000/insertGestoreAgenzia
 Content-Type: application/json
 
 {
-  "username": "gestore",
+  "username": "gestore123",
   "password": "password",
   "email": "email@google.com",
   "nomeAgenzia": "agenzia",
