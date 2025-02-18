@@ -5,7 +5,7 @@
                 class="self-center text-xl text-white font-bold whitespace-nowrap lg:text-2xl xl:text-xl">DietiEstates</span>
         </a>
         <button (click)="toggle()" data-collapse-toggle="navbar-default" type="button"
-            class="inline-flex items-center p-1 w-7 h-7 justify-center text-sm text-blue-600 md:hidden hover:text-yellow-300 focus:outline-none mx-2"
+            class="inline-flex items-center p-1 w-7 h-7 justify-center text-sm text-white md:hidden hover:text-pesca focus:outline-none mx-2"
             aria-controls="navbar-default" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -14,31 +14,29 @@
             </svg>
         </button>
         <div class="{{isOpen ? 'block' : 'hidden'}} w-full md:block md:w-auto" id="navbar-default">
-            <ul
-                class="font-semibold flex flex-col p-0 mt-0 bg-bluScuro md:flex-row space-x-8 rtl:space-x-reverse border-0">
+            <ul class="font-semibold flex flex-col md:flex-row p-0 mt-0 bg-bluScuro border-0 md:items-center md:space-x-8">
 
                 @if(! this.authService.isUserAuthenticated()){
-                <li>
-                    <a (click)="handleNavigationClick()" routerLink="/ricerca"
-                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
-                        class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca Immobile</a>
-                </li>
-                <li>
-                    <a (click)="handleNavigationClick()" routerLink="/registra-agenzia"
-                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
-                        class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Registra Agenzia</a>
-                </li>
-                <li>
-                    <a (click)="handleNavigationClick()" routerLink="/login"
-                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
-                        class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Login</a>
-                </li>
-                <li>
-                    <a (click)="handleNavigationClick()" routerLink="/signup"
-                        routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
-                        class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Sign up</a>
-                </li>
-                
+                    <li class="flex">
+                        <a (click)="handleNavigationClick()" routerLink="/ricerca"
+                            routerLinkActive="md:text-pesca"
+                            class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Ricerca Immobile</a>
+                    </li>
+                    <li class="flex">
+                        <a (click)="handleNavigationClick()" routerLink="/registra-agenzia"
+                            routerLinkActive="md:text-pesca"
+                            class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Registra Agenzia</a>
+                    </li>
+                    <li class="flex">
+                        <a (click)="handleNavigationClick()" routerLink="/login"
+                            routerLinkActive="md:text-pesca"
+                            class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Login</a>
+                    </li>
+                    <li class="flex">
+                        <a (click)="handleNavigationClick()" routerLink="/signup"
+                            routerLinkActive="md:text-pesca"
+                            class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Sign up</a>
+                    </li>
                 } @else {
                     @if(this.authService.isUserGestoreAgenzia()){
                         <li>
