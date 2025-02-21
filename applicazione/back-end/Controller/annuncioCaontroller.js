@@ -39,17 +39,17 @@ anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, 
         for (const file of req.files) {
             const fileName = `${Date.now()}-${file.originalname}`;
             const params = {
-                Bucket: process.env.AWS_S3_BUCKET_NAME,
+                Bucket: process.env.AWS_BUCKET_NAME,
                 Key: fileName,
                 Body: file.buffer,
                 ContentType: file.mimetype,
-                ACL: "public-read",
+                //ACL: "public-read",
             };
 
             // Carica il file su S3
             await s3Client.send(new PutObjectCommand(params));
 
-            const fileUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+            const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
             uploadedFiles.push(fileUrl);
         }
 
@@ -57,7 +57,8 @@ anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, 
         const annuncio = await AnnuncioService.createAnnuncio(req.body, uploadedFiles);
         res.status(201).json(annuncio);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+      console.error(err);
+      res.status(500).json({ error: err.message, stack: err.stack });
     }
 });
 
