@@ -1,49 +1,60 @@
 import express from "express";
 import { AnnuncioService } from "../Service/annuncioService.js";
-import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { console } from "inspector";
+import multer from "multer";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import path from "path";
+import { fileURLToPath } from "url";
 
 export const anunncioController = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../img/')); // directory dove salvare le immagini
+// Configura AWS S3
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // nome del file
-    }
 });
 
+const storage = multer.memoryStorage(); // Usa la memoria per gestire i file prima di inviarli a S3
 const upload = multer({ storage: storage });
 
-const uploadImages = (fieldName, maxCount) => {
-    return upload.array(fieldName, maxCount);
-};
-
-anunncioController.post("/upload/:numeroImg", (req, res, next) => {
-    console.log(req.body);
-    const numeroImg = parseInt(req.params.numeroImg, 10);
-    const uploadMiddleware = uploadImages('foto', numeroImg);
-    uploadMiddleware(req, res, (err) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        next();
-    });
-}, async (req, res) => {
+anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, res) => {
     try {
-        console.log("Files Uploaded:", req.files);
-        console.log("Request Body After Upload:", req.body);
+        const numeroImg = parseInt(req.params.numeroImg, 10);
+
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: "No files uploaded" });
         }
-        const filePaths = req.files.map(file => path.relative(path.join(__dirname, '../'), file.path));
-        const annuncio = await AnnuncioService.createAnnuncio(req.body, filePaths);
+
+        if (req.files.length > numeroImg) {
+            return res.status(400).json({ error: `Maximum ${numeroImg} files allowed` });
+        }
+
+        const uploadedFiles = [];
+
+        for (const file of req.files) {
+            const fileName = `${Date.now()}-${file.originalname}`;
+            const params = {
+                Bucket: process.env.AWS_S3_BUCKET_NAME,
+                Key: fileName,
+                Body: file.buffer,
+                ContentType: file.mimetype,
+                ACL: "public-read",
+            };
+
+            // Carica il file su S3
+            await s3Client.send(new PutObjectCommand(params));
+
+            const fileUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+            uploadedFiles.push(fileUrl);
+        }
+
+        // Creare l'annuncio usando i file caricati
+        const annuncio = await AnnuncioService.createAnnuncio(req.body, uploadedFiles);
         res.status(201).json(annuncio);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -58,47 +69,19 @@ anunncioController.get("/download/annunci", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci(req);
         const annunciConImmagini = annunci.map(annuncio => {
-            const immagini = JSON.parse(annuncio.foto).map(filePath => ({
-                url: `http://localhost:3000/img/${path.basename(filePath)}`,
-                nome: path.basename(filePath)
+            const immagini = JSON.parse(annuncio.foto).map(url => ({
+                url,
+                nome: path.basename(url)
             }));
-            
+
             return {
                 ...annuncio.dataValues,
                 immagini
             };
         });
-        
+
         res.status(200).json(annunciConImmagini);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
-
-
-
-/*anunncioController.get("/download/annunci/:id", async (req, res) => {
-    try {
-        const annunci = await AnnuncioService.getAnnunci(req);
-        if (!annunci || annunci.length === 0) {
-            return res.status(404).json({ error: "Nessun annuncio trovato" });
-        }
-
-        const annunciConImmagini = annunci.map(annuncio => {
-            const immagini = JSON.parse(annuncio.foto).map(filePath => ({
-                url: `http://localhost:3000/img/${path.basename(filePath)}`,
-                nome: path.basename(filePath)
-            }));
-            
-            //console.log(annunciConImmagini);
-            return {
-                ...annuncio.dataValues,
-                immagini
-            };
-        });
-        
-        res.status(200).json(annunciConImmagini);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});*/

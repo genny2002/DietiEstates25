@@ -30,7 +30,6 @@ app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
 app.use(morgan('dev'));
 app.use(cors());
 
-
 app.use((err, req, res, next) => {
     console.log(err.stack);
     res.status(err.status || 500).json({
@@ -52,7 +51,11 @@ app.use(emailController);
 
 
 
-app.listen(PORT, '0.0.0.0', () => {
+/*app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
+});*/
+
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
 });
 
