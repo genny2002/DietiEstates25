@@ -87,6 +87,8 @@ export class RichiestaService {
                     return 0;
                 });
             }
+
+            console.log(richieste)
     
             return richieste;
         } catch (err) {

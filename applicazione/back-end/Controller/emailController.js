@@ -3,12 +3,15 @@ import { EmailService } from "../Service/emailService.js";
 
 export const emailController = express.Router();
 
-emailController.post('/sendEmail', (req, res) => {
+emailController.post('/sendEmail', async (req, res, next) => {
     try {
-          const response = EmailService.sendEmail(req, res);
-          res.status(200).json(response);
-      } catch (err) {
-          console.error(err);
-          next({ status: 500, message: err.message || "Errore durante la configurazione della mappa" });
-      }
+        const response = await EmailService.sendEmail(req, res);
+        res.status(200).json(response);
+    } catch (err) {
+        // Log dell'errore
+        console.error('Errore:', err.message);
+
+        // Passa l'errore al middleware di gestione degli errori
+        next({ status: 400, message: err.message || "Errore durante l'invio dell'email" });
+    }
 });
