@@ -34,7 +34,6 @@ export class NavbarComponent {
       switch (role) {
         case "gestoreAgenzia":
           return "/homePageGestore";
-
         case "agenteImmobiliare":
           return "/homePageAgenteImmobiliare";
         case "cliente":

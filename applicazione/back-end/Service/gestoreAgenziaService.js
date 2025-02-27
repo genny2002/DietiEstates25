@@ -12,8 +12,6 @@ GestoreAgenziaService {
                     nomeAgenzia: req.body.nomeAgenzia,
                     indirizzoAgenzia: req.body.indirizzoAgenzia
                 }
-
-                console.log(gestoreAgenziaDaCreare);
             const gestoreAgenzia = await GestoreAgenziaRepository.insertGestoreAgenzia(gestoreAgenziaDaCreare);
             res.status(201).json(gestoreAgenzia);
         } catch (err) {
@@ -23,7 +21,6 @@ GestoreAgenziaService {
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
-
 
     static async gestoreAgenziaCambioPassword(req, res) {
         try {
