@@ -44,7 +44,6 @@ richiestaController.get("/getRichiestaById/:id", async (req, res, next) => {
     }
 });
 
-
 richiestaController.put("/cambioStato/:id/:stato", async (req, res, next) => {
     try {
         const Richiesta = await RichiestaService.richiestaRisposta(req, res);
@@ -54,7 +53,6 @@ richiestaController.put("/cambioStato/:id/:stato", async (req, res, next) => {
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
-
 
 richiestaController.delete("/deleteRichiesta/:id", async (req, res, next) => {
     try {
@@ -66,7 +64,6 @@ richiestaController.delete("/deleteRichiesta/:id", async (req, res, next) => {
     }
 });
 
-
 richiestaController.put("/updateRichiesta/:id", async (req, res, next) => {
     try {
         const Richiesta = await RichiestaService.updateRichiesta(req, res);
@@ -76,7 +73,6 @@ richiestaController.put("/updateRichiesta/:id", async (req, res, next) => {
         next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });
-
 
 richiestaController.get("/getRichiesteGiornoX/:AgenteImmobiliareUsername/:data", async (req, res, next) => {
     try {

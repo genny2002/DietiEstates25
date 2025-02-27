@@ -31,8 +31,6 @@ authenticationController.post("/signupCliente", (req, res, next) => {  //tenta d
     }
 });
 
-
-
 authenticationController.get("/getCliente/:user", async (req, res, next) => {  //tenta di ottenere un utente e invia una risposta
     try{
         const cliente = await AuthenticationService.getCliente(req);

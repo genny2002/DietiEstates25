@@ -19,7 +19,6 @@ gestoreAgenziaController.post("/insertGestoreAgenzia", async (req, res, next) =>
     }
 });
 
-
 gestoreAgenziaController.put("/gestoreAgenziaCambioPassword", async (req, res, next) => {
     try {
         const gestoreAgenzia = await GestoreAgenziaService.gestoreAgenziaCambioPassword(req, res);
