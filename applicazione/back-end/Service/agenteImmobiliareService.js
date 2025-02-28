@@ -22,7 +22,7 @@ export class AgenteImmobiliareService {
         }
     }
 
-    static async insertAgenteImmobiliareByCollabboratore(req, res) {
+    static async insertAgenteImmobiliareByCollaboratore(req, res) {
         try {
             console.log(req.body.referente);
             const Collaboratore = await CollaboratoreService.getCollaboratoreByUsername(req.body.referente);

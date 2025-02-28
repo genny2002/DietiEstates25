@@ -54,48 +54,6 @@ export class AuthenticationService {
         Jwt.verify(token, process.env.TOKEN_SECRET, callback);
     }//fine isTokenValid
 
-    static async canUserModifyIdea(user, ideaId) {   //controlla se l'utente 'user' può modificare l'idea 'ideaId'
-        const idea = await Idea.findByPk(ideaId);
-
-        return idea && idea.UserUserName === user;
-    }//fine canUserModifyIdea
-
-    static async canUserModifyComment(user, commentId) {   //controlla se l'utente 'user' può modificare il commento 'commentId'
-        const comment = await Comment.findByPk(commentId);
-
-        return comment && comment.UserUserName === user;
-    }//fine canUserModifyComment
-
-    static async canUserModifyVote(user, ideaId) {   //controlla se l'utente 'user' può modificare il voto 'votoId'
-        let vote = await Vote.findOne({    //cerca un voto positivo dell utente all'idea
-            where: {
-                UserUserName: user,
-                IdeaId: ideaId,
-            }
-        });
-
-        return vote !== null;
-    }//fine canUserModifyVote
-
-    static async canUserVoteIdea(user, ideaId) {   //controlla se l'utente 'user' può votare l'idea 'ideaId'
-        const idea = await Idea.findByPk(ideaId);
-
-        return idea && idea.UserUserName != user;
-    }//fine canUserVoteIdea
-
-    static async userVotedIdea(user, ideaId) {  //controlla se l'utente 'user' ha votato l'idea 'ideaId', quindi ritorna il valore del voto oppure NULL
-        const vote = await Vote.findOne({
-            where: {
-                [Op.and]: [{ userName: user }, { id: ideaId }],
-            },
-            attributes: ['valore']
-        })
-
-        return vote ? vote.valore : null;
-    }//fine userVotedIdea*/
-
-
-
     static async getCliente(req) {    //cerca un utente con 'req.params.user'
         return await ClienteRepository.getClienteByUsername(req.params.user);
     }//fine getUser

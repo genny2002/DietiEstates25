@@ -113,7 +113,7 @@ export class RichiestaService {
         try {
             const id = req.params.id;
             const stato = req.params.stato;
-            return await RichiestaRepository.RichiestaRisposta(id, stato);
+            return await RichiestaRepository.richiestaRisposta(id, stato);
         } catch (err) {
             console.error("Error in RichiestaRisposta:", err);
             throw err;

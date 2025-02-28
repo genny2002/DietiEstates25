@@ -21,11 +21,6 @@ export class RichiestaRepository {
             const oggi = new Date();
             const soloData = oggi.toISOString().split('T')[0];
             return await Richiesta.findAll({
-                /*where: {
-                    data: {
-                        [Op.gt]: soloData
-                    }
-                },*/
                 include: [{
                     model: Annuncio,
                     attributes: ['indirizzo']
@@ -49,7 +44,7 @@ export class RichiestaRepository {
     }
 
 
-    static async RichiestaRisposta(id, stato){
+    static async richiestaRisposta(id, stato){
         try {
             const richiesta = await Richiesta.findByPk(id);
             richiesta.stato =  stato;
