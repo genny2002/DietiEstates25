@@ -3,9 +3,6 @@ import { AgenteImmobiliare } from "../Repository/database.js";
 
 export class AnnuncioService {
     static async createAnnuncio(data, filePaths) {
-
-        console.log()
-
         try {
             const AnnuncioDaCreare = {
                 foto: JSON.stringify(filePaths), // salva i percorsi delle immagini come stringa JSON
@@ -21,8 +18,6 @@ export class AnnuncioService {
                 categoria: data.categoria,
                 AgenteImmobiliareUsername: data.AgenteImmobiliareUsername
             };
-
-            console.log("AnnuncioDaCreare:", AnnuncioDaCreare); // Log dei dati da inserire
 
             return await AnnuncioRepository.insertAnnuncio(AnnuncioDaCreare);
         } catch (err) {

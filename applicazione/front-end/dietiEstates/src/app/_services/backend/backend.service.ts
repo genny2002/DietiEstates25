@@ -239,7 +239,6 @@ export class BackendService {
 
   createRichiesta(richiesta: Richiesta){
     const url = `${this.url}/insertRichiesta`; //URL per la richiesta
-    console.log(richiesta.data);
     return this.http.post(url, richiesta, this.httpOptions);
   }
 

@@ -7,7 +7,7 @@ export class RichiestaService {
     static async insertRichiesta(req, res) {
         try {
             const date = new Date(req.body.data);
-            await RichiestaService.controlloRichiesta( req.body.AgenteImmobiliareUsername, date);
+            await RichiestaService.controlloRichiesta(req.body.AgenteImmobiliareUsername, date);
             date.setHours(date.getHours() -1 );
 
             const richiestaDaCreare ={
@@ -24,8 +24,8 @@ export class RichiestaService {
         }
     }
 
-    static async controlloRichiesta(aggente,date) {
-        const richieste = await RichiestaRepository.getRichiesteGiornoX(aggente, date);
+    static async controlloRichiesta(agente,date) {
+        const richieste = await RichiestaRepository.getRichiesteGiornoX(agente, date);
         const ora = date.hour;
         if (ora < 8 || ora >= 19) {
             throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');

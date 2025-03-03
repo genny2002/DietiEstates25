@@ -143,25 +143,6 @@ export class RicercaComponent {
         indirizzo: suggestion.properties.formatted
       });  // Mostra l'indirizzo selezionato
       this.suggestions = [];
-  
-      /*const lat = suggestion.geometry.coordinates[1]; // Latitudine
-      const lon = suggestion.geometry.coordinates[0]; // Longitudine
-  
-      // Centrare la mappa sulle coordinate selezionate
-      if (this.map) {
-        this.map.setView([lat, lon], 15); // Zoom 15 per focalizzare l'indirizzo
-      }
-  
-      if(this.map != null){
-      // Aggiungere un marker sulla mappa
-        if (this.selectedMarker) {
-          this.map.removeLayer(this.selectedMarker); // Rimuove eventuali marker esistenti
-        }
-  
-        this.selectedMarker = L.marker([lat, lon]).addTo(this.map)
-          .bindPopup(`<b>${suggestion.properties.formatted}</b>`)
-          .openPopup();
-      }*/
     }
 
     handleAddress(){
