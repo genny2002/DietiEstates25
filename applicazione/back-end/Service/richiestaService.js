@@ -154,7 +154,6 @@ export class RichiestaService {
                 currentDate.setDate(currentDate.getDate() + i);
                 const dateOnly = currentDate.toISOString().split('T')[0];
                 const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
-                console.log(richieste);
     
                 const orariDisponibili = [];
                 for (let hour = 8; hour <= 18; hour += 2) {
