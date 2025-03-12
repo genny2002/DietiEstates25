@@ -5,7 +5,6 @@ export class EmailService {
         const apiKey = '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'; // Sostituisci con la tua API Key
         const url = 'https://api.sendgrid.com/v3/mail/send';
         const { to, subject, text } = req.body;
-        //console.log(req.body.text)
 
         const payload = {
             personalizations: [

@@ -1,6 +1,5 @@
 
 import {RichiestaRepository} from "../Repository/richiestaRepository.js";
-import moment from 'moment';
 
 export class RichiestaService {
 
@@ -25,17 +24,32 @@ export class RichiestaService {
     }
 
     static async controlloRichiesta(agente,date) {
-        const richieste = await RichiestaRepository.getRichiesteGiornoX(agente, date);
-        const ora = date.hour;
-        if (ora < 8 || ora >= 19) {
-            throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
+        try {
+            await RichiestaService.checkeDate(date.hour, date.day);
+        } catch (err) {
+            return err;
         }
+
+        const richieste = await RichiestaRepository.getRichiesteGiornoX(agente, date);
+
         for (let richiesta of richieste) {
             const dataRichiesta = new Date(richiesta.data);
             const diff = Math.abs(date - dataRichiesta);
             if (diff < 2) {
                 throw new Error('deve esserci una differenza di due ore tra una richiesta e l\'altra');
             }
+        }
+    }
+
+    static async checkeDate(hour, day) {    //funzione da testare
+        if (hour < 8 || hour >= 19) {
+            throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
+        }
+
+        currentDate=new Date();
+
+        if (day < currentDate.getDay()) {
+            throw new Error('Non è possibile inserire una richiesta per un giorno passato');
         }
     }
 

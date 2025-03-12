@@ -24,7 +24,6 @@ export class AgenteImmobiliareService {
 
     static async insertAgenteImmobiliareByCollaboratore(req, res) {
         try {
-            console.log(req.body.referente);
             const Collaboratore = await CollaboratoreService.getCollaboratoreByUsername(req.body.referente);
             const AgenteImmobiliareDaCreare ={
                 username: req.body.usr,
