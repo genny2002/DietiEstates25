@@ -55,4 +55,17 @@ export class GestoreAgenziaRepository {
             throw err;
         }
     }
+
+    static async getOldPassword(username){
+        try {
+            let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+            if(gestoreAgenzia === null){
+                throw new Error("utente non trovato");
+            }
+            return gestoreAgenzia.password;
+        } catch (err) {
+            console.error("Error in getOldPassword:", err);
+            throw err;
+        }
+    }
 }

@@ -37,7 +37,7 @@ GestoreAgenziaService {
 
         const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
 
-        if(length(password)< 4 || length(username) > 20 || !specialCharacterRegex.test(str)){
+        if(length(password) < 4 || length(password) > 20 || !specialCharacterRegex.test(str)){
             return false;
         }
 
@@ -51,15 +51,33 @@ GestoreAgenziaService {
     static async gestoreAgenziaCambioPassword(req, res) {
         try {
             const username = req.body.usr;
-            const password = req.body.pwd;
-            const gestoreAgenzia = await GestoreAgenziaRepository.gestoreAgenziaCambioPassword(username, password);
-            res.status(201).json(gestoreAgenzia);
+            const newPassword = req.body.pwd;
+            const oldPassword = await GestoreAgenziaRepository.getOldPassword(username);
+
+            if(checkPassword(newPassword, oldPassword) ){
+                const gestoreAgenzia = await GestoreAgenziaRepository.gestoreAgenziaCambioPassword(username, newPassword);
+                res.status(201).json(gestoreAgenzia);
+            }
         } catch (err) {
             if (err.message === "credenziali già usate") {
                 return res.status(409).json({ message: err.message });
             }
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
+    }
+
+    static async checkPassword(newPassword, oldPassword) {   //funzione da testare
+        const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
+
+        if(length(newPassword) < 4 || length(newPassword) > 20 || !specialCharacterRegex.test(str)){
+            return false;
+        }
+        
+        if(newPassword === oldPassword ){
+            return false;
+        }
+
+        return true;
     }
 
     static async getPrimoAccesso(req, res) {
