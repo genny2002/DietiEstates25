@@ -1,7 +1,6 @@
 import {GestoreAgenziaRepository} from "../Repository/gestoreAgenziaRepository.js";
 
-export class 
-GestoreAgenziaService {
+export class GestoreAgenziaService {
 
     static async insertGestoreAgenzia(req, res) {
         try {
@@ -30,23 +29,30 @@ GestoreAgenziaService {
         }
     }
 
-    static async checkCredential(username, password, email) {   //funzione da testare
-        if(length(username) < 4 || length(username) > 20) {
+    static async checkCredential(username, password, email) {
+        // Controlla la lunghezza dello username
+        if(username === null || username === undefined || password === null || password === undefined || email === null || email === undefined){
             return false;
         }
 
+        if (username.length < 4 || username.length > 20 ) {
+            return false;
+        }
+    
         const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
-
-        if(length(password) < 4 || length(password) > 20 || !specialCharacterRegex.test(str)){
+    
+        // Controlla la lunghezza della password e se contiene un carattere speciale
+        if (password.length < 4 || password.length > 20 || !specialCharacterRegex.test(password)) {
             return false;
         }
-
-        if(!email.includes("@") || !email.includes(".")){
+    
+        // Controlla se l'email contiene '@' e '.'
+        if (!email.includes("@") || !email.includes(".")) {
             return false;
         }
-
+    
         return true;
-    }
+    }    
 
     static async gestoreAgenziaCambioPassword(req, res) {
         try {
@@ -69,7 +75,11 @@ GestoreAgenziaService {
     static async checkPassword(newPassword, oldPassword) {   //funzione da testare
         const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
 
-        if(length(newPassword) < 4 || length(newPassword) > 20 || !specialCharacterRegex.test(str)){
+        if(newPassword === null || newPassword === undefined || oldPassword === null || oldPassword === undefined){
+            return false;
+        }
+
+        if(newPassword.length < 4 || newPassword.length > 20 || !specialCharacterRegex.test(newPassword)){
             return false;
         }
         
