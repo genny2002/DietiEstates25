@@ -41,8 +41,6 @@ export class EmailService {
         }
     }
 
-    
-
     static isEmailAddressInvalid(error) {
         return error.response?.data?.errors && error.response.data.errors[0]?.message.includes("Invalid email address");
     }
