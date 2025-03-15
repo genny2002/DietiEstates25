@@ -46,7 +46,7 @@ export class RichiestaService {
             throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
         }
 
-        currentDate=new Date();
+        let currentDate=new Date();
 
         if (day < currentDate.getDay()) {
             throw new Error('Non è possibile inserire una richiesta per un giorno passato');
@@ -59,12 +59,10 @@ export class RichiestaService {
 
             let richieste = await RichiestaRepository.getRichieste();
     
-            // Filtro per stato
             if (stato) {
                 richieste = richieste.filter(item => item.stato === stato);
             }
     
-            // Filtro per AgenteImmobiliareUsername
             if (agenteImmobiliare) {
                 richieste = richieste.filter(item => item.AgenteImmobiliareUsername === agenteImmobiliare);
             }
@@ -74,23 +72,15 @@ export class RichiestaService {
             }
            
             if (dataSelected) {
-
-                // Creiamo un oggetto Date per la data selezionata (senza orario)
-                // Impostiamo a mezzanotte per evitare differenze di orario
-                //selectedDate.setHours(0, 0, 0, 0);  // Set a midnight
                 let dataSelectedWrapper = new Date(dataSelected);
     
                 richieste = richieste.filter(item => {
-                    // Creiamo una data per ogni richiesta e impostiamo a mezzanotte
                     let itemDate = new Date(item.data);
 
-    
-                    // Confrontiamo solo anno, mese e giorno
                     return itemDate.getFullYear() === dataSelectedWrapper.getFullYear() && itemDate.getMonth() === dataSelectedWrapper.getMonth() && itemDate.getDate() === dataSelectedWrapper.getDate();
                 });
             }
-    
-            // Ordinamento (se richiesto)
+
             if (sort) {
                 richieste.sort((a, b) => {
                     if (mode === 'asc') {
@@ -101,8 +91,6 @@ export class RichiestaService {
                     return 0;
                 });
             }
-
-            console.log(richieste)
     
             return richieste;
         } catch (err) {
@@ -161,38 +149,55 @@ export class RichiestaService {
             const agent = req.params.AgenteImmobiliareUsername;
             const rawDate = req.params.data;
             const startDate = new Date(rawDate);
-            const results = [];
-    
-            for (let i = 0; i <= 13; i++) {
-                const currentDate = new Date(startDate);
-                currentDate.setDate(currentDate.getDate() + i);
-                const dateOnly = currentDate.toISOString().split('T')[0];
-                const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);
-    
-                const orariDisponibili = [];
-                for (let hour = 8; hour <= 18; hour += 2) {
-                    let disponibile = true;
-                    for (const richiesta of richieste) {
-                        if (richiesta.stato == 'accettata') {
-                            const oraRichiesta = new Date(richiesta.data).getHours();
-                            if (Math.abs(hour - oraRichiesta) < 2) {
-                                disponibile = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (disponibile) {
-                        orariDisponibili.push(`${hour}:00`);
-                    }
-                }
-    
-                results.push({ data: dateOnly, orariDisponibili });
-            }
-    
+            const results = await this.generateAvailableTimes(agent, startDate);
+
             return results;
         } catch (err) {
             console.error("Error in asyncGetOrariRichiestaDisponibili:", err);
             throw err;
         }
+    }
+    
+    static async generateAvailableTimes(agent, startDate) {
+        const results = [];
+    
+        for (let i = 0; i <= 13; i++) {
+            const currentDate = new Date(startDate);
+
+            currentDate.setDate(currentDate.getDate() + i);
+
+            const dateOnly = currentDate.toISOString().split('T')[0];
+            const richieste = await RichiestaRepository.getRichiesteByDateOnly(agent, dateOnly);  
+            const orariDisponibili = this.getAvailableHours(richieste);
+
+            results.push({ data: dateOnly, orariDisponibili });
+        }
+    
+        return results;
+    }
+    
+    static getAvailableHours(richieste) {
+        const orariDisponibili = [];
+    
+        for (let hour = 8; hour <= 18; hour += 2) {
+            if (this.isHourAvailable(richieste, hour)) {
+                orariDisponibili.push(`${hour}:00`);
+            }
+        }
+    
+        return orariDisponibili;
+    }
+    
+    static isHourAvailable(richieste, hour) {
+        for (const richiesta of richieste) {
+            if (richiesta.stato === 'accettata') {
+                const oraRichiesta = new Date(richiesta.data).getHours();
+                
+                if (Math.abs(hour - oraRichiesta) < 2) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const GEOAPIFY_API_KEY = "8cb9e657dbaf434fb522fad850eeafb0";
-const MAPBOX_TOKEN = "pk.eyJ1IjoiZ2VubnkwMDIiLCJhIjoiY201bWRpeGd4MXdhazJrc2ZsNWJuN295byJ9.CmVpz5NMWkqZMraUwMD-Hg";
+const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
+const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
 export class MapService {
   static getMapConfig(){

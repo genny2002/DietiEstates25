@@ -1,14 +1,10 @@
-import { Richiesta } from "./database.js";
-import { Annuncio } from "./database.js";
+import { Richiesta, Annuncio } from "./database.js";
 import { Op , Sequelize } from "sequelize";
 
 export class RichiestaRepository {
 
     static async insertRichiesta(richiestaDaCreare){
         try {
-            console.log(richiestaDaCreare.data);
-            
-
             return await Richiesta.create(richiestaDaCreare);
         } catch (err) {
             console.error("Error in insertRichiesta:", err);
@@ -18,8 +14,6 @@ export class RichiestaRepository {
 
     static async getRichieste(){
         try {
-            const oggi = new Date();
-            const soloData = oggi.toISOString().split('T')[0];
             return await Richiesta.findAll({
                 include: [{
                     model: Annuncio,
@@ -31,8 +25,6 @@ export class RichiestaRepository {
             throw err;
         }
     }
-
-
 
     static async getRichiestaById(id){
         try {
@@ -47,6 +39,7 @@ export class RichiestaRepository {
     static async richiestaRisposta(id, stato){
         try {
             const richiesta = await Richiesta.findByPk(id);
+
             richiesta.stato =  stato;
             return await richiesta.save();
         } catch (err) {
@@ -56,7 +49,7 @@ export class RichiestaRepository {
     }
 
 
-    static async getRichiesteGiornoX(AgenteImmobiliareUsername,data){
+    static async getRichiesteGiornoX(AgenteImmobiliareUsername, data){
         try {
             return await Richiesta.findAll({
                 where: {
@@ -70,7 +63,6 @@ export class RichiestaRepository {
         }
         
     }
-
 
     static async deleteRichiesta(id){
         try {
@@ -111,7 +103,4 @@ export class RichiestaRepository {
             throw err;
         }
     }
-
-    
-
 }

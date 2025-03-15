@@ -13,24 +13,22 @@ export class GestoreAgenziaService {
                     nomeAgenzia: req.body.nomeAgenzia,
                     indirizzoAgenzia: req.body.indirizzoAgenzia
                 }
-
-                
-            const gestoreAgenzia = await GestoreAgenziaRepository.insertGestoreAgenzia(gestoreAgenziaDaCreare);
-            res.status(201).json(gestoreAgenzia);
-            }
-            else {
+             
+                const gestoreAgenzia = await GestoreAgenziaRepository.insertGestoreAgenzia(gestoreAgenziaDaCreare);
+                res.status(201).json(gestoreAgenzia);
+            }else {
                 res.status(409).json({ message: "credenziali errate" });
             }
         } catch (err) {
             if (err.message === "credenziali già usate") {
                 return res.status(409).json({ message: err.message });
             }
+
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
 
     static async checkCredential(username, password, email) {
-        // Controlla la lunghezza dello username
         if(username === null || username === undefined || password === null || password === undefined || email === null || email === undefined){
             return false;
         }
@@ -40,18 +38,12 @@ export class GestoreAgenziaService {
         }
     
         const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
-    
-        // Controlla la lunghezza della password e se contiene un carattere speciale
+
         if (password.length < 4 || password.length > 20 || !specialCharacterRegex.test(password)) {
             return false;
         }
-    
-        // Controlla se l'email contiene '@' e '.'
-        if (!email.includes("@") || !email.includes(".")) {
-            return false;
-        }
-    
-        return true;
+
+        return email.includes("@") && email.includes(".");
     }    
 
     static async gestoreAgenziaCambioPassword(req, res) {
@@ -68,11 +60,12 @@ export class GestoreAgenziaService {
             if (err.message === "credenziali già usate") {
                 return res.status(409).json({ message: err.message });
             }
+            
             next({ status: 500, message: err.message || "Errore durante la registrazione" });
         }
     }
 
-    static async checkPassword(newPassword, oldPassword) {   //funzione da testare
+    static async checkPassword(newPassword, oldPassword) {
         const specialCharacterRegex = /[^a-zA-Z0-9\s]/;
 
         if(newPassword === null || newPassword === undefined || oldPassword === null || oldPassword === undefined){
@@ -82,12 +75,8 @@ export class GestoreAgenziaService {
         if(newPassword.length < 4 || newPassword.length > 20 || !specialCharacterRegex.test(newPassword)){
             return false;
         }
-        
-        if(newPassword === oldPassword ){
-            return false;
-        }
 
-        return true;
+        return newPassword !== oldPassword;
     }
 
     static async getPrimoAccesso(req, res) {

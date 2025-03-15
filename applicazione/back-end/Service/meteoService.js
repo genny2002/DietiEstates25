@@ -1,6 +1,4 @@
 import axios from "axios";
-import * as flatbuffers from "flatbuffers";
-import { fetchWeatherApi } from "openmeteo";
 
 export class MeteoService {
   static async getMeteo(req) {
@@ -36,9 +34,7 @@ export class MeteoService {
         daily: response.data.daily
       };
 
-      console.log(result);
       return result;
-
     } catch (error) {
       console.error(error);
       return { error: "Failed to fetch data from Open Meteo" };
