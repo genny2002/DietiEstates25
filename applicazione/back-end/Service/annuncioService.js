@@ -79,15 +79,68 @@ export class AnnuncioService {
             categoria
         } = filters;
         
-        if (prezzoMin ) {
-            annunci = annunci.filter(item => item.prezzo >= prezzoMin);
+        annunci = AnnuncioService.filterPrezzoMin(prezzoMin, annunci);
+        annunci = AnnuncioService.filterPrezzoMax(prezzoMax, annunci);
+        annunci = AnnuncioService.filterDimensioni(dimensioni, annunci);
+        annunci = AnnuncioService.filterIndirizzo(indirizzo, annunci);
+        annunci = AnnuncioService.filterNumeroStanze(numeroStanze, annunci);
+        annunci = AnnuncioService.filterPiano(piano, annunci);
+        annunci = AnnuncioService.filterAscensore(ascensore, annunci);
+        annunci = AnnuncioService.filterClasseEnergetica(classeEnergetica, annunci);
+        annunci = AnnuncioService.filterAltriServizi(altriServizi, annunci);
+        annunci = AnnuncioService.filterCategoria(categoria, annunci);
+
+        return annunci;
+    }
+
+    static filterCategoria(categoria, annunci) {
+        if (categoria) {
+            annunci = annunci.filter(item => item.categoria == categoria);
         }
-        if (prezzoMax) {
-            annunci = annunci.filter(item => item.prezzo <= prezzoMax);
+        return annunci;
+    }
+
+    static filterAltriServizi(altriServizi, annunci) {
+        if (altriServizi) {
+            if (altriServizi.includes("portineria")) {
+                annunci = annunci.filter(item => item.altriServizi.includes("portineria:true"));
+            }
+            if (altriServizi.includes("climatizzazione")) {
+                annunci = annunci.filter(item => item.altriServizi.includes("climatizzazione:true"));
+            }
         }
-        if (dimensioni) {
-            annunci = annunci.filter(item => item.dimensioni >= dimensioni);
+        return annunci;
+    }
+
+    static filterClasseEnergetica(classeEnergetica, annunci) {
+        if (classeEnergetica) {
+            annunci = annunci.filter(item => item.classeEnergetica.includes(classeEnergetica));
         }
+        return annunci;
+    }
+
+    static filterAscensore(ascensore, annunci) {
+        if (ascensore) {
+            annunci = annunci.filter(item => item.ascensore);
+        }
+        return annunci;
+    }
+
+    static filterPiano(piano, annunci) {
+        if (piano) {
+            annunci = annunci.filter(item => item.piano == piano);
+        }
+        return annunci;
+    }
+
+    static filterNumeroStanze(numeroStanze, annunci) {
+        if (numeroStanze) {
+            annunci = annunci.filter(item => item.numeroStanze == numeroStanze);
+        }
+        return annunci;
+    }
+
+    static filterIndirizzo(indirizzo, annunci) {
         if (indirizzo) {
             const paroleIndirizzo = indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/);
 
@@ -95,30 +148,27 @@ export class AnnuncioService {
                 annunci = annunci.filter(item => item.indirizzo.toLowerCase().replace(/[^a-z0-9\s]/g, '').includes(parola));
             }
         }
-        if (numeroStanze) {
-            annunci = annunci.filter(item => item.numeroStanze == numeroStanze);
-        }
-        if (piano) {
-            annunci = annunci.filter(item => item.piano == piano);
-        }
-        if (ascensore) {
-            annunci = annunci.filter(item => item.ascensore);
-        }
-        if (classeEnergetica) {
-            annunci = annunci.filter(item => item.classeEnergetica.includes(classeEnergetica));
-        }
-        if (altriServizi) {
-            if(altriServizi.includes("portineria")){
-                annunci = annunci.filter(item => item.altriServizi.includes("portineria:true"));
-            }
-            if(altriServizi.includes("climatizzazione")){
-                annunci = annunci.filter(item => item.altriServizi.includes("climatizzazione:true"));
-            }
-        }
-        if (categoria) {
-            annunci = annunci.filter(item => item.categoria == categoria);
-        }
+        return annunci;
+    }
 
+    static filterDimensioni(dimensioni, annunci) {
+        if (dimensioni) {
+            annunci = annunci.filter(item => item.dimensioni >= dimensioni);
+        }
+        return annunci;
+    }
+
+    static filterPrezzoMax(prezzoMax, annunci) {
+        if (prezzoMax) {
+            annunci = annunci.filter(item => item.prezzo <= prezzoMax);
+        }
+        return annunci;
+    }
+
+    static filterPrezzoMin(prezzoMin, annunci) {
+        if (prezzoMin) {
+            annunci = annunci.filter(item => item.prezzo >= prezzoMin);
+        }
         return annunci;
     }
 

@@ -20,7 +20,7 @@ const s3Client = new S3Client({
 });
 
 const storage = multer.memoryStorage(); // Usa la memoria per gestire i file prima di inviarli a S3
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 }});
 
 anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, res) => {
     try {
