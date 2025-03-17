@@ -3,7 +3,7 @@
         <table class="table-auto w-1/3 ml-2 mt-2">
             <tr>
                 @if(changeDayClicked > 0) {
-                    <th>Appuntamenti del {{this.dayToShow  | date:'dd/MM/YYYY'}}</th>
+                    <th>Appuntamenti del {{this.dayToShow  | date:'YYYY-MM-dd'}}</th>
                 }@else {
                     <th>Appuntamenti di oggi</th>
                 }
@@ -32,7 +32,7 @@
             }
         </div>
 
-        {{this.dayToShow  | date:'dd/MM/YYYY'}}
+        {{this.dayToShow  | date:'YYYY-MM-dd'}}
         <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded ml-2" (click)="nextDay()"> &gt; </button>
         <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded ml-4" (click)="setCurrentDay()"> Oggi </button>
     </div>
