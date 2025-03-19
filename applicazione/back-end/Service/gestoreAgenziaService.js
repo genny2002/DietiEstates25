@@ -5,7 +5,7 @@ export class GestoreAgenziaService {
     static async insertGestoreAgenzia(req, res) {
         try {
 
-            if (checkCredential(req.body.username, req.body.password, req.body.email) === false) {
+            if (GestoreAgenziaService.checkCredential(req.body.username, req.body.password, req.body.email)) {
                 const gestoreAgenziaDaCreare ={
                     username: req.body.username,
                     password: req.body.password,
@@ -52,7 +52,7 @@ export class GestoreAgenziaService {
             const newPassword = req.body.pwd;
             const oldPassword = await GestoreAgenziaRepository.getOldPassword(username);
 
-            if(checkPassword(newPassword, oldPassword) ){
+            if(GestoreAgenziaService.checkPassword(newPassword, oldPassword) ){
                 const gestoreAgenzia = await GestoreAgenziaRepository.gestoreAgenziaCambioPassword(username, newPassword);
                 res.status(201).json(gestoreAgenzia);
             }
