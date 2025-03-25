@@ -7,15 +7,16 @@ import { createModelRichiesta } from "./Model/Richiesta.js";
 import {createModelCollaboratore} from "./Model/Collaboratore.js";
 import 'dotenv/config.js';
 
+console.log(process.env.DB_CONNECTION_URI);
 
 export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
     dialect: process.env.DIALECT,
-    /*dialectOptions: {
+    dialectOptions: {
         ssl: {
             require: true, // Forza l'uso di SSL
             rejectUnauthorized: false, // Permette certificati non verificati (opzionale)
         },
-    },*/
+    },
 });
 
 createModelGestoreAgenzia(database);
@@ -36,7 +37,7 @@ Annuncio.AgenteImmobiliare=Annuncio.belongsTo(AgenteImmobiliare);
 AgenteImmobiliare.Richiestas=AgenteImmobiliare.hasMany(Richiesta);
 Richiesta.AgenteImmobiliare=Richiesta.belongsTo(AgenteImmobiliare);
 
-Annuncio.Richiestas=Annuncio.hasMany(Richiesta);
+Annuncio.Richiestas=Annuncio.hasMany(Richiesta, { onDelete: 'CASCADE' });
 Richiesta.Annuncio=Richiesta.belongsTo(Annuncio);
 
 Cliente.Richiestas=Cliente.hasMany(Richiesta);

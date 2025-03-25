@@ -1,0 +1,74 @@
+@if(!deleted){
+    <div class="mb-4 w-full bg-pesca h-1/4 flex flex-row items-start space-x-4 mt-2">
+        <img src={{this.immobileItem.immagini[0].url}} class="h-64 w-1/3"/>
+        
+        <div>
+            <p class="font-bold">Immobile in {{immobileItem.categoria}}</p>
+            <p class="font-bold">Prezzo: {{immobileItem.prezzo}}</p>
+            <p class="font-bold mb-4">Indirizzo: {{immobileItem.indirizzo}}</p>
+
+            <div class="flex items-center space-x-6 mb-4 ml-2 mt-6">
+                <div class="flex items-center space-x-2">
+                    <img ngSrc="dimensioni.png" alt="Dimensioni: " width="40" height="40" />
+                    <p>{{immobileItem.dimensioni}}</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <img ngSrc="numeroStanze.png" alt="Numero Stanze: " width="40" height="40">
+                    <p>{{immobileItem.numeroStanze}}</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <img ngSrc="piano.png" alt="Piano: " width="40" height="40">
+                    <p>{{immobileItem.piano}}</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <img ngSrc="classeEnergetica.png" alt="Classe Energetica: " width="40" height="40">
+                    <p>{{immobileItem.classeEnergetica}}</p>
+                </div>
+            </div>
+
+            <p class="font-bold mb-4 mt-8">Servizi</p>
+            <div class="flex items-center space-x-6 mb-4 ml-2">
+                <div class="flex items-center space-x-2">
+                    <img ngSrc="ascensore.png" alt="Ascensore: " width="40" height="40" />
+                    @if(immobileItem.ascensore){
+                        <img ngSrc="si.png" alt="SI" width="16" height="16">
+                    } @else {
+                        <img ngSrc="no.png" alt="NO" width="16" height="16">
+                    }
+                </div>    
+
+                @for(s of servizi; track s.nome){
+                    <div class="flex items-center space-x-2">
+                        <img ngSrc={{s.nomeFile}} alt={{s.nome}} width="40" height="40" />
+                        @if(s.valore == "true"){
+                            <img ngSrc="si.png" alt="SI" width="16" height="16">
+                        }@else {
+                            <img ngSrc="no.png" alt="NO" width="16" height="16">
+                        }
+                    </div>
+                }
+                <button  (click)="allert()" class="text-white bg-arancione hover:bg-gray-100 hover:text-arancione rounded-lg font-semibold px-4 py-2 text-center text-lg self-end mt-auto ">
+                    Elimina
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="{{showMessage ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 w-96 text-center">
+            <h3 class="text-base font-bold text-arancione mb-4">Sicuro di voler elminare questo annuncio?</h3>
+                <p>Se si elimina questo annuncio, tutti gli appuntamenti per questo annuncio verranno annullati.</p>
+            <div class="flex gap-x-4 mt-4">
+                <button type="button" (click)="deleteAnnuncio()"
+                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                    SI
+                </button>
+                <button type="button" (click)="cancel()" 
+                class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                    NO
+                </button>
+            </div>
+        </div>
+    </div>
+}    
+

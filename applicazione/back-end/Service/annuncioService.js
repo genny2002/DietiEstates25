@@ -1,4 +1,5 @@
 import { AnnuncioRepository } from "../Repository/annuncioRepository.js";
+import { RichiestaRepository } from "../Repository/richiestaRepository.js";
 
 export class AnnuncioService {
     static async createAnnuncio(data, filePaths) {
@@ -27,7 +28,7 @@ export class AnnuncioService {
 
     static async getAnnunci(req) {
         try {
-            const {prezzoMin, prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode, id } = req.query;
+            const {prezzoMin, prezzoMax, dimensioni, indirizzo, numeroStanze, piano, ascensore, classeEnergetica, altriServizi, categoria, sort, mode, id, agent } = req.query;
 
             if (id) {
                 return await this.getAnnuncioById(id);
@@ -44,7 +45,8 @@ export class AnnuncioService {
                     ascensore,
                     classeEnergetica,
                     altriServizi,
-                    categoria
+                    categoria,
+                    agent
                 });
 
                 annunci = this.sortAnnunci(annunci, sort, mode);
@@ -76,9 +78,11 @@ export class AnnuncioService {
             ascensore,
             classeEnergetica,
             altriServizi,
-            categoria
+            categoria,
+            agent
         } = filters;
         
+        annunci = AnnuncioService.filterAgent(agent, annunci);
         annunci = AnnuncioService.filterPrezzoMin(prezzoMin, annunci);
         annunci = AnnuncioService.filterPrezzoMax(prezzoMax, annunci);
         annunci = AnnuncioService.filterDimensioni(dimensioni, annunci);
@@ -90,6 +94,15 @@ export class AnnuncioService {
         annunci = AnnuncioService.filterAltriServizi(altriServizi, annunci);
         annunci = AnnuncioService.filterCategoria(categoria, annunci);
 
+        return annunci;
+    }
+
+    static filterAgent(agent, annunci) {
+        console.log(agent); 
+        console.log(annunci);
+        if (agent) {
+            annunci = annunci.filter(item => item.AgenteImmobiliareUsername == agent);
+        }
         return annunci;
     }
 
@@ -184,5 +197,16 @@ export class AnnuncioService {
             });
         }
         return annunci;
+    }
+
+    static async deleteAnnuncio(req, res) {
+        try {
+            const id = req.params.id;
+            //richieste=RichiestaRepository.deleteRichiestaByAnnuncioID(id);
+            return await AnnuncioRepository.deleteAnnuncio(id);
+        } catch (err) {
+            console.error("Error in deleteAnnuncio:", err);
+            throw err;
+        }
     }
 }

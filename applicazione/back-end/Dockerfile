@@ -13,6 +13,12 @@ RUN npm install --production
 # Copia il resto del codice
 COPY . .
 
+# Esegui la build (ad esempio, per TypeScript o Webpack)
+RUN npm run build
+
+# Rimuovi le dipendenze di sviluppo per ottimizzare il container
+RUN npm prune --production
+
 # Esponi la porta usata dall'app
 EXPOSE 3000
 

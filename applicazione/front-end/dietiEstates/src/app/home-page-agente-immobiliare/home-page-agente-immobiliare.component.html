@@ -12,10 +12,9 @@
             </tr>
 
             @for(item of dates; track item.IDRichiesta){
-            <tr>
-
+            <tr class="border-b border-black">
                 <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm'}}</td>
-                <td>A {{item.Annuncio.indirizzo}}</td>
+                <td>{{item.Annuncio.indirizzo}}</td>
             </tr>
         }
         </table>
@@ -36,4 +35,19 @@
         <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded ml-2" (click)="nextDay()"> &gt; </button>
         <button class="bg-arancione hover:bg-pesca text-white hover:text-arancione font-bold py-2 px-4 rounded ml-4" (click)="setCurrentDay()"> Oggi </button>
     </div>
+
+    <div class="flex flex-col space-y-4 mt-4">
+        <p class="text-center font-bold ml-2 mt-2">I tuoi annunci</p>
+        <div class="flex-[5] overflow-y-auto max-h-[73vh] ml-2">
+            <ul class="w-full text-sm font-medium text-black border border-gray-100 rounded-lg">
+                @for(item of immobili; track item.IDimmobile){
+                    <app-immobile [immobileItem]=item />
+                } @empty {
+                    <li class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
+                        Non sono stati trovati immobili
+                    </li>
+                } 
+            </ul>
+        </div>
+    </div>      
 </section>

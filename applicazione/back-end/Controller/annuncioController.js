@@ -5,7 +5,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import path from "path";
 import { fileURLToPath } from "url";
 
-export const anunncioController = express.Router();
+export const annuncioController = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +22,7 @@ const s3Client = new S3Client({
 const storage = multer.memoryStorage(); // Usa la memoria per gestire i file prima di inviarli a S3
 const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 }});
 
-anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, res) => {
+annuncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, res) => {
     try {
         const numeroImg = parseInt(req.params.numeroImg, 10);
 
@@ -62,11 +62,11 @@ anunncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, 
     }
 });
 
-anunncioController.get("/", (req, res) => {
+annuncioController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
 });
 
-anunncioController.get("/download/annunci", async (req, res) => {
+annuncioController.get("/download/annunci", async (req, res) => {
     try {
         const annunci = await AnnuncioService.getAnnunci(req);
         const annunciConImmagini = annunci.map(annuncio => {
@@ -84,5 +84,15 @@ anunncioController.get("/download/annunci", async (req, res) => {
         res.status(200).json(annunciConImmagini);
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+});
+
+annuncioController.delete("/deleteAnnuncio/:id", async (req, res, next) => {
+    try {
+        const Annuncio = await AnnuncioService.deleteAnnuncio(req, res);
+        res.status(200).json(Annuncio);
+    } catch (err) {
+        console.error(err);
+        next({ status: 500, message: err.message || "Errore durante la registrazione" });
     }
 });

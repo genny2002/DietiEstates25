@@ -4,10 +4,12 @@ import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
 import { CommonModule } from '@angular/common';
 import {Appuntamento} from '../_services/backend/appuntamento.type';
+import { AnnuncioGet } from '../_services/backend/annuncio.type'
+import { ImmobileComponent } from './immobile/immobile.component';
 
 @Component({
   selector: 'app-home-page-agente-immobiliare',
-  imports: [CommonModule],
+  imports: [CommonModule, ImmobileComponent],
   templateUrl: './home-page-agente-immobiliare.component.html',
   styleUrl: './home-page-agente-immobiliare.component.scss'
 })
@@ -20,9 +22,12 @@ export class HomePageAgenteImmobiliareComponent {
   dayToShow = new Date();
   currentDay = new Date();
   changeDayClicked = 0;
+  immobili: AnnuncioGet [] = [];
+  showMessage = false;
 
   ngOnInit() {  //inizializza il componente
     this.getDates(this.dayToShow); 
+    this.getImmobili();
   }
 
   getDates(selectedData: Date) { //recupera tutte le idee controverse
@@ -62,4 +67,21 @@ export class HomePageAgenteImmobiliareComponent {
     this.dayToShow = this.currentDay;
     this.getDates(this.dayToShow);
   }
+
+  getImmobili() {
+    this.backendService.getAnnunciByAgent(this.authService.user()).subscribe({ //cerca tutte le idee controverse
+      next: (data: AnnuncioGet[]) => {
+        this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+        } else {
+          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+        }
+      }
+    });
+  }
+
+  
 }

@@ -103,4 +103,17 @@ export class RichiestaRepository {
             throw err;
         }
     }
+
+    /*static async deleteRichiestaByAnnuncioID(annuncioID){
+        try {
+            return await Richiesta.destroy({
+                where: {
+                    annuncioIDimmobile: annuncioID
+                }
+            });
+        } catch (err) {
+            console.error("Error in deleteRichiesta:", err);
+            throw err;
+        }
+    }*/
 }

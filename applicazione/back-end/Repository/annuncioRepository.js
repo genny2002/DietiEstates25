@@ -27,4 +27,17 @@ export class AnnuncioRepository {
             throw err;
         }
     }
+
+    static async deleteAnnuncio(id){
+        try {
+            return await Annuncio.destroy({
+                where: {
+                    IDimmobile: id
+                }
+            });
+        } catch (err) {
+            console.error("Error in deleteAnnucio:", err);
+            throw err;
+        }
+    }
 }

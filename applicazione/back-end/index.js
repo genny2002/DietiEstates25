@@ -8,7 +8,7 @@ import {authenticationController} from "./Controller/authenticationController.js
 import {gestoreAgenziaController} from "./Controller/gestoreAgenziaController.js";
 import {agenteImmobiliareController} from "./Controller/agenteImmobiliareController.js";
 import {collaboratoreController} from "./Controller/collaboratoreController.js";
-import {anunncioController} from  "./Controller/annuncioController.js";
+import {annuncioController} from  "./Controller/annuncioController.js";
 import {richiestaController} from "./Controller/richiestaController.js";
 import {mapController} from './Controller/mapController.js';
 import {meteoContoller} from './Controller/meteoController.js';
@@ -39,20 +39,18 @@ app.use(authenticationController);
 app.use(gestoreAgenziaController);
 app.use(agenteImmobiliareController);
 app.use(collaboratoreController);
-app.use(anunncioController);
+app.use(annuncioController);
 app.use(richiestaController);
 app.use(mapController);
 app.use(meteoContoller);
 app.use(emailController);
 
-
-
-/*app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
-});*/
-
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
 });
+
+/*app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
+});*/
 
 console.log("\n\n\naggiornato!!\n\n\n");

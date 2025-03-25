@@ -110,6 +110,12 @@ export class BackendService {
     return this.http.delete(url, this.httpOptions);
   }
 
+  deleteAnnuncio(id: number | null){
+    const url= `${this.url}/deleteAnnuncio/${id}`;
+
+    return this.http.delete(url, this.httpOptions);
+  }
+
   changeOffer(id: number, newOfferta: Offerta)  {
     const url= `${this.url}/updateRichiesta/${id}`;
 
@@ -153,6 +159,12 @@ export class BackendService {
 
   getAnnunci(){
     const url= `${this.url}/download/annunci?sort=prezzo&mode=desc`;
+    
+    return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
+  }
+
+  getAnnunciByAgent(agent: string | null){
+    const url= `${this.url}/download/annunci?sort=prezzo&mode=desc&agent=${agent}`;
     
     return this.http.get<AnnuncioGet[]>(url, this.httpOptions);
   }
