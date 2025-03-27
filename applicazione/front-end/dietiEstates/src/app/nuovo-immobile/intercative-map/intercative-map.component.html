@@ -8,7 +8,7 @@
   <div
     class="map-wrapper"
     style="width: 100%; height: 331px; border: 1px solid #000; overflow: hidden; margin-left: auto; margin-right: auto; position: relative;">
-    <div class="map-container" #map style="width: 100%; height: 100%;"></div>
+    <div class="map-container" #map style="width: 100%; height: 100%; z-index: 0"></div>
   </div>
 
   <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="step3Form" (ngSubmit)="handleStep3Form()">
@@ -41,4 +41,16 @@
       </button>
     </div>
   </form>
+</div>
+
+<div class="{{showMessage ? 'block' : 'hidden'}} fixed inset-0 z-99 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-96 text-center">
+      <h3 class="text-base font-bold text-arancione mb-4">Annuncio creato con successo!</h3>
+      <div class="flex gap-x-4 mt-4">
+          <button type="button" (click)="returnHome()"
+          class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+              Continua
+          </button>
+      </div>
+  </div>
 </div>

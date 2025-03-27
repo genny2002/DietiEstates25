@@ -128,7 +128,7 @@
         </form>
     </div>
     } @else {
-      <app-intercative-map (backStepEvent)="backStep()" [nuovoAnnuncio]="nuovoAnnuncio"></app-intercative-map>      
+      <app-intercative-map (backStepEvent)="backStep()" [nuovoAnnuncio]="nuovoAnnuncio" (immobileAggiunto)="propagateEvent()"></app-intercative-map>
     }
 </section>
   

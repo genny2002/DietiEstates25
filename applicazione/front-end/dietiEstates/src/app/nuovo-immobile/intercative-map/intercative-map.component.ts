@@ -27,6 +27,7 @@ export class IntercativeMapComponent {
   private clickListener?: () => void;
   query: string = ''; 
   suggestions: any[] = [];
+  showMessage: boolean = false;
 
   private map?: L.Map;
   private selectedMarker: any;
@@ -47,6 +48,7 @@ export class IntercativeMapComponent {
   private mapContainer!: ElementRef<HTMLElement>;
 
   @Output() backStepEvent = new EventEmitter<void>();
+  @Output() immobileAggiunto = new EventEmitter<void>();
 
   ngOnInit() {
     L.Marker.prototype.options.icon = this.DefaultIcon;
@@ -87,14 +89,19 @@ export class IntercativeMapComponent {
         this.toastr.error("L'annuncio non è stato creato", "Errore");  //mostra un messaggio di errore
       },
       complete: () => {
-        this.toastr.success(`Il nuovo annuncio è stato creato`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        //this.toastr.success(`Il nuovo annuncio è stato creato`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.showMessage=false;
         this.step3Form.reset();
         this.submittedStep3Form = false;
-        //INVIARE LA MAIL AL NUOVO UTENTE
+        this.immobileAggiunto.emit();
+        this.showMessage = true; // Mostra il messaggio di successo
       }
     })
+  }
 
+  returnHome(){
     this.router.navigateByUrl("/homePageAgenteImmobiliare");
+    this.showMessage = false; // Nascondi il messaggio di successo
   }
 
   backStep(){

@@ -41,7 +41,7 @@
         <div class="flex-[5] overflow-y-auto max-h-[73vh] ml-2">
             <ul class="w-full text-sm font-medium text-black border border-gray-100 rounded-lg">
                 @for(item of immobili; track item.IDimmobile){
-                    <app-immobile [immobileItem]=item />
+                    <app-immobile [immobileItem]=item (immobileEliminato)="this.getDates(this.dayToShow)"/>
                 } @empty {
                     <li class="flex items-center flex-wrap content-between w-full px-4 py-2 border-b border-gray-100 rounded-lg">
                         Non sono stati trovati immobili

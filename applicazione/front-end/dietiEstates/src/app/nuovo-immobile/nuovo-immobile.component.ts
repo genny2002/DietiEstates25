@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import {IntercativeMapComponent} from './intercative-map/intercative-map.component';
+import { IntercativeMapComponent } from './intercative-map/intercative-map.component';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { Annuncio } from '../_services/backend/annuncio.type';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './nuovo-immobile.component.scss'
 })
 export class NuovoImmobileComponent {
+  @Output() eventoRicevuto = new EventEmitter<void>();
+
   authService = inject(AuthService);  //gestisce le informazioni della sessione
   router = inject(Router);  //permette la navigazione
   toastr = inject(ToastrService);
@@ -99,6 +101,10 @@ export class NuovoImmobileComponent {
 
   backStep(){
     this.step--;
+  }
+
+  propagateEvent() { 
+    this.eventoRicevuto.emit();
   }
 }
 

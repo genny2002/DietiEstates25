@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/AuthService/auth-service.service';
 import { BackendService } from '../_services/backend/backend.service';
 import { CommonModule } from '@angular/common';
-import {Appuntamento} from '../_services/backend/appuntamento.type';
+import { Appuntamento } from '../_services/backend/appuntamento.type';
 import { AnnuncioGet } from '../_services/backend/annuncio.type'
 import { ImmobileComponent } from './immobile/immobile.component';
 
@@ -82,6 +82,4 @@ export class HomePageAgenteImmobiliareComponent {
       }
     });
   }
-
-  
 }

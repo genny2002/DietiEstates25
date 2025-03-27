@@ -172,7 +172,7 @@ export class RichiestaService {
 
             results.push({ data: dateOnly, orariDisponibili });
         }
-    
+        
         return results;
     }
     
@@ -181,7 +181,11 @@ export class RichiestaService {
     
         for (let hour = 8; hour <= 18; hour += 2) {
             if (this.isHourAvailable(richieste, hour)) {
-                orariDisponibili.push(`${hour}:00`);
+                if(hour==8){
+                    orariDisponibili.push(`0${hour}:00`);
+                }else{
+                    orariDisponibili.push(`${hour}:00`);
+                }
             }
         }
     

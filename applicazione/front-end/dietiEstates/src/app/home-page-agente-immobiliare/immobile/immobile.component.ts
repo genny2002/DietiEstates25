@@ -1,4 +1,4 @@
-import { Component, Input, inject} from '@angular/core';
+import { Component, Input, inject, Output, EventEmitter} from '@angular/core';
 import { AnnuncioGet } from '../../_services/backend/annuncio.type';
 import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr'
@@ -18,6 +18,7 @@ interface Servizio {
 })
 export class ImmobileComponent {
   @Input({ required: true }) immobileItem!: AnnuncioGet;
+  @Output() immobileEliminato = new EventEmitter<void>();
 
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
@@ -53,6 +54,7 @@ export class ImmobileComponent {
         this.deleted = true; //aggiorna il flag di eliminazione
         this.toastr.success(`L'annuncio è stato eliminato`, `Annuncio eliminato!`);  //mostra un messaggio di successo
         this.showMessage = false;
+        this.immobileEliminato.emit();
       }
     });
   }

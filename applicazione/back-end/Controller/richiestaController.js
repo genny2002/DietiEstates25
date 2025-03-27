@@ -9,6 +9,7 @@ richiestaController.get("/", (req, res) => {
 
 richiestaController.post("/insertRichiesta", async (req, res, next) => { 
     try {
+        console.log(req.body);
         const Richiesta = await RichiestaService.insertRichiesta(req, res);
         res.status(201).json(Richiesta);
     } catch (err) {

@@ -245,7 +245,7 @@ export class BackendService {
 
   getDisponibilita(usr: string, data: string){
     const url= `${this.url}/getRichiesteGiornoX/${usr}/${data}`;
-
+    console.log(url);
     return this.http.get<Disponibilita[]>(url, this.httpOptions);
   }
 
