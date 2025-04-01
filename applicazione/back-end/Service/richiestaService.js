@@ -5,13 +5,14 @@ export class RichiestaService {
 
     static async insertRichiesta(req, res) {
         try {
+            console.log("Richiesta:", req.body);
             const date = new Date(req.body.data);
             await RichiestaService.controlloRichiesta(req.body.AgenteImmobiliareUsername, date);
-            date.setHours(date.getHours() -1 );
+            date.setHours(date.getUTCHours());
 
             const richiestaDaCreare ={
                 offerta: req.body.offerta,
-                data: date,
+                data: req.body.data,
                 ClienteUsername: req.body.ClienteUsername,
                 AgenteImmobiliareUsername: req.body.AgenteImmobiliareUsername,
                 AnnuncioIDimmobile: req.body.AnnuncioIDimmobile
