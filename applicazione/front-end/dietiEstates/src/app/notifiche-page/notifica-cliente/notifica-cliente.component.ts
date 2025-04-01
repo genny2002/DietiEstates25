@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr'
 import { Appuntamento } from '../../_services/backend/appuntamento.type';

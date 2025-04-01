@@ -1,6 +1,5 @@
 @if(!deleted){
     <div class="mb-4 p-2 mt-2 bg-white rounded-xl shadow-lg">
-        {{this.notificaItem.IDRichiesta}}
         <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.indirizzo}}, il 
             {{this.notificaItem.data | date:'YYYY-MM-dd'}} alle ore {{this.notificaItem.data | date:'HH:mm' : 'UTC'}} è 
             @if(this.notificaItem.stato=="accettata"){

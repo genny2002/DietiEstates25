@@ -14,7 +14,7 @@
             @for(item of dates; track item.IDRichiesta){
             <tr>
 
-                <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm'}}</td>
+                <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm' : 'UTC'}}</td>
                 <td>A {{item.Annuncio.indirizzo}}</td>
             </tr>
         }

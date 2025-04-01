@@ -13,7 +13,7 @@
 
             @for(item of dates; track item.IDRichiesta){
             <tr class="border-b border-black">
-                <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm'}}</td>
+                <td>Appuntamento con {{item.ClienteUsername}} alle {{item.data | date:'HH:mm' : 'UTC'}}</td>
                 <td>{{item.Annuncio.indirizzo}}</td>
             </tr>
         }

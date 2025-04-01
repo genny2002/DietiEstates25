@@ -2,7 +2,7 @@
 @if(!deleted){
     <div class="mb-4 p-2 mt-2 bg-white rounded-xl shadow-lg">
         <p>{{this.notificaItem.ClienteUsername}} ha richiesto un appuntamento il {{this.notificaItem.data | date:'YYYY-MM-dd'}} alle 
-            ore {{this.notificaItem.data | date:'HH:mm'}} per l'immobile a {{this.notificaItem.Annuncio.indirizzo}}</p>
+            ore {{this.notificaItem.data | date:'HH:mm' : 'UTC'}} per l'immobile a {{this.notificaItem.Annuncio.indirizzo}}</p>
         
             @if(this.notificaItem.offerta){
             <p>Offerta: €{{this.notificaItem.offerta}}</p>
