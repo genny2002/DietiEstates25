@@ -1,0 +1,22 @@
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-6 w-96 text-center">
+        <h3 class="text-base font-bold text-arancione mb-4">Cambia l'orario per la richiesta della visita</h3>
+        <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="timeForm" (ngSubmit)="handleChangeTime()">
+            <label for="orario" class="block text-arancione font-bold mb-2"> Selezionare un orario</label>
+            <select id="orario" formControlName="orario" name="orario" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5">
+                @for(o of this.orari[0].orariDisponibili; track $index) {
+                    <option value="{{o}}">{{o}}</option>
+                }
+            </select>
+            <div class="flex gap-x-4 mt-4">
+                <button type="button" (click)="cancel()" 
+                    class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
+                    Indietro
+                </button>
+                <button type="submit" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-lg">
+                    Continua 
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

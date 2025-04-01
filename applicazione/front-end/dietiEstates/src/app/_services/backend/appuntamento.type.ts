@@ -6,6 +6,7 @@ export interface Appuntamento {
     AgenteImmobiliareUsername: string | null;
     data: Date;
     Annuncio: {
+        IDImmobile: number;
         indirizzo: string;
     };
   }

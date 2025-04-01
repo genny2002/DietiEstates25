@@ -5,9 +5,9 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../_services/backend/backend.service';
 import { AuthService } from '../_services/AuthService/auth-service.service';
-import {ApiMeteoResponse} from '../_services/backend/meteo.type';
-import {AnnuncioGet} from '../_services/backend/annuncio.type';
-import {Disponibilita} from '../_services/backend/disponibilita.type';
+import { ApiMeteoResponse } from '../_services/backend/meteo.type';
+import { AnnuncioGet } from '../_services/backend/annuncio.type';
+import { Disponibilita } from '../_services/backend/disponibilita.type';
 
 @Component({
   selector: 'app-prenota',

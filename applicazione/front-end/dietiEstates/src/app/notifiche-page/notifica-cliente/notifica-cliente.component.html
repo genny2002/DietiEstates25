@@ -1,7 +1,8 @@
 @if(!deleted){
     <div class="mb-4 p-2 mt-2 bg-white rounded-xl shadow-lg">
+        {{this.notificaItem.IDRichiesta}}
         <p>La tua richiesta di appuntamento per l'immobile a {{this.notificaItem.Annuncio.indirizzo}}, il 
-            {{this.notificaItem.data | date:'YYYY-MM-dd'}} alle ore {{this.notificaItem.data | date:'HH:mm'}} è 
+            {{this.notificaItem.data | date:'YYYY-MM-dd'}} alle ore {{this.notificaItem.data | date:'HH:mm' : 'UTC'}} è 
             @if(this.notificaItem.stato=="accettata"){
                 <span class="font-bold text-green-500">accettata</span>
             }@else if (this.notificaItem.stato=="rifiutata"){
@@ -12,42 +13,15 @@
         <br>
 
         @if(this.notificaItem.stato=="rifiutata"){
-            <button (click)="changeOffer()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-md mr-2">Cambia Offerta</button>
+            <button (click)="changeTime()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-md mr-2">Cambia Orario</button>
         }
 
         <button (click)="allert()" class="text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-6 py-2 text-center text-md">Elimina</button>
+        
+        @if(this.showChangeTime){
+            <app-change-time [orari]="orari" [notificaItem]="notificaItem" (notificaModificata)="terminaModifica($event)" (modificaAnnullata)="cancel()"></app-change-time>
+        }
 
-        <div class="{{showChangeOffer ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div class="bg-white rounded-lg p-6 w-96 text-center">
-                <h3 class="text-base font-bold text-arancione mb-4">Cambia la tua offerta</h3>
-                <form class="space-y-4 md:space-y-6 mt-4" [formGroup]="offerForm" (ngSubmit)="handleChangeOffer()">
-                    <div class="mb-6">
-                        <label class="block text-arancione font-bold mb-2" for="pass">
-                            Nuova offerta:  €
-                        </label>
-                    
-                        <input type="number" formControlName="offer" id="offer" placeholder="{{this.notificaItem.offerta}}" 
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-xl xl:text-sm rounded-lg block w-full p-2.5"
-                            required="" min="{{this.notificaItem.offerta}}">
-                        @if(submittedOfferForm && offerForm.controls.offer.errors){
-                        @if(offerForm.controls.offer.errors['required']){
-                        <p class="form-error">Inserire un'offerta.</p>
-                        }
-                    
-                        }
-                    </div>
-                    <div class="flex gap-x-4">
-                        <button type="submit"
-                        class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
-                            Avanti
-                        </button>
-                        <button type="button" (click)="cancel()" class="w-full text-white bg-arancione hover:bg-pesca hover:text-arancione rounded-lg font-semibold px-5 py-2.5 text-center text-lg">
-                            Indietro
-                        </button>
-                    </div>    
-                </form>
-            </div>
-        </div>
 
         <div class="{{showMessage ? 'block' : 'hidden'}} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-white rounded-lg p-6 w-96 text-center">
@@ -57,7 +31,7 @@
                 }@else if (this.notificaItem.stato=="in attesa") {
                     <p>Se si elimina questa notifica, l'agente immobiliare non potrà accettare o rifiutare la richiesta</p>
                 }@else {
-                    <p>Se si elimina questa notifica, non sarà possibile inviare una nuova offerta all'agente immobiliare?</p>
+                    <p>Se si elimina questa notifica, non sarà possibile modificare la richiesta con un nuovo orario all'agente immobiliare?</p>
                 }
                 <div class="flex gap-x-4 mt-4">
                     <button type="button" (click)="deleteNotifica()"

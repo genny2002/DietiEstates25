@@ -92,6 +92,8 @@ export class RichiestaService {
                 });
             }
     
+            console.log("Richieste filtrate:", richieste);
+
             return richieste;
         } catch (err) {
             console.error("Error in getRichiesta:", err);
@@ -136,8 +138,8 @@ export class RichiestaService {
     static async updateRichiesta(req, res) {
         try {
             const id = req.params.id;
-            const offerta = req.body.offerta;
-            return await RichiestaRepository.updateRichiesta(id, offerta);
+            const orario = req.body.orario;
+            return await RichiestaRepository.updateRichiesta(id, orario);
         } catch (err) {
             console.error("Error in updateRichiesta:", err);
             throw err;

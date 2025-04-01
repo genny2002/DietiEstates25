@@ -4,7 +4,7 @@ import { AuthRequest } from './aut-request.type';
 import { GestoreAgenzia } from './gestoreAgenzia.type';
 import { CollaboratoreAndAgente } from './collaboratoreAgente.type';
 import { Appuntamento } from './appuntamento.type';
-import { Offerta } from './offerta.type';
+import { Orario } from './orario.type';
 import { Annuncio, AnnuncioGet } from './annuncio.type';
 import { Filtro } from './filtro.type';
 import { ApiMeteoResponse } from './meteo.type';
@@ -93,7 +93,6 @@ export class BackendService {
 
   getUserAppuntamenti(usr: string | null, role: string | null){
     const url= `${this.url}/getRichiesta?sort=data&mode=asc&${role}=${usr}`;
-    console.log(url);
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
   }
@@ -116,10 +115,10 @@ export class BackendService {
     return this.http.delete(url, this.httpOptions);
   }
 
-  changeOffer(id: number, newOfferta: Offerta)  {
-    const url= `${this.url}/updateRichiesta/${id}`;
+  changeTime(id: number, newOrario: Orario)  {
+    const url= `${this.url}/updateRichiesta/${id}`; //MODIFICAE IL BACKEND
 
-    return this.http.put(url, newOfferta, this.httpOptions);
+    return this.http.put(url, newOrario, this.httpOptions);
   }
 
   getMapConfiguration() {
@@ -243,7 +242,7 @@ export class BackendService {
     return this.http.get<ApiMeteoResponse>(url, this.httpOptions);
   }
 
-  getDisponibilita(usr: string, data: string){
+  getDisponibilita(usr: string, data: string | Date){
     const url= `${this.url}/getRichiesteGiornoX/${usr}/${data}`;
     console.log(url);
     return this.http.get<Disponibilita[]>(url, this.httpOptions);
