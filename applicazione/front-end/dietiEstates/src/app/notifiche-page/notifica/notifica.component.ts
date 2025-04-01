@@ -48,7 +48,7 @@ export class NotificaComponent {
           
           this.sendEmail(this.authService.user(), emailReciver, this.notificaItem.data, this.notificaItem.Annuncio.indirizzo, newState);
         }catch(err){
-          this.toastr.error("Errore durante il recupero dell'email del cliente", "Errore");
+          this.toastr.warning("L'email non è stata inviata al cliente", "Email non inviata");
         }
       }
     });
@@ -71,7 +71,7 @@ export class NotificaComponent {
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.error("L'email non è stata inviata al cliente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.warning("L'email non è stata inviata al cliente", "Email non inviata");  //mostra un messaggio di errore
       },
       complete: () => {
         this.toastr.success(`La notifica è stata ${state}`, `Risposta inviata!`);  //mostra un messaggio di successo

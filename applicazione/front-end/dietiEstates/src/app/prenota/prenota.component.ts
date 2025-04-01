@@ -266,7 +266,7 @@ export class PrenotaComponent {
         AnnuncioIDimmobile: this.route.snapshot.params["id"],
       }).subscribe({
         error: (err) => {
-          this.toastr.error("Non è stato possibile inviare la richiesta di prenotazione", "Errore");  //mostra un messaggio di errore
+          this.toastr.warning("L'email non è stata inviata all'agente", "Email non inviata");  //mostra un messaggio di errore
         },
         complete: async () => {
           try{
@@ -276,7 +276,7 @@ export class PrenotaComponent {
             this.richiestaForm.reset();
             this.submittedRichiestaForm = false;
           }catch(err){
-            this.toastr.error("Errore durante il recupero dell'email dell'agente", "Errore");
+            this.toastr.warning("L'email non è stata inviata all'agente", "Email non inviata");
           }  
         }
       })
