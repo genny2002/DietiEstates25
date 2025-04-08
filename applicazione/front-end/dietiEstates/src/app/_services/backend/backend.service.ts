@@ -109,8 +109,8 @@ export class BackendService {
     return this.http.delete(url, this.httpOptions);
   }
 
-  deleteAnnuncio(id: number | null){
-    const url= `${this.url}/deleteAnnuncio/${id}`;
+  deleteAnnuncio(id: number | null, username: string | null){
+    const url= `${this.url}/deleteAnnuncio/${id}/${username}`;
 
     return this.http.delete(url, this.httpOptions);
   }

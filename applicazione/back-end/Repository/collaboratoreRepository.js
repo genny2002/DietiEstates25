@@ -46,4 +46,15 @@ export class CollaboratoreRepository {
             throw err;
         }
     }
+
+    static async getUsername(){
+        try {
+            let collaboratori = await Collaboratore.findAll({ attributes: ['username'] });
+            let usernames = collaboratori.map(collaboratore => collaboratore.username);
+            return usernames;
+        } catch (err) {
+            console.error("Error in getClienteByUsername:", err);
+            throw err;
+        }
+    }
 }

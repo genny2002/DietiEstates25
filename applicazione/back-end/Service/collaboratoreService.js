@@ -1,15 +1,21 @@
 import {CollaboratoreRepository} from "../Repository/collaboratoreRepository.js";
+import { AuthenticationService } from "./AuthenticationService.js";
 
 export class CollaboratoreService {
-
     static async insertCollaboratore(req, res) {
         try {
-                const CollaboratoreDaCreare ={
-                    username: req.body.usr,
-                    password: req.body.pwd,
-                    email: req.body.email,
-                    GestoreAgenziumUsername: req.body.referente
-                }
+            let ris = await AuthenticationService.checkUsername(req.body.usr);
+                    
+            if( ris == false){
+                throw new Error("credenziali già usate");
+            }
+
+            const CollaboratoreDaCreare ={
+                username: req.body.usr,
+                password: req.body.pwd,
+                email: req.body.email,
+                GestoreAgenziumUsername: req.body.referente
+            }
             const Collaboratore = await CollaboratoreRepository.insertCollaboratore(CollaboratoreDaCreare);
             res.status(201).json(Collaboratore);
         } catch (err) {

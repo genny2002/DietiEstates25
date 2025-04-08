@@ -38,4 +38,15 @@ export class AgenteImmobiliareRepository {
             throw err;
         }
     }
+
+    static async getUsername(){
+        try {
+            let agenti = await AgenteImmobiliare.findAll({ attributes: ['username'] });
+            let usernames = agenti.map(agente => agente.username);
+            return usernames;
+        } catch (err) {
+            console.error("Error in getClienteByUsername:", err);
+            throw err;
+        }
+    }
 }

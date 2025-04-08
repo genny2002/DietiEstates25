@@ -68,4 +68,15 @@ export class GestoreAgenziaRepository {
             throw err;
         }
     }
+
+    static async getUsername(){
+        try {
+            let gestori = await GestoreAgenzia.findAll({ attributes: ['username'] });
+            let usernames = gestori.map(gestore => gestore.username);
+            return usernames;
+        } catch (err) {
+            console.error("Error in getClienteByUsername:", err);
+            throw err;
+        }
+    }
 }

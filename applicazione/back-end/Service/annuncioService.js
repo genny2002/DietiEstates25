@@ -202,11 +202,28 @@ export class AnnuncioService {
     static async deleteAnnuncio(req, res) {
         try {
             const id = req.params.id;
-            //richieste=RichiestaRepository.deleteRichiestaByAnnuncioID(id);
+            const user = req.params.user;
+            const annuncio = await AnnuncioRepository.getAnnuncioById(id);
+
+            if(this.check(user, annuncio.AgenteImmobiliareUsername)){
+                return res.status(403).json({ message: "Non puoi eliminare questo annuncio" });
+            }
             return await AnnuncioRepository.deleteAnnuncio(id);
         } catch (err) {
             console.error("Error in deleteAnnuncio:", err);
             throw err;
+        }
+    }
+
+    check(user, owner) {
+        if(user === null || user === undefined || owner === null || owner === undefined){
+            return false;
+        }
+
+        if(user === owner){
+            return false;
+        }else{
+            return true;
         }
     }
 }

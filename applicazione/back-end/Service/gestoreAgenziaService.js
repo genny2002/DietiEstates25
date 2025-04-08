@@ -1,9 +1,15 @@
 import {GestoreAgenziaRepository} from "../Repository/gestoreAgenziaRepository.js";
+import { AuthenticationService } from "./AuthenticationService.js";
 
 export class GestoreAgenziaService {
 
     static async insertGestoreAgenzia(req, res) {
         try {
+            let ris = await AuthenticationService.checkUsername(req.body.username);
+        
+            if( ris == false){
+                throw new Error("credenziali già usate");
+            }
 
             if (GestoreAgenziaService.checkCredential(req.body.username, req.body.password, req.body.email)) {
                 const gestoreAgenziaDaCreare ={

@@ -34,11 +34,21 @@ export class ClienteRepository {
         }
     }
 
-
     static async getClienteByUsername(username){
         try {
             let cliente = await Cliente.findByPk(username, { attributes: ['email'] });
             return cliente ? cliente.email : null;
+        } catch (err) {
+            console.error("Error in getClienteByUsername:", err);
+            throw err;
+        }
+    }
+
+    static async getUsername(){
+        try {
+            let clienti = await Cliente.findAll({ attributes: ['username'] });
+            let usernames = clienti.map(cliente => cliente.username);
+            return usernames;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);
             throw err;

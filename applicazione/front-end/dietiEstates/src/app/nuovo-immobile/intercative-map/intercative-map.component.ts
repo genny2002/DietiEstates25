@@ -89,7 +89,6 @@ export class IntercativeMapComponent {
         this.toastr.error("L'annuncio non è stato creato", "Errore");  //mostra un messaggio di errore
       },
       complete: () => {
-        //this.toastr.success(`Il nuovo annuncio è stato creato`, `Registrazione effettuata`);  //mostra un messaggio di successo
         this.showMessage=false;
         this.step3Form.reset();
         this.submittedStep3Form = false;

@@ -3,6 +3,7 @@ import { AnnuncioGet } from '../../_services/backend/annuncio.type';
 import { NgOptimizedImage } from '@angular/common'
 import { ToastrService } from 'ngx-toastr'
 import { BackendService } from '../../_services/backend/backend.service';
+import { AuthService } from '../../_services/AuthService/auth-service.service';
 
 interface Servizio {
   nome: string;
@@ -20,6 +21,7 @@ export class ImmobileComponent {
   @Input({ required: true }) immobileItem!: AnnuncioGet;
   @Output() immobileEliminato = new EventEmitter<void>();
 
+  authService = inject(AuthService);
   backendService = inject(BackendService); //effettua le richieste HTTP
   toastr = inject(ToastrService); //mostra le notifiche
  
@@ -46,7 +48,7 @@ export class ImmobileComponent {
   }
 
   deleteAnnuncio(){
-    this.backendService.deleteAnnuncio(this.immobileItem.IDimmobile).subscribe({ //cerca tutte le idee controverse
+    this.backendService.deleteAnnuncio(this.immobileItem.IDimmobile, this.authService.user()).subscribe({ //cerca tutte le idee controverse
       error: (err) => {
         this.toastr.error(`L'annuncio non è stato eliminato`, `Errore: annuncio non trovato`); //mostra un messaggio di errore
       },

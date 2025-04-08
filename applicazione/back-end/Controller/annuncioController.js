@@ -87,7 +87,7 @@ annuncioController.get("/download/annunci", async (req, res) => {
     }
 });
 
-annuncioController.delete("/deleteAnnuncio/:id", async (req, res, next) => {
+annuncioController.delete("/deleteAnnuncio/:id/:user", async (req, res, next) => {
     try {
         const Annuncio = await AnnuncioService.deleteAnnuncio(req, res);
         res.status(200).json(Annuncio);

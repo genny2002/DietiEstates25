@@ -20,7 +20,7 @@ authenticationController.post("/auth", async (req, res) => {    //se le credenzi
 
 authenticationController.post("/signupCliente", (req, res, next) => {  //tenta di registrare un nuovo utente e invia una risposta
     try{
-        const cliente = AuthenticationService.saveCliente(req);
+        const cliente = AuthenticationService.saveCliente(req, res);
         res.status(201).json(cliente);
     } catch(err) {
         if(err.message==="credenziali già usate"){

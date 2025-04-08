@@ -35,15 +35,42 @@ export class AuthenticationService {
         return Jwt.sign({ user: username, role: ruolo}, process.env.TOKEN_SECRET, { expiresIn: `${24 * 60 * 60}s` });
     }
 
+    static async checkUsername(usr){
+        let usernameClienti = await ClienteRepository.getUsername();
+        let usernameCollaboratori = await CollaboratoreRepository.getUsername();
+        let usernameAgentiImmobiliari = await AgenteImmobiliareRepository.getUsername();
+        let usernameGestoriAgenzia = await GestoreAgenziaRepository.getUsername();
+        let usernames=[...usernameClienti, ...usernameCollaboratori, ...usernameAgentiImmobiliari, ...usernameGestoriAgenzia];
+        let ris=this.usernameIsValid(usernames, usr);
+
+        return ris
+    }
+
+    static usernameIsValid(usernames, usr) {
+        if(usr === null || usr === undefined){
+            return false;
+        }
+
+        let ris=true;
+
+        usernames.forEach(element => {
+            if (element === usr){
+                ris=false;
+            }
+        });
+
+        return ris;
+    }
+
     static async saveCliente(req, res) {
         try{
-            const ruolo = await AuthenticationService.checkRuolo(req);
+           let ris = await this.checkUsername(req.body.usr);
 
-            if (ruolo !== null) {
-                throw new Error("Credenziali già usate");
+            if(ris==false){
+                throw new Error("credenziali già usate");        
+            }else{
+                return await ClienteRepository.signUp(req.body.usr, req.body.pwd, req.body.email);
             }
-
-            return await ClienteRepository.signUp(req.body.usr, req.body.pwd, req.body.email);
         } catch (err) {
             console.error("Errore durante il salvataggio del cliente:", err);
 

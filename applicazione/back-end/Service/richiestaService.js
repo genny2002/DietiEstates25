@@ -92,8 +92,6 @@ export class RichiestaService {
                     return 0;
                 });
             }
-    
-            console.log("Richieste filtrate:", richieste);
 
             return richieste;
         } catch (err) {
