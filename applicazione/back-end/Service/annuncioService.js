@@ -205,7 +205,7 @@ export class AnnuncioService {
             const user = req.params.user;
             const annuncio = await AnnuncioRepository.getAnnuncioById(id);
 
-            if(this.check(user, annuncio.AgenteImmobiliareUsername)){
+            if(this.checkOwner(user, annuncio.AgenteImmobiliareUsername)){
                 return res.status(403).json({ message: "Non puoi eliminare questo annuncio" });
             }
             return await AnnuncioRepository.deleteAnnuncio(id);
@@ -215,15 +215,19 @@ export class AnnuncioService {
         }
     }
 
-    check(user, owner) {
-        if(user === null || user === undefined || owner === null || owner === undefined){
+    static checkOwner(user, owner) {
+        if(owner === null || owner === undefined){
+            return false;
+        }
+
+        if(user === null || user === undefined){
             return false;
         }
 
         if(user === owner){
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
 }
