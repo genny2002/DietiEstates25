@@ -1,5 +1,4 @@
 import { AnnuncioRepository } from "../Repository/annuncioRepository.js";
-import { RichiestaRepository } from "../Repository/richiestaRepository.js";
 
 export class AnnuncioService {
     static async createAnnuncio(data, filePaths) {
@@ -98,8 +97,6 @@ export class AnnuncioService {
     }
 
     static filterAgent(agent, annunci) {
-        console.log(agent); 
-        console.log(annunci);
         if (agent) {
             annunci = annunci.filter(item => item.AgenteImmobiliareUsername == agent);
         }

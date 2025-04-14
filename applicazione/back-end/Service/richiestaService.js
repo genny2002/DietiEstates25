@@ -26,7 +26,7 @@ export class RichiestaService {
 
     static async controlloRichiesta(agente,date) {
         try {
-            await RichiestaService.checkeDate(date.hour, date.day);
+            await RichiestaService.checkDate(date.hour, date.day);
         } catch (err) {
             return err;
         }
@@ -42,7 +42,7 @@ export class RichiestaService {
         }
     }
 
-    static async checkeDate(hour, day) {    //funzione da testare
+    static async checkDate(hour, day) {  
         if (hour < 8 || hour >= 19) {
             throw new Error('L\'orario della richiesta deve essere compreso tra le 8 e le 18.');
         }

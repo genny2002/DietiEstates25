@@ -1,8 +1,8 @@
 # Usa un'immagine di base ufficiale di Node.js
-FROM node:16
+FROM node:22
 
 # Imposta la directory di lavoro
-WORKDIR C:\Users\Genna\Desktop\Ingegneria del Software\progetto\progettino\applicazione\back-end
+WORKDIR "C:/Users/Genna/Desktop/Ingegneria del Software/progetto/progettino/applicazione/back-end"
 
 # Copia package.json e package-lock.json
 COPY package*.json ./

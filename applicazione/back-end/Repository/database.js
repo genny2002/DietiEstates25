@@ -7,6 +7,7 @@ import { createModelRichiesta } from "./Model/Richiesta.js";
 import {createModelCollaboratore} from "./Model/Collaboratore.js";
 import 'dotenv/config.js';
 
+console.log(process.env.DIALECT);
 console.log(process.env.DB_CONNECTION_URI);
 
 export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
