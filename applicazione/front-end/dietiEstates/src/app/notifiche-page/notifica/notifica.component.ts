@@ -14,11 +14,11 @@ import { AuthService } from '../../_services/AuthService/auth-service.service';
 export class NotificaComponent {
   @Input({ required: true }) notificaItem!: Appuntamento;
 
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
   authService = inject(AuthService);
 
-  deleted: boolean = false; //flag di eliminazione della notifica 'notificaItem'
+  deleted: boolean = false;
   showChangeOffert = false;
 
   async getCustomerEmail(): Promise<string> {
@@ -28,7 +28,7 @@ export class NotificaComponent {
           resolve(data);
         },
         error: (err) => {
-          this.toastr.error(err.message, err.statusText); //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
           reject(err);
         }
       })  
@@ -36,13 +36,13 @@ export class NotificaComponent {
   }
 
   changeState(newState: string){
-    this.backendService.changeState(this.notificaItem.IDRichiesta, newState).subscribe({ //cerca tutte le idee controverse
+    this.backendService.changeState(this.notificaItem.IDRichiesta, newState).subscribe({
       error: (err) => {
-        this.toastr.error(`La notifica non è stata ${newState}`, `Errore: notifica non trovata`); //mostra un messaggio di errore
+        this.toastr.error(`La notifica non è stata ${newState}`, `Errore: notifica non trovata`);
       },
       complete: async () => {
         try{
-          this.notificaItem.stato = newState; //aggiorna lo stato della notifica
+          this.notificaItem.stato = newState;
           
           const emailReciver = await this.getCustomerEmail();
           
@@ -55,9 +55,9 @@ export class NotificaComponent {
   }
 
   sendEmail(usernameSender: string | null, emailReciver: string, date: Date, address: string, state: string){
-    const dateString: string = date.toString(); // Ad esempio: "2025-02-14T09:00:00.000Z"
-    const [day, time] = dateString.split('T'); // Divide la stringa in data e orario
-    const cleanTime = time.split('.')[0]; // Rimuove i millisecondi
+    const dateString: string = date.toString(); 
+    const [day, time] = dateString.split('T');
+    const cleanTime = time.split('.')[0];
 
     let message = `La tua richiesta per visitare l'immobile a ${address} il giorno ${day} alle ore ${cleanTime} è stata ${state} da ${usernameSender}.\n`
 
@@ -65,16 +65,16 @@ export class NotificaComponent {
       message = message + `Accedi alle notifiche del tuo account DietiEstates per inviare una nuova offerta all'agente immobiliare.`
     }
 
-    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+    this.backendService.inviaEmail({
       to: emailReciver,
       subject: `Richiesta ${state}`,
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.warning("L'email non è stata inviata al cliente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.warning("L'email non è stata inviata al cliente", "Email non inviata");
       },
       complete: () => {
-        this.toastr.success(`La notifica è stata ${state}`, `Risposta inviata!`);  //mostra un messaggio di successo
+        this.toastr.success(`La notifica è stata ${state}`, `Risposta inviata!`);
       }
     })
   }

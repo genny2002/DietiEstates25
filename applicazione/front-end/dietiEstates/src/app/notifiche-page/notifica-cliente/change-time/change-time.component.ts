@@ -17,31 +17,31 @@ export class ChangeTimeComponent {
   @Output() notificaModificata = new EventEmitter<number>();
   @Output() modificaAnnullata = new EventEmitter<void>(); 
 
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
 
-  submittedTimeForm = false;  //flag dello stato di invio del form
-  timeForm = new FormGroup({ //form per il login
-    orario: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedTimeForm = false;
+  timeForm = new FormGroup({
+    orario: new FormControl('', [Validators.required]),
   })
 
   handleChangeTime(){
-    this.submittedTimeForm = true;  //aggiorna la flag dello stato di invio del form
+    this.submittedTimeForm = true;
 
-    if (this.timeForm.invalid) { //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
+    if (this.timeForm.invalid) {
+      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");
     } else {
-      this.backendService.changeTime(this.notificaItem.IDRichiesta, {  //effettua il login con i dati inseriti nel form
+      this.backendService.changeTime(this.notificaItem.IDRichiesta, {
         orario: this.timeForm.value.orario as string,
       }).subscribe({
         error: (err) => {
-          this.toastr.error("Inserire un orario corretta.", "Errore: orario errato"); //mostra un messaggio di errore
+          this.toastr.error("Inserire un orario corretta.", "Errore: orario errato");
         },
         complete: () => {
-          let orarioString = this.timeForm.value.orario as string; //trasforma l'orario in una stringa
-          const orarioNumber = Number(orarioString.substring(0,2)); //trasforma l'orario in un numero
+          let orarioString = this.timeForm.value.orario as string;
+          const orarioNumber = Number(orarioString.substring(0,2));
           
-          this.toastr.success(`Nuova Richiesta inviata`, `Richiesta inviata!`);  //mostra un messaggio di successo
+          this.toastr.success(`Nuova Richiesta inviata`, `Richiesta inviata!`);
           this.notificaModificata.emit(orarioNumber);
         }
       })

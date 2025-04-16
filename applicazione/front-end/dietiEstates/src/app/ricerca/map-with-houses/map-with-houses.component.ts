@@ -12,9 +12,9 @@ import 'mapbox-gl-leaflet';
   styleUrl: './map-with-houses.component.scss'
 })
 export class MapWithHousesComponent {
-  renderer = inject(Renderer2); //permette di manipolare il DOM
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  renderer = inject(Renderer2);
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
 
   private clickListener?: () => void;
   private map?: L.Map;
@@ -22,12 +22,12 @@ export class MapWithHousesComponent {
   private markersGroup?: L.LayerGroup;
 
   DefaultIcon = L.icon({
-    iconUrl: '/marker-icon.png', // Percorso relativo dalla cartella `public`
+    iconUrl: '/marker-icon.png',
     shadowUrl: '/marker-shadow.png',
-    iconSize: [25, 41], // Dimensioni predefinite dell'icona
-    iconAnchor: [12, 41], // Posizione dell'ancora dell'icona
-    popupAnchor: [1, -34], // Posizione dell'ancora del popup
-    shadowSize: [41, 41]  // Dimensioni dell'ombra
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
   });
 
   @ViewChild('map')
@@ -44,7 +44,6 @@ export class MapWithHousesComponent {
   ngOnInit() {
     L.Marker.prototype.options.icon = this.DefaultIcon;
   
-    // Recupera la configurazione della mappa dal back-end
     this.backendService.getMapConfiguration().subscribe({
       next: (data) => {
         this.map=this.initializeMap(data);
@@ -88,8 +87,8 @@ export class MapWithHousesComponent {
             const marker = L.marker([latitude, longitude]).addTo(this.map)
             .bindPopup(immobile.indirizzo || 'Indirizzo')
 
-              this.markersGroup?.addLayer(marker);
-            }
+            this.markersGroup?.addLayer(marker);
+          }
         },
         error: (err) => {
           this.toastr.error(err.message, err.statusText);

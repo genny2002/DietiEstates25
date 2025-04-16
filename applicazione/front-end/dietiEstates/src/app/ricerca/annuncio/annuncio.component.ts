@@ -22,7 +22,7 @@ export class AnnuncioComponent {
   servizi: Servizio[] = []
 
   ngOnInit(){
-    this.editLink = "/immobile/" + this.annuncioItem?.IDimmobile;  //inizializza 'editLink'
+    this.editLink = "/immobile/" + this.annuncioItem?.IDimmobile;
 
     const pairs = this.annuncioItem.altriServizi.split('-');
     

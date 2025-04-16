@@ -11,38 +11,38 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './home-page-gestore.component.scss'
 })
 export class HomePageGestoreComponent {
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  authService = inject(AuthService);
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
   showChangePassword = false;
   userfirstAccess: boolean = false;
-  submittedPasswordForm = false;  //flag dello stato di invio del form
-  passwordForm = new FormGroup({ //form per il login
-    pass: new FormControl('', [ //campo di input della password
+  submittedPasswordForm = false;
+  passwordForm = new FormGroup({
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])
   })
-  submittedNewCollaboratoreForm = false;  //flag dello stato di invio del form
-  newCollaboratoreForm = new FormGroup({  //form per il sign up
-    user: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedNewCollaboratoreForm = false;
+  newCollaboratoreForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    pass: new FormControl('', [ //campo di input della password
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)]) 
   })
-  submittedNewAgenteForm = false;  //flag dello stato di invio del form
-  newAgenteForm = new FormGroup({  //form per il sign up
-    user: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedNewAgenteForm = false;
+  newAgenteForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    pass: new FormControl('', [ //campo di input della password
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])  
   })
 
-  ngOnInit() {  //inizializza il componente
+  ngOnInit() {
     this.getUserFirstAccess();
   }
 
@@ -59,43 +59,43 @@ export class HomePageGestoreComponent {
     });
   }
 
-  handleChangePassword() { //gestisce il login
-    this.submittedPasswordForm = true;  //aggiorna la flag dello stato di invio del form
+  handleChangePassword() {
+    this.submittedPasswordForm = true;
 
-    if (this.passwordForm.invalid) { //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
+    if (this.passwordForm.invalid) {
+      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");
     } else {
       const user = this.authService.user();
-      this.backendService.changePassword({  //effettua il login con i dati inseriti nel form
+      this.backendService.changePassword({
         usr: user,
         email: null,
         pwd: this.passwordForm.value.pass as string,
       }).subscribe({
         error: (err) => {
-          this.toastr.error("Inserire una password corretta.", "Errore: password errata"); //mostra un messaggio di errore
+          this.toastr.error("Inserire una password corretta.", "Errore: password errata");
         },
         complete: () => {
-          this.toastr.success(`Password aggiornata`, `Registrazione terminata!`);  //mostra un messaggio di successo
+          this.toastr.success(`Password aggiornata`, `Registrazione terminata!`);
           this.showChangePassword=false;
         }
       })
     }
-  }//fine handleLogin
+  }
 
-  handleNewCollaboratore() {  //gestisce il sign up
-    this.submittedNewCollaboratoreForm = true;  //aggiorna la flag dello stato di invio del form
+  handleNewCollaboratore() {
+    this.submittedNewCollaboratoreForm = true;
 
-    if (this.newCollaboratoreForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.newCollaboratoreForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.backendService.createNewCollaboratore({ //effettua il sign up con i dati inseriti nel form
+      this.backendService.createNewCollaboratore({
         usr: this.newCollaboratoreForm.value.user as string,
         email: this.newCollaboratoreForm.value.email as string,
         pwd: this.newCollaboratoreForm.value.pass as string,
         referente: this.authService.user()
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");
         },
         complete: () => {
           this.sendEmail(this.authService.user(), this.newCollaboratoreForm.value.email as string, this.newCollaboratoreForm.value.user as string, this.newCollaboratoreForm.value.pass as string);
@@ -104,22 +104,22 @@ export class HomePageGestoreComponent {
         }
       })
     }
-  }//fine handleSignup
+  }
 
-  handleNewAgente() {  //gestisce il sign up
-    this.submittedNewAgenteForm = true;  //aggiorna la flag dello stato di invio del form
+  handleNewAgente() {
+    this.submittedNewAgenteForm = true;
 
-    if (this.newAgenteForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.newAgenteForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.backendService.createNewAgenteByGestore({ //effettua il sign up con i dati inseriti nel form
+      this.backendService.createNewAgenteByGestore({
         usr: this.newAgenteForm.value.user as string,
         email: this.newAgenteForm.value.email as string,
         pwd: this.newAgenteForm.value.pass as string,
         referente: this.authService.user()
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");
         },
         complete: () => {
           this.sendEmail(this.authService.user(), this.newAgenteForm.value.email as string, this.newAgenteForm.value.user as string, this.newAgenteForm.value.pass as string);
@@ -128,7 +128,7 @@ export class HomePageGestoreComponent {
         }
       })
     }
-  }//fine handleSignup
+  }
 
   sendEmail(sender: string | null, emailReciver: string, usernameReceiver: string, passwordReceiver: string){
     let message = `${sender} ha creato il tuo nuovo account di DietiEstates.\n` +
@@ -136,16 +136,16 @@ export class HomePageGestoreComponent {
               `Username: ${usernameReceiver}\n` +
               `Password: ${passwordReceiver}.\n`;
 
-    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+    this.backendService.inviaEmail({
       to: emailReciver,
       subject: "Il tuo nuovo account di DietiEstates è stato creato",
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");
       },
       complete: () => {
-        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);
       }
     })
   }

@@ -12,13 +12,13 @@ import { BackendService } from '../_services/backend/backend.service';
   styleUrl: './registra-agenzia.component.scss'
 })
 export class RegistraAgenziaComponent {
-  toastr = inject(ToastrService); //mostra le notifiche
-  router = inject(Router);  //permette la navigazione
-  restService = inject(BackendService); //effettua le richieste HTTP
-  submitted = false;  //flag dello stato di invio del form
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  restService = inject(BackendService);
+  submitted = false; 
   showNewCredentials = false;
 
-  nuovaAgenziaForm = new FormGroup({  //form per il sign up
+  nuovaAgenziaForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
     nomeAgenzia: new FormControl('', [Validators.required]),
@@ -27,17 +27,17 @@ export class RegistraAgenziaComponent {
 
   newGeneratedPassword: string = this.generaPassword();
 
-  ngOnInit() {  //inizializza il componente
-    console.log(this.showNewCredentials);
+  ngOnInit() {
+
   }
 
-  handleNuovaAgenzia() {  //gestisce il sign up
-    this.submitted = true;  //aggiorna la flag dello stato di invio del form
+  handleNuovaAgenzia() {
+    this.submitted = true;
 
-    if (this.nuovaAgenziaForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.nuovaAgenziaForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.restService.registraAgenzia({ //effettua il sign up con i dati inseriti nel form,
+      this.restService.registraAgenzia({
         email: this.nuovaAgenziaForm.value.email as string,
         nomeAgenzia: this.nuovaAgenziaForm.value.nomeAgenzia as string,
         indirizzoAgenzia: this.nuovaAgenziaForm.value.indirizzoAgenzia as string,
@@ -45,38 +45,32 @@ export class RegistraAgenziaComponent {
         password: this.newGeneratedPassword
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato da un altro utente", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("L'username che hai inserito è già stato utilizzato da un altro utente", "Username in uso");
         },
         complete: () => {
           this.showNewCredentials=true;
         }
       })
     }
-  }//fine handleSignup
+  }
 
   generaPassword(): string {
     const prefisso = "agz_";
-    const minPasswordLength = 4; // Lunghezza minima complessiva della password
-    const maxPasswordLength = 16; // Lunghezza massima complessiva della password
-
-    // Calcoliamo la lunghezza della parte generata casualmente
+    const minPasswordLength = 4;
+    const maxPasswordLength = 16;
     const randomPartMinLength = Math.max(0, minPasswordLength - prefisso.length);
     const randomPartMaxLength = maxPasswordLength - prefisso.length;
-
-    // Generiamo una lunghezza casuale per la parte casuale
     const randomPartLength = Math.floor(Math.random() * (randomPartMaxLength - randomPartMinLength + 1)) + randomPartMinLength;
-
-    // Caratteri ammessi nella parte casuale
     const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    // Generiamo la parte casuale
     let randomPart = "";
+
     for (let i = 0; i < randomPartLength; i++) {
         const randomIndex = Math.floor(Math.random() * charset.length);
+
         randomPart += charset[randomIndex];
     }
 
-    // Ritorniamo la password completa
     return prefisso + randomPart;
  }
 }

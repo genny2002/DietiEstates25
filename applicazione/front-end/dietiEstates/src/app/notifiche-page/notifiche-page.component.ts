@@ -13,28 +13,28 @@ import { NotificaClienteComponent } from '../notifiche-page/notifica-cliente/not
   styleUrl: './notifiche-page.component.scss'
 })
 export class NotificheComponent {
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  authService = inject(AuthService);
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
 
   requestDates: Appuntamento [] = [];
 
-  ngOnInit() {  //inizializza il componente
+  ngOnInit() {
     this.getRequestDates();
   }
 
-  getRequestDates() { //recupera tutte le idee controverse
-    this.backendService.getUserAppuntamenti(this.authService.user(), this.authService.authState().role).subscribe({ //cerca tutte le idee controverse
+  getRequestDates() {
+    this.backendService.getUserAppuntamenti(this.authService.user(), this.authService.authState().role).subscribe({
       next: (data: Appuntamento[]) => {
-        this.requestDates = data;  //inserisce le idee trovate nel vettore 'ideas'
+        this.requestDates = data;
       },
       error: (err) => {
         if (err.status === 401) {
-          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");
         } else {
-          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
         }
       }
     });
-  }//fine fetchControversialIdeas
+  }
 }

@@ -16,14 +16,13 @@ import {emailController} from './Controller/emailController.js';
 
 const app = express();
 const PORT = 3000;
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const imgDirectory = path.join(__dirname, 'img');
+
 app.use('/img', express.static(imgDirectory));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Per form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
 
@@ -48,9 +47,3 @@ app.use(emailController);
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
 });
-
-/*app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} adress 0.0.0.0`);
-});*/
-
-console.log("\n\n\naggiornato!!\n\n\n");

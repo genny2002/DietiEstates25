@@ -12,39 +12,39 @@ import { BackendService } from '../_services/backend/backend.service';
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
-  toastr = inject(ToastrService); //mostra le notifiche
-  router = inject(Router);  //permette la navigazione
-  restService = inject(BackendService); //effettua le richieste HTTP
-  submitted = false;  //flag dello stato di invio del form
-  signupForm = new FormGroup({  //form per il sign up
-    user: new FormControl('', [Validators.required]), //campo di input dell'username
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  restService = inject(BackendService);
+  submitted = false;
+  signupForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    pass: new FormControl('', [ //campo di input della password
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])
       
   })
 
-  handleSignup() {  //gestisce il sign up
-    this.submitted = true;  //aggiorna la flag dello stato di invio del form
+  handleSignup() {
+    this.submitted = true;
 
-    if (this.signupForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.signupForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.restService.signup({ //effettua il sign up con i dati inseriti nel form
+      this.restService.signup({
         usr: this.signupForm.value.user as string,
         email: this.signupForm.value.email as string,
         pwd: this.signupForm.value.pass as string,
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato da un altro utente", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("L'username che hai inserito è già stato utilizzato da un altro utente", "Username in uso");
         },
         complete: () => {
-          this.toastr.success(`Puoi effettuare il login con il tuo nuovo username`, `Sign up effettuato`);  //mostra un messaggio di successo
-          this.router.navigateByUrl("/login");  //naviga alla pagina "/login"
+          this.toastr.success(`Puoi effettuare il login con il tuo nuovo username`, `Sign up effettuato`);
+          this.router.navigateByUrl("/login");
         }
       })
     }
-  }//fine handleSignup
+  }
 }

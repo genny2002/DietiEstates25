@@ -11,33 +11,33 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './home-page-collaboratore.component.scss'
 })
 export class HomePageCollaboratoreComponent {
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
-  submittedNewAgenteForm = false;  //flag dello stato di invio del form
-  newAgenteForm = new FormGroup({  //form per il sign up
-    user: new FormControl('', [Validators.required]), //campo di input dell'username
+  authService = inject(AuthService);
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
+  submittedNewAgenteForm = false;
+  newAgenteForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    pass: new FormControl('', [ //campo di input della password
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])  
   })
 
-  handleNewAgente() {  //gestisce il sign up
-    this.submittedNewAgenteForm = true;  //aggiorna la flag dello stato di invio del form
+  handleNewAgente() {
+    this.submittedNewAgenteForm = true;
 
-    if (this.newAgenteForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.newAgenteForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.backendService.createNewAgenteByCollaboratore({ //effettua il sign up con i dati inseriti nel form
+      this.backendService.createNewAgenteByCollaboratore({
         usr: this.newAgenteForm.value.user as string,
         email: this.newAgenteForm.value.email as string,
         pwd: this.newAgenteForm.value.pass as string,
         referente: this.authService.user()
       }).subscribe({
         error: (err) => {
-          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");  //mostra un messaggio di errore
+          this.toastr.error("L'username che hai inserito è già stato utilizzato", "Username in uso");
         },
         complete: () => {
           this.sendEmail(this.authService.user(), this.newAgenteForm.value.email as string, this.newAgenteForm.value.user as string, this.newAgenteForm.value.pass as string);
@@ -46,7 +46,7 @@ export class HomePageCollaboratoreComponent {
         }
       })
     }
-  }//fine handleSignup
+  }
 
   sendEmail(sender: string | null, emailReciver: string, usernameReceiver: string, passwordReceiver: string){
     let message = `${sender} ha creato il tuo nuovo account di DietiEstates.\n` +
@@ -54,16 +54,16 @@ export class HomePageCollaboratoreComponent {
               `Username: ${usernameReceiver}\n` +
               `Password: ${passwordReceiver}.\n`;
 
-    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+    this.backendService.inviaEmail({
       to: emailReciver,
       subject: "Il tuo nuovo account di DietiEstates è stato creato",
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");
       },
       complete: () => {
-        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.toastr.success(`E' stata inviata una mail al tuo nuovo collaboratore`, `Registrazione effettuata`);
       }
     })
   }

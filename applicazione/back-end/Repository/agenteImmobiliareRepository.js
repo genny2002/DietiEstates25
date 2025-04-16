@@ -4,7 +4,7 @@ export class AgenteImmobiliareRepository {
 
     static async checkAgenteImmobiliareByUsernamePassword(usrname, psw){
         try {
-            let found = await AgenteImmobiliare.findOne({    //controlla se esiste un utente con le credenziali ricevute
+            let found = await AgenteImmobiliare.findOne({
                 where: {
                     username: usrname,
                     password: psw
@@ -21,6 +21,7 @@ export class AgenteImmobiliareRepository {
     static async insertAgenteImmobiliare(agenteImmobiliareDaCreare) {
         try {
             const agenteImmobiliare = await AgenteImmobiliare.create(agenteImmobiliareDaCreare);
+
             return agenteImmobiliare;
         } catch (err) {
             console.error("Error in insertAgenteImmobiliare:", err);
@@ -32,6 +33,7 @@ export class AgenteImmobiliareRepository {
     static async getAgente(username) {
         try {
             let agente = await AgenteImmobiliare.findByPk(username, { attributes: ['email'] });
+
             return agente ? agente.email : null;
         } catch (err) {
             console.error("Error in AgenteImmobiliare:", err);
@@ -43,6 +45,7 @@ export class AgenteImmobiliareRepository {
         try {
             let agenti = await AgenteImmobiliare.findAll({ attributes: ['username'] });
             let usernames = agenti.map(agente => agente.username);
+            
             return usernames;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);

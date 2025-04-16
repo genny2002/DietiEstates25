@@ -5,8 +5,8 @@ export class RichiestaService {
 
     static async insertRichiesta(req, res) {
         try {
-            console.log("Richiesta:", req.body);
             const date = new Date(req.body.data);
+
             await RichiestaService.controlloRichiesta(req.body.AgenteImmobiliareUsername, date);
             date.setHours(date.getUTCHours());
 
@@ -17,6 +17,7 @@ export class RichiestaService {
                 AgenteImmobiliareUsername: req.body.AgenteImmobiliareUsername,
                 AnnuncioIDimmobile: req.body.AnnuncioIDimmobile
             }
+
             return await RichiestaRepository.insertRichiesta(richiestaDaCreare);
         } catch (err) {
             console.error("Error in insertRichiesta:", err);
@@ -36,6 +37,7 @@ export class RichiestaService {
         for (let richiesta of richieste) {
             const dataRichiesta = new Date(richiesta.data);
             const diff = Math.abs(date - dataRichiesta);
+
             if (diff < 2) {
                 throw new Error('deve esserci una differenza di due ore tra una richiesta e l\'altra');
             }
@@ -116,6 +118,7 @@ export class RichiestaService {
         try {
             const id = req.params.id;
             const stato = req.params.stato;
+
             return await RichiestaRepository.richiestaRisposta(id, stato);
         } catch (err) {
             console.error("Error in RichiestaRisposta:", err);
@@ -126,6 +129,7 @@ export class RichiestaService {
     static async deleteRichiesta(req, res) {
         try {
             const id = req.params.id;
+
             return await RichiestaRepository.deleteRichiesta(id);
         } catch (err) {
             console.error("Error in deleteRichiesta:", err);
@@ -138,6 +142,7 @@ export class RichiestaService {
         try {
             const id = req.params.id;
             const orario = req.body.orario;
+            
             return await RichiestaRepository.updateRichiesta(id, orario);
         } catch (err) {
             console.error("Error in updateRichiesta:", err);

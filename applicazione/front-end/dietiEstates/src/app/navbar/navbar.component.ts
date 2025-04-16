@@ -9,21 +9,21 @@ import { AuthService } from '../_services/AuthService/auth-service.service';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  isOpen = false; //flag di apertura della navbar mobile
-  isDropdownOpen = false; //flag di apertura del dropdown
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
+  isOpen = false;
+  isDropdownOpen = false;
+  authService = inject(AuthService);
 
-  toggle() {  //gestisce il toggle della navbar su schermi piccoli
+  toggle() {
     this.isOpen = !this.isOpen;
-  }//fine toggle
+  }
 
-  handleNavigationClick() {  //chiude la navbar aperta quando un utente clicca su un link
+  handleNavigationClick() {
     this.isOpen = false;
-  }//fine handleNavigationClick
+  }
 
-  toggleDropdown() { //aggiorna il flag di apertura del dropdown
+  toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
-  }//fine toggleDropdown
+  }
 
   setRouter(): string {
     if(! this.authService.isUserAuthenticated()){
@@ -44,6 +44,5 @@ export class NavbarComponent {
           return ""
       }
     }
-
   }
 }

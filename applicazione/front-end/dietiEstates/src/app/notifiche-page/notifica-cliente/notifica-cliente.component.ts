@@ -16,26 +16,26 @@ import { ChangeTimeComponent } from './change-time/change-time.component';
 export class NotificaClienteComponent {
   @Input({ required: true }) notificaItem!: Appuntamento;
   
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
-  deleted: boolean = false; //flag di eliminazione della notifica 'notificaItem'
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
+  deleted: boolean = false;
   showChangeTime = false;
   showMessage = false;
   orari: Disponibilita[] = [];
   
 
-  async ngOnInit() {  //inizializza il componente
+  async ngOnInit() {
     this.initOrari();
   }
 
   deleteNotifica(){
-    this.backendService.deleteNotifica(this.notificaItem.IDRichiesta).subscribe({ //cerca tutte le idee controverse
+    this.backendService.deleteNotifica(this.notificaItem.IDRichiesta).subscribe({
       error: (err) => {
-        this.toastr.error(`La notifica non è stata eliminata`, `Errore: notifica non trovata`); //mostra un messaggio di errore
+        this.toastr.error(`La notifica non è stata eliminata`, `Errore: notifica non trovata`);
       },
       complete: () => {
-        this.deleted = true; //aggiorna il flag di eliminazione
-        this.toastr.success(`La notifica è stata eliminata`, `Notifica eliminata!`);  //mostra un messaggio di successo
+        this.deleted = true;
+        this.toastr.success(`La notifica è stata eliminata`, `Notifica eliminata!`);
         this.showMessage = false;
       }
     });
@@ -61,7 +61,7 @@ export class NotificaClienteComponent {
   terminaModifica(newTime: number){
     this.notificaItem.stato = "in attesa";
     this.notificaItem.data= new Date(this.notificaItem.data); 
-    this.notificaItem.data.setUTCHours(newTime); // Imposta l'orario
+    this.notificaItem.data.setUTCHours(newTime);
     this.showChangeTime = false;
   }
 

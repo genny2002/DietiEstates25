@@ -34,7 +34,7 @@ export class GestoreAgenziaService {
         }
     }
 
-    static async checkCredential(username, password, email) {   //WB
+    static async checkCredential(username, password, email) {
         if(username === null || username === undefined || password === null || password === undefined || email === null || email === undefined){
             return false;
         }

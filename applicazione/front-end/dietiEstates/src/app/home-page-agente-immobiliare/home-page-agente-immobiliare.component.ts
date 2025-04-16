@@ -14,9 +14,9 @@ import { ImmobileComponent } from './immobile/immobile.component';
   styleUrl: './home-page-agente-immobiliare.component.scss'
 })
 export class HomePageAgenteImmobiliareComponent {
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  authService = inject(AuthService);
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
 
   dates: Appuntamento [] = [];
   dayToShow = new Date();
@@ -25,59 +25,60 @@ export class HomePageAgenteImmobiliareComponent {
   immobili: AnnuncioGet [] = [];
   showMessage = false;
 
-  ngOnInit() {  //inizializza il componente
+  ngOnInit() {
     this.getDates(this.dayToShow); 
     this.getImmobili();
   }
 
-  getDates(selectedData: Date) { //recupera tutte le idee controverse
-    this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user(), this.authService.getRuolo()).subscribe({ //cerca tutte le idee controverse
+  getDates(selectedData: Date) {
+    this.backendService.getAppuntamentiWithDate(selectedData, this.authService.user(), this.authService.getRuolo()).subscribe({
       next: (data: Appuntamento[]) => {
-        this.dates = data;  //inserisce le idee trovate nel vettore 'ideas'
+        this.dates = data;
       },
       error: (err) => {
         if (err.status === 401) {
-          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");
         } else {
-          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
         }
       }
     });
-  }//fine fetchControversialIdeas
+  }
 
   nextDay() {
     this.changeDayClicked++;
-    this.changeDay(); // Aggiorna la lista
+    this.changeDay();
   }
 
   previousDay() {
     this.changeDayClicked--;
-    this.changeDay(); // Aggiorna la lista
+    this.changeDay();
   }
 
   private changeDay() {
-    const newDate = new Date(this.currentDay); // Crea una copia della data corrente
-    newDate.setDate(newDate.getDate() + this.changeDayClicked); // Incrementa il giorno
-    this.dayToShow = newDate; // Assegna un nuovo oggetto a dayToShow
-    this.getDates(this.dayToShow); // Aggiorna la lista
+    const newDate = new Date(this.currentDay);
+
+    newDate.setDate(newDate.getDate() + this.changeDayClicked);
+    this.dayToShow = newDate;
+    this.getDates(this.dayToShow);
   }
 
-  setCurrentDay() {  //mostra le idee controverse del giorno corrente
+  setCurrentDay() {
     this.changeDayClicked = 0;
     this.dayToShow = this.currentDay;
     this.getDates(this.dayToShow);
   }
 
   getImmobili() {
-    this.backendService.getAnnunciByAgent(this.authService.user()).subscribe({ //cerca tutte le idee controverse
+    this.backendService.getAnnunciByAgent(this.authService.user()).subscribe({
       next: (data: AnnuncioGet[]) => {
-        this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
+        this.immobili = data;
       },
       error: (err) => {
         if (err.status === 401) {
-          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");
         } else {
-          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
         }
       }
     });

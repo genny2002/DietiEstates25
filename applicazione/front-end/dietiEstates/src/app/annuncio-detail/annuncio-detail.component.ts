@@ -34,12 +34,12 @@ export class AnnuncioDetailComponent  {
 
   backendService = inject(BackendService);
   router = inject(Router);
-  toastr = inject(ToastrService); //mostra le notifiche
+  toastr = inject(ToastrService);
   authService = inject(AuthService);
 
-  async ngOnInit() {  //inizializza il componente
-    await this.initAnnuncio();  //inizializza 'ideaItem'
-    this.editLink = "/immobile/" + this.annuncioItem?.IDimmobile + "/prenota";  //inizializza 'editLink'
+  async ngOnInit() {
+    await this.initAnnuncio();
+    this.editLink = "/immobile/" + this.annuncioItem?.IDimmobile + "/prenota";
 
     const pairs = this.annuncioItem?.altriServizi.split('-');
     
@@ -54,22 +54,22 @@ export class AnnuncioDetailComponent  {
         };
       });
     }
-  }//fine ngOnInit
+  }
 
-  async initAnnuncio(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
+  async initAnnuncio(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({ //recupera le informazioni di 'ideaItem'
+      this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({
         next: (annuncio) => {
-          this.annuncioItem = annuncio[0]; //inizializza 'ideaItem' con i dati trovati
+          this.annuncioItem = annuncio[0];
           resolve();
         },
         error: (err) => {
-          this.toastr.error(err.message, err.statusText); //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
           reject(err);
         }
       });
     })
-  }//initIdeas
+  }
   
   moveSlide(direction: number) {
     if(this.annuncioItem){
@@ -81,7 +81,7 @@ export class AnnuncioDetailComponent  {
       if (carousel) {
         carousel.style.transform = `translateX(-${this.currentIndex * 100}%)`;
       }
-    }, 0); // Permette al DOM di completare il rendering
+    }, 0);
   }
 
   showImmage(index: number): void {

@@ -22,15 +22,15 @@ export class RicercaComponent {
   query: string = ''; 
   suggestions: any[] = [];
 
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
-  router = inject(Router);  //permette la navigazione
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
 
   addressForm = new FormGroup({
-    indirizzo: new FormControl(''), //campo di input dell'username
+    indirizzo: new FormControl(''),
   })
 
-  filterForm = new FormGroup({ //form per il login
+  filterForm = new FormGroup({
     tipo: new FormControl(''),
     servizi: new FormGroup({
       ascensore: new FormControl(''),
@@ -45,21 +45,21 @@ export class RicercaComponent {
     classeEnergetica: new FormControl(''),
   })
 
-  ngOnInit() {  //inizializza il componente
+  ngOnInit() {
     this.getImmobili();
   }
 
   getImmobili() {
-    this.backendService.getAnnunci().subscribe({ //cerca tutte le idee controverse
+    this.backendService.getAnnunci().subscribe({
       next: (data: AnnuncioGet[]) => {
-        this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
+        this.immobili = data;
       
       },
       error: (err) => {
         if (err.status === 401) {
-          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");
         } else {
-          this.toastr.error(err.message, err.statusText)  //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
         }
       }
     });
@@ -68,10 +68,10 @@ export class RicercaComponent {
   handleFilters(){
     this.filterSubmitted = true;
 
-    if (this.filterForm.invalid || this.invalidPrices(this.filterForm.value.prezzoMin as string, this.filterForm.value.prezzoMax as string)) { //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
+    if (this.filterForm.invalid || this.invalidPrices(this.filterForm.value.prezzoMin as string, this.filterForm.value.prezzoMax as string)) {
+      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");
     } else {
-      this.backendService.getAnnunciWithFilter({  //effettua il login con i dati inseriti nel form
+      this.backendService.getAnnunciWithFilter({
         indirizzo: this.addressForm.value.indirizzo  as string,
         categoria: this.filterForm.value.tipo as string,
         servizi: {
@@ -87,11 +87,11 @@ export class RicercaComponent {
         classeEnergetica: this.filterForm.value.classeEnergetica as string
       }).subscribe({
         next: (data: AnnuncioGet[]) => {
-          this.immobili = data;  //inserisce le idee trovate nel vettore 'ideas'
+          this.immobili = data;
           this.showFilters=false;
         },
         error: (err) => {
-          this.toastr.error("Inserire dei dati corretti.", "Errore: input errato"); //mostra un messaggio di errore
+          this.toastr.error("Inserire dei dati corretti.", "Errore: input errato");
         },
       })
     }
@@ -107,7 +107,6 @@ export class RicercaComponent {
   }
 
   onDocumentClick(event: Event) {
-    // Nascondi la lista se il clic avviene fuori
     const target = event.target as HTMLElement;
     if (!target.closest('#indirizzo') && !target.closest('#suggestion-list')) {
       this.suggestions = [];
@@ -115,7 +114,6 @@ export class RicercaComponent {
   }
 
   onContainerClick(event: Event) {
-    // Previeni la chiusura della lista quando si clicca dentro il contenitore
     event.stopPropagation();
   }
 
@@ -141,7 +139,8 @@ export class RicercaComponent {
   selectSuggestion(suggestion: any): void {
       this.addressForm.setValue({
         indirizzo: suggestion.properties.formatted
-      });  // Mostra l'indirizzo selezionato
+      });
+
       this.suggestions = [];
     }
 

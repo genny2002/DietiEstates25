@@ -4,12 +4,13 @@ export class CollaboratoreRepository {
 
     static async checkCollaboratoreByUsernamePassword(usrname, psw){
         try {
-            let found = await Collaboratore.findOne({    //controlla se esiste un utente con le credenziali ricevute
+            let found = await Collaboratore.findOne({
                 where: {
                     username: usrname,
                     password: psw
                 }
             });
+
             return found !== null;
         } catch (err) {
             console.error("Error in checkCollaboratoreByUsernamePassword:", err);
@@ -20,6 +21,7 @@ export class CollaboratoreRepository {
     static async insertCollaboratore(collaboratoreDaCreare){
         try {
             const collaboratore = await Collaboratore.create(collaboratoreDaCreare);
+
             return collaboratore;
         } catch (err) {
             console.error("Error in insertCollaboratore:", err);
@@ -30,6 +32,7 @@ export class CollaboratoreRepository {
     static async getCollaboratore(){
         try {
             const collaboratore = await Collaboratore.findAll();
+
             return collaboratore;
         } catch (err) {
             console.error("Error in getCollaboratore:", err);
@@ -40,6 +43,7 @@ export class CollaboratoreRepository {
     static async getCollaboratoreByUsername(username){
         try {
             const collaboratore = await Collaboratore.findByPk(username);
+
             return collaboratore;
         } catch (err) {
             console.error("Error in getCollaboratoreByUsername:", err);
@@ -51,6 +55,7 @@ export class CollaboratoreRepository {
         try {
             let collaboratori = await Collaboratore.findAll({ attributes: ['username'] });
             let usernames = collaboratori.map(collaboratore => collaboratore.username);
+            
             return usernames;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);

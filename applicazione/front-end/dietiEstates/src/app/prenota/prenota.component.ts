@@ -16,19 +16,19 @@ import { Disponibilita } from '../_services/backend/disponibilita.type';
   styleUrl: './prenota.component.scss',
 })
 export class PrenotaComponent {
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
   route = inject(ActivatedRoute);
   authService = inject(AuthService);
-  router = inject(Router);  //permette la navigazione
+  router = inject(Router);
   renderer = inject(Renderer2);
   elementRef = inject(ElementRef);
 
   weatherData?: ApiMeteoResponse;
   annuncioItem?: AnnuncioGet;
-  fullDayList: number[] = []; // L'array completo di 14 giorni
-  visibleDays: number[] = []; // Gli elementi attualmente visibili
-  startIndex: number = 0; // Indice di partenza per lo slice
+  fullDayList: number[] = []; 
+  visibleDays: number[] = []; 
+  startIndex: number = 0;
 
   numberClick: number = 0;
   dayToShow: number[]=[];
@@ -39,13 +39,13 @@ export class PrenotaComponent {
   orari: string[] = [];
   dateSelected: string = '';  
 
-  submittedRichiestaForm = false;  //flag dello stato di invio del form
-  richiestaForm = new FormGroup({ //form per il login
-    orario: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedRichiestaForm = false;
+  richiestaForm = new FormGroup({
+    orario: new FormControl('', [Validators.required]),
     offerta: new FormControl(),
   })
 
-  async ngOnInit() {  //inizializza il componente
+  async ngOnInit() {
     await this.initAnnuncioItem();
     this.initDisponibilita();
     this.getCordinates();
@@ -54,7 +54,7 @@ export class PrenotaComponent {
   initDisponibilita() {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Aggiungi 1 perché i mesi partono da 0
+    const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     const todayString = `${year}-${month}-${day}`;
 
@@ -70,20 +70,20 @@ export class PrenotaComponent {
     }
   }
 
-  async initAnnuncioItem(): Promise<void> { //recupera le informazioni dell'idea 'ideaItem' e la inizializza
+  async initAnnuncioItem(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({ //recupera le informazioni di 'ideaItem'
+      this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({
         next: (annuncio) => {
-          this.annuncioItem = annuncio[0]; //inizializza 'ideaItem' con i dati trovati
+          this.annuncioItem = annuncio[0];
           resolve();
         },
         error: (err) => {
-          this.toastr.error(err.message, err.statusText); //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
           reject(err);
         }
       });
     })
-  }//initIdeas
+  }
 
   getCordinates()  {
     if(this.annuncioItem?.indirizzo) {
@@ -106,7 +106,7 @@ export class PrenotaComponent {
       },
       error: (err) => {
         if (err.status === 401) {
-          this.toastr.error("Effettuare nuovamente il login", "Token non valido");  //mostra un messaggio di errore
+          this.toastr.error("Effettuare nuovamente il login", "Token non valido");
         }
       }
     });
@@ -162,7 +162,7 @@ export class PrenotaComponent {
   async initAnnuncioToShow(): Promise<void> {
     this.backendService.getAnnuncioToShow(this.route.snapshot.params["id"]).subscribe({
       next: (annuncio) => {
-        this.annuncioItem = annuncio[0]; // Assumendo che i dati siano qui
+        this.annuncioItem = annuncio[0];
         this.fullDayList = this.weatherData?.daily?.time || [];
         this.updateVisibleDays();
       },
@@ -245,7 +245,7 @@ export class PrenotaComponent {
           resolve(data);
         },
         error: (err) => {
-          this.toastr.error(err.message, err.statusText); //mostra un messaggio di errore
+          this.toastr.error(err.message, err.statusText);
           reject(err);
         }
       })  
@@ -253,12 +253,12 @@ export class PrenotaComponent {
   }
 
   handleRichiestaForm(){
-    this.submittedRichiestaForm = true;  //aggiorna la flag dello stato di invio del form
+    this.submittedRichiestaForm = true;
 
-    if (this.richiestaForm.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.richiestaForm.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     } else {
-      this.backendService.createRichiesta({ //effettua il sign up con i dati inseriti nel form
+      this.backendService.createRichiesta({
         offerta: this.richiestaForm.value.offerta as number,
         data: this.dateSelected +'T'+(this.richiestaForm.value.orario as string)+':00Z',
         ClienteUsername: this.authService.user(),
@@ -266,7 +266,7 @@ export class PrenotaComponent {
         AnnuncioIDimmobile: this.route.snapshot.params["id"],
       }).subscribe({
         error: (err) => {
-          this.toastr.warning("L'email non è stata inviata all'agente", "Email non inviata");  //mostra un messaggio di errore
+          this.toastr.warning("L'email non è stata inviata all'agente", "Email non inviata");
         },
         complete: async () => {
           try{
@@ -292,16 +292,16 @@ export class PrenotaComponent {
 
     message = message + `Accedi alle notifiche del tuo account DietiEstates per visualizzare e rispondere a questa richiesta`
 
-    this.backendService.inviaEmail({ //effettua il sign up con i dati inseriti nel form
+    this.backendService.inviaEmail({
       to: emailReciver,
       subject: "Nuova Richiesta",
       text: message
     }).subscribe({
       error: (err) => {
-        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");  //mostra un messaggio di errore
+        this.toastr.error("L'email non è stata inviata al nuovo utente", "Email non inviata");
       },
       complete: () => {
-        this.toastr.success(`E' stata inviata una mail all'agente immobiliare`, `Registrazione effettuata`);  //mostra un messaggio di successo
+        this.toastr.success(`E' stata inviata una mail all'agente immobiliare`, `Registrazione effettuata`);
         this.router.navigateByUrl("/homePageCliente");
       }
     })

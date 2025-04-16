@@ -16,35 +16,33 @@ import { Email } from './email.type'
   providedIn: 'root'
 })
 export class BackendService {
-  url = "http://13.48.44.76:3000"; //URL del backend 
+  url = "http://13.48.44.76:3000";
   
   constructor(private http: HttpClient) { }
 
-  httpOptions = { //configurazione delle richieste
+  httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'  //le richieste saranno in JSON
+      'Content-Type': 'application/json'
     })
   };
 
-  login(loginRequest: AuthRequest) {  //effettua il login
-    const url = `${this.url}/auth`; //URL per la richiesta
+  login(loginRequest: AuthRequest) {
+    const url = `${this.url}/auth`;
 
     return this.http.post<string>(url, loginRequest, this.httpOptions);
-  }//fine login
+  }
 
-  signup(signupRequest: AuthRequest) { //effettua la registrazione
-    const url = `${this.url}/signupCliente`; //URL per la richiesta
-
-    console.log(signupRequest);
+  signup(signupRequest: AuthRequest) {
+    const url = `${this.url}/signupCliente`;
 
     return this.http.post(url, signupRequest, this.httpOptions);
-  }//fine signup
+  }
 
-  registraAgenzia(gestoreAgenzia: GestoreAgenzia) { //effettua la registrazione
-    const url = `${this.url}/insertGestoreAgenzia`; //URL per la richiesta
+  registraAgenzia(gestoreAgenzia: GestoreAgenzia) {
+    const url = `${this.url}/insertGestoreAgenzia`;
 
     return this.http.post<GestoreAgenzia>(url, gestoreAgenzia, this.httpOptions);
-  }//fine signup
+  }
 
   getFirstAccess(usr: string | null){
     const url= `${this.url}/primoAccesso/${usr}`;
@@ -59,32 +57,25 @@ export class BackendService {
   }
 
   createNewCollaboratore(newCollaboratoreRequest: CollaboratoreAndAgente){
-    const url = `${this.url}/insertCollaboratore`; //URL per la richiesta
-
-    console.log(newCollaboratoreRequest);
+    const url = `${this.url}/insertCollaboratore`;
 
     return this.http.post(url, newCollaboratoreRequest, this.httpOptions);
   }
 
   createNewAgenteByGestore(newAgenteRequest: CollaboratoreAndAgente){
-    const url = `${this.url}/gestoreAgenzia/insertAgenteImmobiliare`; //URL per la richiesta
-
-    console.log(newAgenteRequest);
+    const url = `${this.url}/gestoreAgenzia/insertAgenteImmobiliare`;
 
     return this.http.post(url, newAgenteRequest, this.httpOptions);
   }
 
   createNewAgenteByCollaboratore(newAgenteRequest: CollaboratoreAndAgente){
-    const url = `${this.url}/collaboratore/insertAgenteImmobiliare`; //URL per la richiesta
-
-    console.log(newAgenteRequest);
+    const url = `${this.url}/collaboratore/insertAgenteImmobiliare`;
 
     return this.http.post(url, newAgenteRequest, this.httpOptions);
   }
 
   getAppuntamentiWithDate(date: Date, usr: string | null, role: string | null){
     const stringDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    
     const url= `${this.url}/getRichiesta?sort=data&mode=asc&stato=accettata&${role}=${usr}&dataSelected=${stringDate}`;
     
     return this.http.get<Appuntamento[]>(url, this.httpOptions);
@@ -115,7 +106,7 @@ export class BackendService {
   }
 
   changeTime(id: number, newOrario: Orario)  {
-    const url= `${this.url}/updateRichiesta/${id}`; //MODIFICAE IL BACKEND
+    const url= `${this.url}/updateRichiesta/${id}`;
 
     return this.http.put(url, newOrario, this.httpOptions);
   }
@@ -137,7 +128,7 @@ export class BackendService {
     const formData = new FormData();
 
     newAnnuncioRequest.foto.forEach((image, index) => {
-      formData.append('foto', image, image.name); // 'foto' field name
+      formData.append('foto', image, image.name);
     });
 
     formData.append('descrizione', newAnnuncioRequest.descrizione);
@@ -243,17 +234,18 @@ export class BackendService {
 
   getDisponibilita(usr: string, data: string | Date){
     const url= `${this.url}/getRichiesteGiornoX/${usr}/${data}`;
-    console.log(url);
+
     return this.http.get<Disponibilita[]>(url, this.httpOptions);
   }
 
   createRichiesta(richiesta: Richiesta){
-    const url = `${this.url}/insertRichiesta`; //URL per la richiesta
+    const url = `${this.url}/insertRichiesta`;
+
     return this.http.post(url, richiesta, this.httpOptions);
   }
 
   inviaEmail(email: Email){
-    const url = `${this.url}/sendEmail`; //URL per la richiesta
+    const url = `${this.url}/sendEmail`;
 
     return this.http.post(url, email, this.httpOptions);
   }

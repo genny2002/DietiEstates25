@@ -14,14 +14,14 @@ import 'mapbox-gl-leaflet';
   styleUrl: './intercative-map.component.scss'
 })
 export class IntercativeMapComponent {
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
-  router = inject(Router);  //permette la navigazione
-  renderer = inject(Renderer2); //permette di manipolare il DOM
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  renderer = inject(Renderer2);
 
-  submittedStep3 = false;  //flag dello stato di invio del form
-  step3Form = new FormGroup({ //form per il login
-    indirizzo: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedStep3 = false;
+  step3Form = new FormGroup({
+    indirizzo: new FormControl('', [Validators.required]),
   })
 
   private clickListener?: () => void;
@@ -33,12 +33,12 @@ export class IntercativeMapComponent {
   private selectedMarker: any;
 
   DefaultIcon = L.icon({
-    iconUrl: '/marker-icon.png', // Percorso relativo dalla cartella `public`
+    iconUrl: '/marker-icon.png',
     shadowUrl: '/marker-shadow.png',
-    iconSize: [25, 41], // Dimensioni predefinite dell'icona
-    iconAnchor: [12, 41], // Posizione dell'ancora dell'icona
-    popupAnchor: [1, -34], // Posizione dell'ancora del popup
-    shadowSize: [41, 41]  // Dimensioni dell'ombra
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
   });
 
   @Input() nuovoAnnuncio!: Annuncio;
@@ -57,7 +57,6 @@ export class IntercativeMapComponent {
       this.onDocumentClick(event);
     });
 
-    // Recupera la configurazione della mappa dal back-end
     this.backendService.getMapConfiguration().subscribe({
       next: (data) => {
         this.map=this.initializeMap(data);
@@ -69,15 +68,14 @@ export class IntercativeMapComponent {
   }
 
   onDocumentClick(event: Event) {
-    // Nascondi la lista se il clic avviene fuori
     const target = event.target as HTMLElement;
+
     if (!target.closest('#indirizzo') && !target.closest('#suggestion-list')) {
       this.suggestions = [];
     }
   }
 
   onContainerClick(event: Event) {
-    // Previeni la chiusura della lista quando si clicca dentro il contenitore
     event.stopPropagation();
   }
 
@@ -86,21 +84,21 @@ export class IntercativeMapComponent {
 
     this.backendService.createNewAnnuncio(this.nuovoAnnuncio).subscribe({
       error: (err) => {
-        this.toastr.error("L'annuncio non è stato creato", "Errore");  //mostra un messaggio di errore
+        this.toastr.error("L'annuncio non è stato creato", "Errore");
       },
       complete: () => {
         this.showMessage=false;
         this.step3Form.reset();
         this.submittedStep3Form = false;
         this.immobileAggiunto.emit();
-        this.showMessage = true; // Mostra il messaggio di successo
+        this.showMessage = true;
       }
     })
   }
 
   returnHome(){
     this.router.navigateByUrl("/homePageAgenteImmobiliare");
-    this.showMessage = false; // Nascondi il messaggio di successo
+    this.showMessage = false;
   }
 
   backStep(){
@@ -145,21 +143,20 @@ export class IntercativeMapComponent {
   selectSuggestion(suggestion: any): void {
     this.step3Form.setValue({
       indirizzo: suggestion.properties.formatted
-    });  // Mostra l'indirizzo selezionato
+    });
+
     this.suggestions = [];
 
-    const lat = suggestion.geometry.coordinates[1]; // Latitudine
-    const lon = suggestion.geometry.coordinates[0]; // Longitudine
+    const lat = suggestion.geometry.coordinates[1];
+    const lon = suggestion.geometry.coordinates[0];
 
-    // Centrare la mappa sulle coordinate selezionate
     if (this.map) {
-      this.map.setView([lat, lon], 15); // Zoom 15 per focalizzare l'indirizzo
+      this.map.setView([lat, lon], 15);
     }
 
     if(this.map != null){
-    // Aggiungere un marker sulla mappa
       if (this.selectedMarker) {
-        this.map.removeLayer(this.selectedMarker); // Rimuove eventuali marker esistenti
+        this.map.removeLayer(this.selectedMarker);
       }
 
       this.selectedMarker = L.marker([lat, lon]).addTo(this.map)

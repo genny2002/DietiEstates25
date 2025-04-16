@@ -15,23 +15,23 @@ import { ToastrService } from 'ngx-toastr';
 export class NuovoImmobileComponent {
   @Output() eventoRicevuto = new EventEmitter<void>();
 
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  router = inject(Router);  //permette la navigazione
+  authService = inject(AuthService);
+  router = inject(Router);
   toastr = inject(ToastrService);
   step: number = 1;
 
-  submittedStep1 = false;  //flag dello stato di invio del form
-  step1Form = new FormGroup({ //form per il login
-    tipo: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedStep1 = false;
+  step1Form = new FormGroup({
+    tipo: new FormControl('', [Validators.required]),
     prezzo: new FormControl('', [Validators.required]),
     descrizione: new FormControl('', [Validators.required]),
     numeroStanze: new FormControl('', [Validators.required]),
     dimensioni: new FormControl('', [Validators.required]),
   })
 
-  submittedStep2 = false;  //flag dello stato di invio del form
-  step2Form = new FormGroup({ //form per il login
-    immagini: new FormControl('', [Validators.required]), //campo di input dell'username
+  submittedStep2 = false;
+  step2Form = new FormGroup({
+    immagini: new FormControl('', [Validators.required]),
     servizi: new FormGroup({
       ascensore: new FormControl('', [Validators.required]),
       portineria: new FormControl('', [Validators.required]),
@@ -50,10 +50,10 @@ export class NuovoImmobileComponent {
   }
 
   handleStep1Form(){
-    this.submittedStep1 = true;  //aggiorna la flag dello stato di invio del form
+    this.submittedStep1 = true;
 
-    if (this.step1Form.invalid) {  //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");  //mostra un messaggio di errore
+    if (this.step1Form.invalid) {
+      this.toastr.error("I dati che hai inserito non sono corretti", "Dati errati");
     }else{
       this.nuovoAnnuncio.AgenteImmobiliareUsername = this.authService.user();
       this.nuovoAnnuncio.categoria = this.step1Form.value.tipo as string;

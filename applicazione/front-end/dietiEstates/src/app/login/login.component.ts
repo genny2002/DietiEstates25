@@ -13,38 +13,38 @@ import { BackendService } from '../_services/backend/backend.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  toastr = inject(ToastrService); //mostra le notifiche
-  router = inject(Router);  //permette la navigazione
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  authService = inject(AuthService);  //gestisce le informazioni della sessione
-  submitted = false;  //flag dello stato di invio del form
-  loginForm = new FormGroup({ //form per il login
-    user: new FormControl('', [Validators.required]), //campo di input dell'username
-    pass: new FormControl('', [ //campo di input della password
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  backendService = inject(BackendService);
+  authService = inject(AuthService);
+  submitted = false;
+  loginForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(16)])
   })
 
-  handleLogin() { //gestisce il login
-    this.submitted = true;  //aggiorna la flag dello stato di invio del form
+  handleLogin() {
+    this.submitted = true;
 
-    if (this.loginForm.invalid) { //controlla se i dati inseriti nel form non sono validi
-      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");  //mostra un messaggio di errore
+    if (this.loginForm.invalid) {
+      this.toastr.error("Inserire dei dati corretti", "Errore: dati errati");
     } else {
-      this.backendService.login({  //effettua il login con i dati inseriti nel form
+      this.backendService.login({
         usr: this.loginForm.value.user as string,
         email: null, 
         pwd: this.loginForm.value.pass as string,
       }).subscribe({
         next: (token) => {
-          this.authService.updateToken(token);  //aggiorna il token
+          this.authService.updateToken(token);
         },
         error: (err) => {
-          this.toastr.error("Inserire username e password corretti.", "Errore: credenziali errate"); //mostra un messaggio di errore
+          this.toastr.error("Inserire username e password corretti.", "Errore: credenziali errate");
         },
         complete: () => {
-          this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);  //mostra un messaggio di successo
+          this.toastr.success(`Accesso effettuato correttamente`, `Benvenuto ${this.loginForm.value.user}!`);
 
           const role = this.authService.authState().role;
           
@@ -67,5 +67,5 @@ export class LoginComponent {
         }
       })
     }
-  }//fine handleLogin
+  }
 }

@@ -5,7 +5,7 @@ export class ClienteRepository {
 
     static async checkClienteByUsernamePassword(usrname, psw){
         try {
-            let found = await Cliente.findOne({    //controlla se esiste un utente con le credenziali ricevute
+            let found = await Cliente.findOne({
                 where: {
                     username: usrname,
                     password: psw
@@ -21,7 +21,7 @@ export class ClienteRepository {
 
     static async signUp(usrname, psw, email){
         try {
-            let cliente = new Cliente({   //dati dell'utente da inserire
+            let cliente = new Cliente({
                 username: usrname,
                 password: psw,
                 email: email
@@ -37,6 +37,7 @@ export class ClienteRepository {
     static async getClienteByUsername(username){
         try {
             let cliente = await Cliente.findByPk(username, { attributes: ['email'] });
+
             return cliente ? cliente.email : null;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);
@@ -48,6 +49,7 @@ export class ClienteRepository {
         try {
             let clienti = await Cliente.findAll({ attributes: ['username'] });
             let usernames = clienti.map(cliente => cliente.username);
+            
             return usernames;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);

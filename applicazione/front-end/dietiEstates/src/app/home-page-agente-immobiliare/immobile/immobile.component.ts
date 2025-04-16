@@ -22,8 +22,8 @@ export class ImmobileComponent {
   @Output() immobileEliminato = new EventEmitter<void>();
 
   authService = inject(AuthService);
-  backendService = inject(BackendService); //effettua le richieste HTTP
-  toastr = inject(ToastrService); //mostra le notifiche
+  backendService = inject(BackendService);
+  toastr = inject(ToastrService);
  
   servizi: Servizio[] = []
   showMessage = false;
@@ -48,13 +48,13 @@ export class ImmobileComponent {
   }
 
   deleteAnnuncio(){
-    this.backendService.deleteAnnuncio(this.immobileItem.IDimmobile, this.authService.user()).subscribe({ //cerca tutte le idee controverse
+    this.backendService.deleteAnnuncio(this.immobileItem.IDimmobile, this.authService.user()).subscribe({
       error: (err) => {
-        this.toastr.error(`L'annuncio non è stato eliminato`, `Errore: annuncio non trovato`); //mostra un messaggio di errore
+        this.toastr.error(`L'annuncio non è stato eliminato`, `Errore: annuncio non trovato`);
       },
       complete: () => {
-        this.deleted = true; //aggiorna il flag di eliminazione
-        this.toastr.success(`L'annuncio è stato eliminato`, `Annuncio eliminato!`);  //mostra un messaggio di successo
+        this.deleted = true;
+        this.toastr.success(`L'annuncio è stato eliminato`, `Annuncio eliminato!`);
         this.showMessage = false;
         this.immobileEliminato.emit();
       }

@@ -8,10 +8,7 @@ emailController.post('/sendEmail', async (req, res, next) => {
         const response = await EmailService.sendEmail(req, res);
         res.status(200).json(response);
     } catch (err) {
-        // Log dell'errore
         console.error('Errore:', err.message);
-
-        // Passa l'errore al middleware di gestione degli errori
         next({ status: 400, message: err.message || "Errore durante l'invio dell'email" });
     }
 });

@@ -8,15 +8,15 @@ import { authInterceptor } from './_interceptor/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),  //abilita le animazioni 
-    provideToastr({ //configura le notifiche toast
+    provideAnimations(),
+    provideToastr({
       progressBar: true,
       newestOnTop: true,
     }),
-    provideHttpClient(  //permette di inviare richieste HTTP e di gestire le risposte
-      withFetch(),  //usa l'API Fetch invece di XMLHttpRequests
-      withInterceptors([authInterceptor]) //permette di utilizzare l'interceptor "authInterceptor"
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor])
     ),
-    provideRouter(routes) //fornisce la configurazione del router
+    provideRouter(routes)
   ]
 };

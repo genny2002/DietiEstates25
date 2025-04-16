@@ -29,7 +29,6 @@ export function createModelGestoreAgenzia(database) {
         defaultValue: true,
     }
     
-
   }, {
 
   });

@@ -6,89 +6,89 @@ import { AuthState } from './auth-state.type';
   providedIn: 'root'
 })
 export class AuthService {
-  authState: WritableSignal<AuthState> = signal<AuthState>({ //signal che tiene aggiornate le informazioni nel localStorage della sessione
-    user: this.getUser(), //username dell'utente
+  authState: WritableSignal<AuthState> = signal<AuthState>({
+    user: this.getUser(),
     role: this.getRuolo(),
-    token: this.getToken(), //token della sessione
-    isAuthenticated: this.verifyToken(this.getToken())  //flag di autenticazione del token
+    token: this.getToken(),
+    isAuthenticated: this.verifyToken(this.getToken())
   })
 
-  user = computed(() => this.authState().user);   //tiene aggiornato 'user' con il valore in 'this.authState'
-  token = computed(() => this.authState().token);   //tiene aggiornato 'token' con il valore in 'this.authState'
-  isAuthenticated = computed(() => this.authState().isAuthenticated);   //tiene aggiornato 'isAuthenticated' con il valore in 'this.authState'
+  user = computed(() => this.authState().user);
+  token = computed(() => this.authState().token);
+  isAuthenticated = computed(() => this.authState().isAuthenticated);
 
   constructor() {
     effect(() => {
-      const token = this.authState().token; //token della sessione aggiornato
-      const user = this.authState().user; //username dell'utente aggiornato
-      const ruolo = this.authState().role; //ruolo dell'utente aggiornato
+      const token = this.authState().token; 
+      const user = this.authState().user;
+      const ruolo = this.authState().role;
 
-      if (token !== null) { //controlla se il token non è NULL
-        localStorage.setItem("token", token); //aggiorna il valore di "token" nel localStorage della sessione
+      if (token !== null) {
+        localStorage.setItem("token", token);
       } else {
-        localStorage.removeItem("token"); //rimuove "token" dal localStorage della sessione
+        localStorage.removeItem("token");
       }
 
-      if (user !== null) {  //controlla se l'username dell'utente non è NULL
-        localStorage.setItem("user", user); //aggiorna il valore di "user" nel localStorage della sessione
+      if (user !== null) {
+        localStorage.setItem("user", user);
       } else {
-        localStorage.removeItem("user");  //rimuove "user" dal localStorage della sessione
+        localStorage.removeItem("user");
       }
-      if (ruolo !== null) {  //controlla se il ruolo dell'utente non è NULL
-        localStorage.setItem("role", ruolo); //aggiorna il valore di "ruolo" nel localStorage della sessione
+      if (ruolo !== null) {
+        localStorage.setItem("role", ruolo);
       }
       else {
-        localStorage.removeItem("role");  //rimuove "ruolo" dal localStorage della sessione
+        localStorage.removeItem("role");
       }
     });
   }
 
-  getUser() {  //ritorna l'username dell'utente del localStorge
+  getUser() {
     return localStorage.getItem("user");
-  }//fine getUser
+  }
 
-  getRuolo() {  //ritorna l'username dell'utente del localStorge
+  getRuolo() {
     return localStorage.getItem("role");
-  }//fine getUser
+  }
 
-  getToken() { //ritorna il token del localStorge
+  getToken() {
     return localStorage.getItem("token");
-  }//fine getToken
+  }
 
-  verifyToken(token: string | null): boolean {  //controlla se il token è valido
-    if (token !== null) { //controlla se il token non è NULL
+  verifyToken(token: string | null): boolean {
+    if (token !== null) {
       try {
-        const decodedToken = jwtDecode(token);  //token decofdificato
-        const expiration = decodedToken.exp;  //tempo di scadenza del token
+        const decodedToken = jwtDecode(token);
+        const expiration = decodedToken.exp;
 
-        if (expiration === undefined || Date.now() >= expiration * 1000) {  //controlla se il token è scaduto
+        if (expiration === undefined || Date.now() >= expiration * 1000) {
           return false;
         } else {
           return true;
         }
-      } catch (error) {  //se il token non è valido ritorna false
+      } catch (error) {
         return false;
       }
     }
     return false;
-  }//fine verifyToken
+  }
 
-  updateToken(token: string): void {  //decodifica e aggiorna il token
-    const decodedToken: any = jwtDecode(token); //token decofdificato
-    const user = decodedToken.user; //username dell'utente decodificato
-    const ruolo = decodedToken.role; //ruolo dell'utente decodificato
+  updateToken(token: string): void {
+    const decodedToken: any = jwtDecode(token); 
+    const user = decodedToken.user;
+    const ruolo = decodedToken.role;
 
-    this.authState.set({  //aggiorna lo stato di autenticazione
+    this.authState.set({
       user: user,
       role: ruolo,
       token: token,
       isAuthenticated: this.verifyToken(token)
     })
-  }//fine updateToken
+  }
 
-  isUserAuthenticated(): boolean {  //verifica se l'utente è autenticato
+  isUserAuthenticated(): boolean {
     return this.verifyToken(this.getToken());
-  }//fine isUserAuthenticated
+  }
 
   isUserGestoreAgenzia(): boolean {
     return this.getRuolo()=="gestoreAgenzia";
@@ -106,12 +106,12 @@ export class AuthService {
     return this.getRuolo()=="collaboratore";
   }
 
-  logout() { //effettua il logout
+  logout() {
     this.authState.set({
       user: null,
       role: null,
       token: null,
       isAuthenticated: false
     });
-  }//fine logout
+  }
 }

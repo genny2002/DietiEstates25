@@ -9,8 +9,6 @@ export const annuncioController = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Configura AWS S3
 const s3Client = new S3Client({
     region: process.env.AWS_REGION,
     credentials: {
@@ -18,8 +16,7 @@ const s3Client = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
-
-const storage = multer.memoryStorage(); // Usa la memoria per gestire i file prima di inviarli a S3
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 }});
 
 annuncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, res) => {
@@ -43,17 +40,14 @@ annuncioController.post("/upload/:numeroImg", upload.array("foto"), async (req, 
                 Key: fileName,
                 Body: file.buffer,
                 ContentType: file.mimetype,
-                //ACL: "public-read",
             };
 
-            // Carica il file su S3
             await s3Client.send(new PutObjectCommand(params));
 
             const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
             uploadedFiles.push(fileUrl);
         }
 
-        // Creare l'annuncio usando i file caricati
         const annuncio = await AnnuncioService.createAnnuncio(req.body, uploadedFiles);
         res.status(201).json(annuncio);
     } catch (err) {

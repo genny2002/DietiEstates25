@@ -7,18 +7,18 @@ authenticationController.get("/", (req, res) => {
     res.send("<h1>Welcome To JWT Authentication </h1>");
 });
 
-authenticationController.post("/auth", async (req, res) => {    //se le credenziali dell'utente sono corette invia una risposta con il token, altrimenti invia una risposta con un messaggio di errore
-    let getRole = await AuthenticationService.checkCredentials(req, res);    //segnale se le credenziali sono corrette pr l'autenticazione
+authenticationController.post("/auth", async (req, res) => {
+    let getRole = await AuthenticationService.checkCredentials(req, res);
     
-    if (getRole!=null) {    //controla se l'utente è stato autenticato
-        res.json(AuthenticationService.issueToken(req.body.usr, getRole));    //invia una risposta con il token generato
+    if (getRole!=null) {
+        res.json(AuthenticationService.issueToken(req.body.usr, getRole));
     } else {
-        res.status(401);    //imposta lo stato della risposta
-        res.json({ error: "Invalid credentials. Try again." });    //invia una risposta con un messaggio di errore
+        res.status(401);
+        res.json({ error: "Invalid credentials. Try again." });
     }
 });
 
-authenticationController.post("/signupCliente", (req, res, next) => {  //tenta di registrare un nuovo utente e invia una risposta
+authenticationController.post("/signupCliente", (req, res, next) => {
     try{
         const cliente = AuthenticationService.saveCliente(req, res);
         res.status(201).json(cliente);
@@ -31,7 +31,7 @@ authenticationController.post("/signupCliente", (req, res, next) => {  //tenta d
     }
 });
 
-authenticationController.get("/getCliente/:user", async (req, res, next) => {  //tenta di ottenere un utente e invia una risposta
+authenticationController.get("/getCliente/:user", async (req, res, next) => {
     try{
         const cliente = await AuthenticationService.getCliente(req);
         res.status(200).json(cliente);

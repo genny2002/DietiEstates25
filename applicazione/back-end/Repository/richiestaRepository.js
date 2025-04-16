@@ -35,7 +35,6 @@ export class RichiestaRepository {
         }
     }
 
-
     static async richiestaRisposta(id, stato){
         try {
             const richiesta = await Richiesta.findByPk(id);
@@ -61,7 +60,6 @@ export class RichiestaRepository {
             console.error("Error in getRichiesteGiornoX:", err);
             throw err;
         }
-        
     }
 
     static async deleteRichiesta(id){
@@ -86,8 +84,9 @@ export class RichiestaRepository {
             const dataFormatted = richiesta.data.toISOString().split('T')[0];
             const nuovaData = new Date(dataFormatted);
 
-            nuovaData.setUTCHours(orario.split(':')[0]); //MODIFICARE LA DATA CON L'ORARIO
+            nuovaData.setUTCHours(orario.split(':')[0]);
             richiesta.data = nuovaData;
+
             return await richiesta.save();
         } catch (err) {
             console.error("Error in updateRichiesta:", err);

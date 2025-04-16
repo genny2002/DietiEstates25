@@ -5,7 +5,7 @@ export class GestoreAgenziaRepository {
 
     static async checkGestoreByUsernamePassword(usrname, psw){
         try {
-            let found = await GestoreAgenzia.findOne({    //controlla se esiste un utente con le credenziali ricevute
+            let found = await GestoreAgenzia.findOne({
                 where: {
                     username: usrname,
                     password: psw
@@ -31,11 +31,14 @@ export class GestoreAgenziaRepository {
     static async gestoreAgenziaCambioPassword(username, password){
         try {
             let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+
             if(gestoreAgenzia === null){
                 throw new Error("utente non trovato");
             }
+
             gestoreAgenzia.password = password;
             gestoreAgenzia.primoAccesso = false;
+
             return await gestoreAgenzia.save();
         } catch (err) {
             console.error("Error in gestoreAgenziaCambioPassword:", err);
@@ -46,9 +49,11 @@ export class GestoreAgenziaRepository {
     static async getPrimoAccesso(username){
         try {
             let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+
             if(gestoreAgenzia === null){
                 throw new Error("utente non trovato");
             }
+
             return gestoreAgenzia.primoAccesso;
         } catch (err) {
             console.error("Error in getPrimoAccesso:", err);
@@ -59,9 +64,11 @@ export class GestoreAgenziaRepository {
     static async getOldPassword(username){
         try {
             let gestoreAgenzia = await GestoreAgenzia.findByPk(username);
+
             if(gestoreAgenzia === null){
                 throw new Error("utente non trovato");
             }
+
             return gestoreAgenzia.password;
         } catch (err) {
             console.error("Error in getOldPassword:", err);
@@ -73,6 +80,7 @@ export class GestoreAgenziaRepository {
         try {
             let gestori = await GestoreAgenzia.findAll({ attributes: ['username'] });
             let usernames = gestori.map(gestore => gestore.username);
+
             return usernames;
         } catch (err) {
             console.error("Error in getClienteByUsername:", err);

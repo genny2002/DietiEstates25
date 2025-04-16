@@ -67,7 +67,6 @@ export const routes: Routes = [
         path: "immobile/:id",
         component: AnnuncioDetailComponent,
         title: "Annuncio Detail | DietiEstates",
-        //canActivate: [authGuard]
     }, {
         path: "immobile/:id/prenota",
         component: PrenotaComponent,

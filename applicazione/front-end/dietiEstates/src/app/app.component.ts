@@ -15,11 +15,11 @@ import { HomePageAgenteImmobiliareComponent } from './home-page-agente-immobilia
 export class AppComponent {
   @ViewChild(HomePageAgenteImmobiliareComponent) childComponent!: HomePageAgenteImmobiliareComponent;
 
-  title = 'DietiEstates'; //titolo del'applicazione
+  title = 'DietiEstates';
 
   handleButtonClick() {
     if (this.childComponent) {
-      this.childComponent.getImmobili();  // Chiama il metodo del SecondComponent
+      this.childComponent.getImmobili();
     } else {
       console.log('SecondComponent non è ancora disponibile.');
     }
