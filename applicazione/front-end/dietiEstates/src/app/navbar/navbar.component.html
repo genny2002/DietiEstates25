@@ -69,13 +69,6 @@
                                 class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Notifica</a>
                         </li>
                     }
-                    @if(this.authService.isUserCollaboratore()){
-                        <li>
-                            <a (click)="handleNavigationClick()" routerLink="/nuovoCollaboratore"
-                                routerLinkActive="hover:text-[#FFD5C2] md:text-pesca"
-                                class="block py-2 px-3 text-white hover:text-pesca bg-bluScuro">Aggiungi collaboratore</a>
-                        </li>
-                    }
 
                     <li>
                         <a (click)="handleNavigationClick()" routerLink="/logout"
