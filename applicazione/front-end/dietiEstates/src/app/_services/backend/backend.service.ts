@@ -16,7 +16,7 @@ import { Email } from './email.type'
   providedIn: 'root'
 })
 export class BackendService {
-  url = "http://13.48.44.76:3000";
+  url = "http://16.171.21.200:3000";
   
   constructor(private http: HttpClient) { }
 
